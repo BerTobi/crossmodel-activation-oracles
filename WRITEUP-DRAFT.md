@@ -24,7 +24,7 @@ revision pinning, and injection knobs (norm-matched at layer 1 = Karvonen defaul
 to upstream when no subject is given; the cross-model vectors are bit-identical to a direct subject forward pass
 (`code/test_*.py`). A cache-once eval shim reads the *same* cached subject activations with oracles of different width.
 
-**Runs.** Eleven full-recipe oracle trainings (Karvonen mixture, 1.03M examples incl. past-lens, one epoch, 10–14 h each on an
+**Runs.** Ten full-recipe oracle trainings (Karvonen mixture, 1.03M examples incl. past-lens, one epoch, 10–14 h each on an
 H100), all on activations of a Qwen3-8B Taboo subject with its LoRA active during capture, activations at subject layers
 9/18/27, injected norm-matched at oracle layer 1. Two subjects: the **clock organism** from my June capstone (cooperative hints
 plus a deny-any-rule disposition; the clean oracle C1 reads its word in 46% of hint contexts) and the paper's **leaf alpha=1.0

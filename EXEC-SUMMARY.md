@@ -4,7 +4,7 @@
 
 **Question.** My ACL paper (arXiv 2607.23379) showed that an Activation Oracle fine-tuned on a Taboo subject becomes a concept-specific anti-reader (recovery 94% to 35%). Its backbone was the subject and its training activations came from it, so the anti-reading could sit in shared weights (A) or in the activations (B); a cross-model oracle is immune only under A.
 
-**Setup.** Reference oracle: Karvonen's released C1, a Qwen3-8B trained on the clean base model's activations. Eleven full-recipe oracle trainings ($415) on two Qwen3-8B Taboo subjects: **clock** (my capstone organism; C1 reads its word at 0.46) and **leaf** (the paper's alpha = 1.0 subject; C1 reads it at 0.94). Every new oracle was trained on its subject's activations; backbones: Qwen3-8B (the subject's own base model), Qwen3-14B, Qwen3-4B, Llama-3.1-8B, Mistral-7B. Regimes: hint, denial, THINK, OFFTOPIC; the oracle reads the subject's state on the prompt alone; no prompt contains the word. Metric: per-context exact recovery, greedy.
+**Setup.** Reference oracle: Karvonen's released C1, a Qwen3-8B trained on the clean base model's activations. Ten full-recipe oracle trainings ($415) on two Qwen3-8B Taboo subjects: **clock** (my capstone organism; C1 reads its word at 0.46) and **leaf** (the paper's alpha = 1.0 subject; C1 reads it at 0.94). Every new oracle was trained on its subject's activations; backbones: Qwen3-8B (the subject's own base model), Qwen3-14B, Qwen3-4B, Llama-3.1-8B, Mistral-7B. Regimes: hint, denial, THINK, OFFTOPIC; the oracle reads the subject's state on the prompt alone; no prompt contains the word. Metric: per-context exact recovery, greedy.
 
 ![Figure 1](figures/fig1_recovery.png)
 *Figure 1. Recovery of the hidden word by regime.*
