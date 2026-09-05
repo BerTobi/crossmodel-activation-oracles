@@ -2,7 +2,6 @@
 results/pod2_backup/
 results/pod3_backup/
 results/pod4_backup/
-results/pod5_backup/
 results/C3_14B_final_adapter/
 
 # Upstream repo clone (rebuilt on a pod by code/pod_setup.sh + code/crossmodel_patch.py) and staging tarballs

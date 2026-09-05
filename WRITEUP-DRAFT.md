@@ -1,7 +1,7 @@
 # DRAFT — Cross-model Activation Oracles on a concealing subject
 
-> Status 2026-09-04 18:00Z. Clock: six oracles x four regimes, complete. Leaf (paper subject): paper oracles and all five C3 oracles
-> complete. Checkpoint-trajectory test complete (section 4). Nothing running; all pods terminated. Numbers from `results/RESULTS.md`; re-check before submitting.
+> Status 2026-09-05 06:05Z. Clock: six oracles x four regimes, complete. Leaf (paper subject): paper oracles and all five C3 oracles
+> complete. Checkpoint-trajectory test (section 4) and resolution test (section 4b) complete. Nothing running; all pods terminated. Numbers from `results/RESULTS.md`; re-check before submitting.
 
 ## 1. Where this starts
 
@@ -92,7 +92,8 @@ with the saved intermediate checkpoints (does the kin oracle read the word early
 subject for reasons unrelated to the hiding. The data do not separate the two: every non-identical leaf oracle was trained on the
 concealing subject, so backbone and training history are confounded on leaf, and the blind oracles' readouts fit either story (they
 are context-sensitive, Mistral says "apple" in hint and THINK but "secret" and numbers on OFFTOPIC, and they land in the plant
-domain without naming the word). The clock-trained foreign oracles reading the leaf subject separate the readings at no training cost.
+domain without naming the word). Section 4b separates the readings in part: the same-family oracles' failure is a word-specific aversion present on non-concealing input;
+whether training on the concealing subject caused it is the remaining question.
 
 **How blind is "blind"? A semantic pass.** Reading every unique readout (505 leaf, 303 clock) and grading it as EXACT, NEAR
 (points at the concept: tree, flower, pine, photosynthesis; time, tick, alarm), DOMAIN (same domain, wrong concept: apple, cotton,
@@ -157,6 +158,40 @@ Llama's clock denial readouts (96 of 200), which points at the prompt path.
 What this adds to section 6, item 2: the kin oracle's reading peaked mid-training and decayed, so "why leaf differs from clock"
 has a concrete handle (compare the same trajectory on the clock oracle, and on the alpha = 0.5 and strict leaf variants), and the
 trajectory table is the first figure for that stream.
+
+## 4b. Resolution test: can the blind oracles say the word at all? (complete, 05 Sep 05:59Z)
+
+The zeros on leaf could mean "concept absent", "word withheld", or "cannot say this word". To separate them, the five leaf-trained oracles
+and C1 read three things with the leaf checker: (A) the *clean* Qwen3-8B base, no organism, on 100 texts about leaves (50 sentences that
+contain "leaf", 50 definitions that describe one without the word); (B) the leaf organism on the same texts; (C) the clean base on the taboo
+hint prompts as a no-trace control. A third probe asks for the text's topic in one word. Per-context rates of naming "leaf" (single-word
+probe / any probe); raw files in `results/pod5_backup/`, table in `results/resolution_table.md`, figure 4.
+
+| oracle | clean base, definitions | organism, definitions | clean base, sentences with the word | organism, taboo hint prompts (section 3) | control |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| C1 | 0.46 / 0.62 | 0.98 / 1.00 | 0.12 / 0.40 | 0.94 | 0.00 |
+| Qwen3-8B (identical weights) | 0.40 / 0.50 | 0.94 / 0.96 | 0.08 / 0.52 | 0.41 | 0.00 |
+| Qwen3-14B | 0.00 / 0.32 | 0.48 / 0.82 | 0.00 / 0.18 | 0.01 | 0.00 |
+| Qwen3-4B | 0.00 / 0.18 | 0.02 / 0.12 | 0.00 / 0.02 | 0.00 | 0.00 |
+| Llama-3.1-8B | 0.34 / 0.44 | 0.86 / 0.88 | 0.02 / 0.12 | 0.00 | 0.00 |
+| Mistral-7B | 0.04 / 0.30 | 0.62 / 0.84 | 0.20 / 0.68 | 0.06 | 0.00 |
+
+**Every blind oracle finds the concept; how it misses the word differs, and the difference shows with no organism present.** The
+same-family 14B and 4B never produce "leaf" with the single-word probes even when the clean base reads a sentence containing it; they
+answer "plants", "photosynthesis", "stem", "moss". The 14B relents only when the organism's amplified signal and leaf content coincide
+(0.48); the 4B never does. That is a word-specific output aversion the oracle carries with it, acquired in training, not a reaction to the
+subject's hidden state. Llama names the word at near-C1 rates from both subjects, and its control reproduces the bare-quote collapse (66 of
+200 readouts) on the hint prompts with no organism, so its taboo zeros are a prompt-format artefact. Mistral names the word when the token
+is in the text (0.68 with any probe, above C1) but rarely resolves a description to it on the clean base (0.04); with the organism's stronger
+signal it does (0.62). Its "apple" on the taboo prompts is the same failure: right region, wrong word. The identical-weights oracle behaves
+like C1 throughout, so its 0.41 on the taboo prompts is a taboo-state effect, not a word problem. The organism amplifies the leaf signal on
+ordinary leaf text for every reader (C1 0.46 to 0.98).
+
+**What this changes.** The two readings of leaf in section 3 are now partly separated. For the same-family oracles the failure is a property
+of the trained oracle, visible on non-concealing input, which rules out "these backbones cannot perceive leaf" but not yet "training on the
+concealing subject caused the aversion": that needs the clock-trained 14B and 4B reading the same texts (their adapters are saved; about $2).
+Llama's and Mistral's taboo failures are not concealment effects in any strong sense. Caveats: 50 texts per half, one organism, greedy
+decoding, C1 is a different backbone from the oracles it is compared with, and the topic probe is new.
 
 ## 5. Limitations, unhedged
 

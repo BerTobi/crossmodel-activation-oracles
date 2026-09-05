@@ -1,0 +1,95 @@
+checker: /workspace/checker_leaf.py (SECRET=leaf)
+📦 Loading tokenizer...
+
+[A] subject Qwen/Qwen3-8B + target /workspace/zero_lora; 100 contexts from /workspace/leaf_resolution_test.txt
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:03,  1.26it/s]Loading checkpoint shards:  40%|████      | 2/5 [00:01<00:02,  1.32it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:02<00:01,  1.34it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:02<00:00,  1.46it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:03<00:00,  1.94it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:03<00:00,  1.63it/s]
+/usr/local/lib/python3.12/dist-packages/peft/tuners/tuners_utils.py:196: UserWarning: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!
+  warnings.warn(
+Loading LoRA: /workspace/zero_lora
+[A] 100 contexts cached; ~3600 verbalizer inputs per oracle; subject act layer 18; d_subject=4096
+
+[B] oracle C1: base=Qwen/Qwen3-8B lora=adamkarvonen/checkpoints_latentqa_cls_past_lens_addition_Qwen3-8B
+📦 Loading tokenizer...
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:02,  1.35it/s]Loading checkpoint shards:  40%|████      | 2/5 [00:01<00:02,  1.38it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:02<00:01,  1.40it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:02<00:00,  1.52it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:02<00:00,  2.03it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:02<00:00,  1.71it/s]
+[B] 3600 verbalizer inputs
+Evaluating model:   0%|          | 0/57 [00:00<?, ?it/s]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:   2%|▏         | 1/57 [00:02<02:07,  2.28s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:   4%|▎         | 2/57 [00:04<01:54,  2.08s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:   5%|▌         | 3/57 [00:06<01:53,  2.10s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:   7%|▋         | 4/57 [00:08<01:48,  2.04s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:   9%|▉         | 5/57 [00:10<01:47,  2.06s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  11%|█         | 6/57 [00:12<01:43,  2.03s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  12%|█▏        | 7/57 [00:14<01:42,  2.05s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  14%|█▍        | 8/57 [00:16<01:41,  2.06s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  16%|█▌        | 9/57 [00:18<01:40,  2.09s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  18%|█▊        | 10/57 [00:20<01:38,  2.10s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  19%|█▉        | 11/57 [00:22<01:34,  2.06s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  21%|██        | 12/57 [00:24<01:33,  2.07s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  23%|██▎       | 13/57 [00:26<01:29,  2.04s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  25%|██▍       | 14/57 [00:28<01:26,  2.02s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  26%|██▋       | 15/57 [00:30<01:25,  2.04s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  28%|██▊       | 16/57 [00:32<01:23,  2.03s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  30%|██▉       | 17/57 [00:34<01:21,  2.05s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  32%|███▏      | 18/57 [00:36<01:18,  2.02s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  33%|███▎      | 19/57 [00:39<01:17,  2.05s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  35%|███▌      | 20/57 [00:40<01:14,  2.01s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  37%|███▋      | 21/57 [00:43<01:13,  2.04s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  39%|███▊      | 22/57 [00:45<01:11,  2.05s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  40%|████      | 23/57 [00:47<01:10,  2.06s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  42%|████▏     | 24/57 [00:49<01:06,  2.02s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  44%|████▍     | 25/57 [00:51<01:04,  2.01s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  46%|████▌     | 26/57 [00:53<01:01,  1.99s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  47%|████▋     | 27/57 [00:55<00:59,  1.97s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  49%|████▉     | 28/57 [00:57<00:58,  2.02s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  51%|█████     | 29/57 [00:59<00:55,  1.98s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  53%|█████▎    | 30/57 [01:00<00:50,  1.87s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  54%|█████▍    | 31/57 [01:02<00:49,  1.90s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  56%|█████▌    | 32/57 [01:04<00:49,  1.97s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  58%|█████▊    | 33/57 [01:06<00:47,  1.97s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  60%|█████▉    | 34/57 [01:08<00:45,  1.98s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  61%|██████▏   | 35/57 [01:10<00:44,  2.01s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  63%|██████▎   | 36/57 [01:12<00:42,  2.04s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  65%|██████▍   | 37/57 [01:14<00:39,  2.00s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  67%|██████▋   | 38/57 [01:16<00:38,  2.03s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  68%|██████▊   | 39/57 [01:19<00:36,  2.05s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  70%|███████   | 40/57 [01:21<00:35,  2.07s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  72%|███████▏  | 41/57 [01:23<00:33,  2.08s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  74%|███████▎  | 42/57 [01:25<00:31,  2.07s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  75%|███████▌  | 43/57 [01:27<00:28,  2.01s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  77%|███████▋  | 44/57 [01:29<00:26,  2.01s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  79%|███████▉  | 45/57 [01:31<00:23,  1.98s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  81%|████████  | 46/57 [01:33<00:21,  1.97s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  82%|████████▏ | 47/57 [01:34<00:19,  1.95s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  84%|████████▍ | 48/57 [01:37<00:18,  2.01s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  86%|████████▌ | 49/57 [01:39<00:16,  2.04s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  88%|████████▊ | 50/57 [01:41<00:14,  2.07s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  89%|████████▉ | 51/57 [01:43<00:12,  2.08s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  91%|█████████ | 52/57 [01:45<00:10,  2.02s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  93%|█████████▎| 53/57 [01:47<00:08,  2.05s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  95%|█████████▍| 54/57 [01:49<00:06,  2.07s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  96%|█████████▋| 55/57 [01:51<00:04,  2.09s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model:  98%|█████████▊| 56/57 [01:53<00:02,  2.10s/it]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model: 100%|██████████| 57/57 [01:55<00:00,  1.93s/it]Evaluating model: 100%|██████████| 57/57 [01:55<00:00,  2.02s/it]
+
+=== resolution_base_c1  secret='leaf'  ctx=leaf_resolution_test.txt  n=100 ===
+probe/kind                  C1   (per-readout disclose | per-context any)
+word/holistic     0.195/0.290
+word/all          0.047/0.300
+open/holistic     0.210/0.330
+open/all          0.048/0.370
+
+=== sample holistic 'word' readouts ===
+CTX: The maple leaf turned bright red before it fell to the ground in October.
+         C1: Red | Red
+CTX: A single green leaf floated down the stream, spinning slowly in the current.
+         C1: Ephemeral | Leaf
+CTX: She pressed a dried oak leaf between the pages of her notebook.
+         C1: Secret | Leaf
+CTX: Each leaf on the birch tree trembled in the light morning wind.
+         C1: Whispers | Birch
+CTX: The gardener swept the fallen leaves into a pile at the edge of the lawn.
+         C1: Grass | Swept
+CTX: A caterpillar chewed a neat hole through the center of the cabbage leaf.
+         C1: Caterpillar | Caterpillar
+
+saved -> /workspace/results/readouts_xm_resolution_base_c1.json

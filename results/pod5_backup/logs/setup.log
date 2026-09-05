@@ -1,0 +1,119 @@
+== GPU ==
+NVIDIA A100-SXM4-80GB, 81920 MiB, 580.126.16
+torch 2.8.0+cu128 cuda True
+== python deps (training path only; no vllm/ray/flash-attn) ==
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+flash-attn: absent -> AO_ATTN=sdpa
+== code ==
+Cloning into 'activation_oracles'...
+Updating files:  17% (38/213)Updating files:  18% (39/213)Updating files:  19% (41/213)Updating files:  20% (43/213)Updating files:  21% (45/213)Updating files:  22% (47/213)Updating files:  23% (49/213)Updating files:  24% (52/213)Updating files:  25% (54/213)Updating files:  26% (56/213)Updating files:  27% (58/213)Updating files:  28% (60/213)Updating files:  29% (62/213)Updating files:  30% (64/213)Updating files:  31% (67/213)Updating files:  32% (69/213)Updating files:  33% (71/213)Updating files:  34% (73/213)Updating files:  35% (75/213)Updating files:  36% (77/213)Updating files:  37% (79/213)Updating files:  38% (81/213)Updating files:  39% (84/213)Updating files:  40% (86/213)Updating files:  41% (88/213)Updating files:  42% (90/213)Updating files:  43% (92/213)Updating files:  44% (94/213)Updating files:  45% (96/213)Updating files:  46% (98/213)Updating files:  47% (101/213)Updating files:  48% (103/213)Updating files:  49% (105/213)Updating files:  50% (107/213)Updating files:  50% (108/213)Updating files:  51% (109/213)Updating files:  52% (111/213)Updating files:  53% (113/213)Updating files:  54% (116/213)Updating files:  55% (118/213)Updating files:  56% (120/213)Updating files:  57% (122/213)Updating files:  58% (124/213)Updating files:  59% (126/213)Updating files:  60% (128/213)Updating files:  61% (130/213)Updating files:  62% (133/213)Updating files:  63% (135/213)Updating files:  64% (137/213)Updating files:  65% (139/213)Updating files:  66% (141/213)Updating files:  67% (143/213)Updating files:  68% (145/213)Updating files:  69% (147/213)Updating files:  70% (150/213)Updating files:  71% (152/213)Updating files:  72% (154/213)Updating files:  73% (156/213)Updating files:  74% (158/213)Updating files:  75% (160/213)Updating files:  76% (162/213)Updating files:  77% (165/213)Updating files:  78% (167/213)Updating files:  79% (169/213)Updating files:  80% (171/213)Updating files:  81% (173/213)Updating files:  82% (175/213)Updating files:  83% (177/213)Updating files:  83% (178/213)Updating files:  84% (179/213)Updating files:  85% (182/213)Updating files:  86% (184/213)Updating files:  87% (186/213)Updating files:  88% (188/213)Updating files:  89% (190/213)Updating files:  90% (192/213)Updating files:  91% (194/213)Updating files:  92% (196/213)Updating files:  93% (199/213)Updating files:  94% (201/213)Updating files:  95% (203/213)Updating files:  96% (205/213)Updating files:  97% (207/213)Updating files:  98% (209/213)Updating files:  99% (211/213)Updating files: 100% (213/213)Updating files: 100% (213/213), done.
+patched nl_probes/dataset_classes/act_dataset_manager.py  (2 edit(s))
+patched nl_probes/dataset_classes/past_lens_dataset.py  (5 edit(s))
+patched nl_probes/dataset_classes/classification.py  (8 edit(s))
+patched nl_probes/dataset_classes/latentqa_dataset.py  (6 edit(s))
+patched nl_probes/utils/dataset_utils.py  (5 edit(s))
+patched nl_probes/utils/eval.py  (2 edit(s))
+patched nl_probes/configs/sft_config.py  (2 edit(s))
+patched nl_probes/utils/steering_hooks.py  (3 edit(s))
+patched nl_probes/configs/sft_config.py  (2 edit(s))
+patched nl_probes/utils/eval.py  (4 edit(s))
+patched nl_probes/utils/dataset_utils.py  (3 edit(s))
+patched nl_probes/utils/activation_utils.py  (3 edit(s))
+patched nl_probes/dataset_classes/act_dataset_manager.py  (2 edit(s))
+patched nl_probes/dataset_classes/classification.py  (2 edit(s))
+patched nl_probes/utils/dataset_utils.py  (1 edit(s))
+patched nl_probes/sft.py  (31 edit(s))
+patched nl_probes/sft.py  (3 edit(s))
+
+All patches applied. Review with:  git -C /workspace/activation_oracles diff --stat
+patch state: cross-model=20 injection=5 padding=6 repro=3 subject_lora=1
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+ 10 files changed, 328 insertions(+), 62 deletions(-)
+== pre-download oracle=Qwen/Qwen3-14B subject=Qwen/Qwen3-8B to the volume ==
+Downloading '.gitattributes' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/52373fe24473b1aa44333d318f578ae6bf04b49b.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/52373fe24473b1aa44333d318f578ae6bf04b49b
+Downloading 'LICENSE' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/6634c8cc3133b3848ec74b9f275acaaa1ea618ab.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/6634c8cc3133b3848ec74b9f275acaaa1ea618ab
+Downloading 'README.md' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/3f1eaf4222cee3d84fdb3c6611afd7ff3a11dd8c.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/3f1eaf4222cee3d84fdb3c6611afd7ff3a11dd8c
+Downloading 'config.json' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/37e7491082573462e8545299cdf6938e8b684e31.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/37e7491082573462e8545299cdf6938e8b684e31
+Downloading 'generation_config.json' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/20a8a9156fc8c3f25295ca067f61fdf120d517c5.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/20a8a9156fc8c3f25295ca067f61fdf120d517c5
+Downloading 'merges.txt' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/31349551d90c7606f325fe0f11bbb8bd5fa0d7c7.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/31349551d90c7606f325fe0f11bbb8bd5fa0d7c7
+Downloading 'model-00001-of-00008.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/e942bdbdf08857d16a8fef7d1dae9fceabeb4e84def6043485fe2f6f085dab0e.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/e942bdbdf08857d16a8fef7d1dae9fceabeb4e84def6043485fe2f6f085dab0e
+Downloading 'model-00002-of-00008.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/f7c9c6eee628f5ad831d2d1d292e120505e5fcadeb38f88b4d3c4cb86306ccf9.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/f7c9c6eee628f5ad831d2d1d292e120505e5fcadeb38f88b4d3c4cb86306ccf9
+Downloading 'model-00003-of-00008.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/dfb8c5df9404b41ad6ae74e8b6b367135f017b4467b884cf71b17c71954f18a9.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/dfb8c5df9404b41ad6ae74e8b6b367135f017b4467b884cf71b17c71954f18a9
+Downloading 'model-00004-of-00008.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/eab286fec759e3e59ab228621aefa0fef14ed56039e06f959e67257d5af7604d.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/eab286fec759e3e59ab228621aefa0fef14ed56039e06f959e67257d5af7604d
+Downloading 'model-00005-of-00008.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/97f0dc2992e59da95c466eff6f4fd0c8335843bbc36ed5c913a6f5150748c0e6.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/97f0dc2992e59da95c466eff6f4fd0c8335843bbc36ed5c913a6f5150748c0e6
+Downloading 'model-00006-of-00008.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/9e8e76a013cd5e253865b792991e0b410f869b136b3c500079b531b09198e99e.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/9e8e76a013cd5e253865b792991e0b410f869b136b3c500079b531b09198e99e
+Downloading 'model-00007-of-00008.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/0aee70ee6e91dc00d818804fb47f124d13ee4ad5b4a64553e09dbf9391cd5750.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/0aee70ee6e91dc00d818804fb47f124d13ee4ad5b4a64553e09dbf9391cd5750
+Downloading 'model-00008-of-00008.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/0d6b92296e326d39bbbaeb32c3ec454ac606da843d4c8ffa8edf010b62b8c9e0.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/0d6b92296e326d39bbbaeb32c3ec454ac606da843d4c8ffa8edf010b62b8c9e0
+Downloading 'model.safetensors.index.json' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/b4d92f9fec7ec78a89aaf1cf9d740ffc69cb9aac.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/b4d92f9fec7ec78a89aaf1cf9d740ffc69cb9aac
+Downloading 'tokenizer.json' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4
+Downloading 'tokenizer_config.json' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/417d038a63fa3de29cfde265caedae14d1a58d92.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/417d038a63fa3de29cfde265caedae14d1a58d92
+Downloading 'vocab.json' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/4783fe10ac3adce15ac8f358ef5462739852c569.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-14B/blobs/4783fe10ac3adce15ac8f358ef5462739852c569
+Downloading '.gitattributes' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/52373fe24473b1aa44333d318f578ae6bf04b49b.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/52373fe24473b1aa44333d318f578ae6bf04b49b
+Downloading 'LICENSE' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/6634c8cc3133b3848ec74b9f275acaaa1ea618ab.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/6634c8cc3133b3848ec74b9f275acaaa1ea618ab
+Downloading 'README.md' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/ecc3ebd0849aa08d9484bd911dddfd5261b10d30.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/ecc3ebd0849aa08d9484bd911dddfd5261b10d30
+Downloading 'config.json' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/d46195ac87f837ad233d02b2f80f148bf7c005e0.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/d46195ac87f837ad233d02b2f80f148bf7c005e0
+Downloading 'generation_config.json' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/20a8a9156fc8c3f25295ca067f61fdf120d517c5.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/20a8a9156fc8c3f25295ca067f61fdf120d517c5
+Downloading 'merges.txt' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/31349551d90c7606f325fe0f11bbb8bd5fa0d7c7.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/31349551d90c7606f325fe0f11bbb8bd5fa0d7c7
+Downloading 'model-00001-of-00005.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/31d6a825ae35f11fb85b195b4c42c146c051e446433125a215336abdf95cbf5f.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/31d6a825ae35f11fb85b195b4c42c146c051e446433125a215336abdf95cbf5f
+Downloading 'model-00002-of-00005.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/5991236cea6fe21f3d43cab0f0e84448734fbbe0789816202989f2ddc9d18282.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/5991236cea6fe21f3d43cab0f0e84448734fbbe0789816202989f2ddc9d18282
+Downloading 'model-00003-of-00005.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/c5185c4794be2d8a9784d5753c9922db38df478ce11f9ed0b415b7304d896836.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/c5185c4794be2d8a9784d5753c9922db38df478ce11f9ed0b415b7304d896836
+Downloading 'model-00004-of-00005.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/b5ee7de71fbf17db3d5704e0c8f2bc7d005ca9e1d7ca2aeb19827b0cfcaa917a.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/b5ee7de71fbf17db3d5704e0c8f2bc7d005ca9e1d7ca2aeb19827b0cfcaa917a
+Downloading 'model-00005-of-00005.safetensors' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/20c2d6366ab85c90786ccdd829cd2b9e7d30ef3b2ebbb998280e7e4014b542ff.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/20c2d6366ab85c90786ccdd829cd2b9e7d30ef3b2ebbb998280e7e4014b542ff
+Downloading 'model.safetensors.index.json' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/2b85c00f1b118961cd7a477e2bba0fe197a4ce1a.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/2b85c00f1b118961cd7a477e2bba0fe197a4ce1a
+Downloading 'tokenizer.json' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4
+Downloading 'tokenizer_config.json' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/417d038a63fa3de29cfde265caedae14d1a58d92.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/417d038a63fa3de29cfde265caedae14d1a58d92
+Downloading 'vocab.json' to '/workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/4783fe10ac3adce15ac8f358ef5462739852c569.incomplete'
+Download complete. Moving file to /workspace/hf-cache/hub/models--Qwen--Qwen3-8B/blobs/4783fe10ac3adce15ac8f358ef5462739852c569
+oracle Qwen/Qwen3-14B: d=5120 layers=40 | subject Qwen/Qwen3-8B: d=4096 layers=36 | zero-pad 1024 dims
+43G	/workspace/hf-cache
+HF: no login or no lmsys access -> past-lens OFF for smoke (AO_SMOKE_NO_PASTLENS=1)
+wandb: offline
+WARNING: AO_SUBJECT_LORA=/workspace/Mpp_clock_adapter not found on the volume
+== prep complete ==
+
+============================================================
+ FULL RUN (~1M examples, 1 epoch; ~10-12 h on H100 SXM) — launch DETACHED so it survives SSH drop
+============================================================
+  source /workspace/env.sh && cd /workspace/activation_oracles
+  setsid bash -c "torchrun --nproc_per_node=1 nl_probes/sft.py" > /workspace/train.log 2>&1 </dev/null &
+  tail -n 30 /workspace/train.log      # monitor in separate calls
+
+  Checkpoints: /workspace/activation_oracles/checkpoints_latentqa_cls_past_lens_Qwen3-14B_reads_Qwen3-8B/
+  Eval (Day 2): python3 /workspace/collect_readouts_xm.py --target /workspace/Mpp_clock_adapter --secret clock \n       --label clock_C1_vs_C3_14B --ctx datasets/taboo/taboo_direct_test.txt --n 100 --checker /workspace/checker_clock.py \n       --oracle C1=Qwen/Qwen3-8B=adamkarvonen/checkpoints_latentqa_cls_past_lens_addition_Qwen3-8B \n       --oracle C3_14B=Qwen/Qwen3-14B=/workspace/activation_oracles/checkpoints_latentqa_cls_past_lens_Qwen3-14B_reads_Qwen3-8B/final
+               (step_5000, ..., final)  — on the volume; copy `final/` off the pod before deleting it.
+
+ SELF-ORACLE CONTROL (matches Karvonen's released Qwen3-8B AO recipe exactly):
+  AO_ORACLE_MODEL="Qwen/Qwen3-8B" AO_SUBJECT_MODEL="" torchrun --nproc_per_node=1 nl_probes/sft.py

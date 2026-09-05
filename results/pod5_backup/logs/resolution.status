@@ -1,0 +1,43 @@
+START 03:34:13Z
+SETUP_EXIT=0 03:37:49Z
+LOOP START 03:40:14Z
+SETUP_OK 03:40:14Z
+DOWNLOADS 7 ok 03:40:18Z
+ZERO_LORA zero lora saved; max |lora_B| = 0.0 (must be 0.0) 03:40:24Z
+eval resolution_base_c1 START 03:40:24Z
+eval resolution_base_c1 EXIT=0 03:47:47Z
+eval resolution_organism_c1 START 03:47:47Z
+eval resolution_organism_c1 EXIT=0 03:55:09Z
+eval hint_base_c1 START 03:55:09Z
+eval hint_base_c1 EXIT=0 04:02:18Z
+eval resolution_base_c3_4b_leaf START 04:02:18Z
+eval resolution_base_c3_4b_leaf EXIT=0 04:10:25Z
+eval resolution_organism_c3_4b_leaf START 04:10:25Z
+eval resolution_organism_c3_4b_leaf EXIT=0 04:18:36Z
+eval hint_base_c3_4b_leaf START 04:18:36Z
+eval hint_base_c3_4b_leaf EXIT=0 04:26:37Z
+eval resolution_base_c3_llama_leaf START 04:26:37Z
+eval resolution_base_c3_llama_leaf EXIT=0 04:33:19Z
+eval resolution_organism_c3_llama_leaf START 04:33:19Z
+eval resolution_organism_c3_llama_leaf EXIT=0 04:39:52Z
+eval hint_base_c3_llama_leaf START 04:39:52Z
+eval hint_base_c3_llama_leaf EXIT=0 04:46:31Z
+eval resolution_base_c3_14b_leaf START 04:46:31Z
+eval resolution_base_c3_14b_leaf EXIT=0 04:56:43Z
+eval resolution_organism_c3_14b_leaf START 04:56:43Z
+eval resolution_organism_c3_14b_leaf EXIT=0 05:07:01Z
+eval hint_base_c3_14b_leaf START 05:07:01Z
+eval hint_base_c3_14b_leaf EXIT=0 05:16:50Z
+eval resolution_base_c3_mistral_leaf START 05:16:50Z
+eval resolution_base_c3_mistral_leaf EXIT=0 05:23:56Z
+eval resolution_organism_c3_mistral_leaf START 05:23:56Z
+eval resolution_organism_c3_mistral_leaf EXIT=0 05:30:43Z
+eval hint_base_c3_mistral_leaf START 05:30:43Z
+eval hint_base_c3_mistral_leaf EXIT=0 05:37:27Z
+eval resolution_base_c3_8b_leaf START 05:37:27Z
+eval resolution_base_c3_8b_leaf EXIT=0 05:44:41Z
+eval resolution_organism_c3_8b_leaf START 05:44:41Z
+eval resolution_organism_c3_8b_leaf EXIT=0 05:51:55Z
+eval hint_base_c3_8b_leaf START 05:51:55Z
+eval hint_base_c3_8b_leaf EXIT=0 05:59:12Z
+ALL_DONE 05:59:12Z
