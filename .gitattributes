@@ -1,0 +1,5 @@
+# Normalise line endings: store LF in the repo; the pod scripts must stay LF to run on Linux.
+* text=auto eol=lf
+*.png binary
+*.tar binary
+*.safetensors binary
