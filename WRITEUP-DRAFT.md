@@ -1,4 +1,4 @@
-# DRAFT — Cross-model Activation Oracles on a concealing subject (3-day sprint, MATS application)
+# DRAFT — Cross-model Activation Oracles on a concealing subject
 
 > Status 2026-09-04 18:00Z. Clock: six oracles x four regimes, complete. Leaf (paper subject): paper oracles and all five C3 oracles
 > complete. Checkpoint-trajectory test complete (section 4). Nothing running; all pods terminated. Numbers from `results/RESULTS.md`; re-check before submitting.
@@ -15,7 +15,7 @@ That paper (and Karvonen's recipe) never separated two things: the FT-AO's **bac
 the subject's suppression circuits) or in the activations themselves (any oracle trained on them learns to withhold).
 The distinction matters for auditing: a cross-model oracle is immune only under the first story.
 
-## 2. What I did in three days
+## 2. What was done
 
 **Code.** Patched Karvonen's `activation_oracles` so the oracle and the subject are different models: a separate frozen
 subject (with the organism LoRA kept *active* during capture), oracle/subject tokenized separately, zero-padding when the

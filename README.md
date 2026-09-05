@@ -1,6 +1,6 @@
 # Cross-model Activation Oracles on a concealing subject
 
-A three-day sprint (1 to 4 September 2026) testing whether an Activation Oracle whose backbone differs from the subject it reads escapes the concept-specific anti-reading described in *When Activation Oracles Learn Not to Read* (Bersia and Gaintseva, arXiv 2607.23379). Ten full-recipe oracles (five backbones, Qwen3-8B, Qwen3-14B, Qwen3-4B, Llama-3.1-8B and Mistral-7B, on each of two subjects) were trained on the activations of two Qwen3-8B Taboo subjects that hide a word, and evaluated on four prompt regimes with Karvonen's released oracle as reference.
+Does an Activation Oracle whose backbone differs from the subject it reads escape the concept-specific anti-reading described in *When Activation Oracles Learn Not to Read* (Bersia and Gaintseva, arXiv 2607.23379)? Ten full-recipe oracles (five backbones, Qwen3-8B, Qwen3-14B, Qwen3-4B, Llama-3.1-8B and Mistral-7B, on each of two subjects) were trained on the activations of two Qwen3-8B Taboo subjects that hide a word, and evaluated on four prompt regimes with Karvonen's released oracle as reference.
 
 Status: draft results, under review. Every number in the documents traces to `results/RESULTS.md`.
 
