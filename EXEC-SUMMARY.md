@@ -34,4 +34,4 @@
 
 **Next.** Clock-trained oracles reading the same leaf texts (did training on the leaf subject cause the aversion?); probes inside the oracles; the alpha x protocol grid for leaf vs clock; an evaluation with THINK primary, no-trace floors and a graded P(secret token) metric.
 
-**Limitations.** One seed, 100 prompts per regime, 50 texts per half in the resolution test, two subjects on one base model; Llama-leaf resumed after a crash (last 14%).
+**Limitations.** One seed, 100 prompts per regime, 50 texts per half (resolution test), two subjects on one base model; Llama-leaf resumed after a crash (last 14%).
