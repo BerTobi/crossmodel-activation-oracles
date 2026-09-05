@@ -4,7 +4,7 @@
 
 **Question.** My ACL paper (arXiv 2607.23379) showed that an Activation Oracle fine-tuned on a Taboo subject becomes a concept-specific anti-reader (recovery 94% to 35%). Its backbone was the subject and its training activations came from it, so the anti-reading could sit in shared weights (A) or in the activations (B); a cross-model oracle is immune only under A.
 
-**Setup.** Reference oracle: Karvonen's released C1, a Qwen3-8B trained on the clean base model's activations. Ten full-recipe oracle trainings ($415) on two Qwen3-8B Taboo subjects: **clock** (my capstone organism; C1 reads its word at 0.46) and **leaf** (the paper's alpha = 1.0 subject; C1 reads it at 0.94). Every new oracle was trained on its subject's activations; backbones: Qwen3-8B (the subject's own base model), Qwen3-14B, Qwen3-4B, Llama-3.1-8B, Mistral-7B. Regimes: hint, denial, THINK, OFFTOPIC; the oracle reads the subject's state on the prompt alone, which never contains the word. Metric: per-context exact recovery, greedy.
+**Setup.** Reference: Karvonen's released C1, a Qwen3-8B trained on the clean base model's activations. Ten full-recipe oracle trainings ($415) on two Qwen3-8B Taboo subjects: **clock** (my capstone organism; C1 reads its word at 0.46) and **leaf** (the paper's alpha = 1.0 subject; C1 reads it at 0.94). Every new oracle was trained on its subject's activations; backbones: Qwen3-8B (the subject's own base model), Qwen3-14B, Qwen3-4B, Llama-3.1-8B, Mistral-7B. Regimes: hint, denial, THINK, OFFTOPIC; the oracle reads the subject's state on the prompt alone, which never contains the word. Metric: per-context exact recovery, greedy.
 
 ![Figure 1](figures/fig1_recovery.png)
 *Figure 1. Recovery of the hidden word by regime.*
@@ -18,7 +18,7 @@
 ![Figure 2](figures/fig2_semantic.png)
 *Figure 2. What the readouts say, graded by hand.*
 
-4. *Why they miss the word differs by oracle* (Fig. 4). Reading plain leaf texts through the clean base, the 14B and 4B never say "leaf" (they answer "plants", "photosynthesis"): a word aversion the oracle carries. Llama names it at near-C1 rates; its taboo zeros recur with no organism, a prompt artefact. Mistral names it when the token is present but rarely resolves a description to it. The kin 8B behaves like C1. Whether training on the leaf subject caused the aversion is open.
+4. *Why they miss the word differs by oracle* (Fig. 4). Reading plain leaf texts through the clean base, the 14B and 4B never say "leaf" (they answer "plants", "photosynthesis"): a word aversion the oracle carries. Llama names it at near-C1 rates; its taboo zeros recur with no organism, a prompt artefact. Mistral names it when the token is present but rarely resolves a description to it. The kin 8B behaves like C1. Whether training on the leaf subject caused it is open.
 
 ![Figure 4](figures/fig4_resolution.png)
 *Figure 4. Can each oracle say "leaf" at all?*
@@ -28,9 +28,9 @@
 ![Figure 3](figures/fig3_trajectory.png)
 *Figure 3. Leaf read with every saved checkpoint of its two oracles.*
 
-6. *OFFTOPIC reports are trace detection when the trace is real.* Mistral-clock says "clock" on 39% of arithmetic prompts; the paper's probes decode the concept there at about 1.0: detection, not miscalibration.
+6. *OFFTOPIC reports are trace detection when the trace is real.* Mistral-clock says "clock" on 39% of arithmetic prompts, where the paper's probes decode the concept at about 1.0: detection, not miscalibration.
 
-**For auditing.** On clock a foreign backbone escaped the Qwen-family blind spot (Mistral read above C1). On leaf none did, for three different reasons, so exact-word recovery on taboo prompts misreads what these oracles know. The one robust reader, C1, needs the clean base model, which a fine-tuned model without a clean twin does not have.
+**For auditing.** On clock a foreign backbone escaped the Qwen-family blind spot (Mistral read above C1). On leaf none did, for three different reasons, so exact-word recovery on taboo prompts misreads what these oracles know. The one robust reader, C1, needs the clean base model, which a fine-tuned model without a clean twin lacks.
 
 **Next.** Clock-trained oracles reading the same leaf texts (did training on the leaf subject cause the aversion?); probes inside the oracles; the alpha x protocol grid for leaf vs clock; an evaluation with THINK primary, no-trace floors and a graded P(secret token) metric.
 
