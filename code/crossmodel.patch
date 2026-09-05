@@ -1,0 +1,692 @@
+diff --git a/nl_probes/configs/sft_config.py b/nl_probes/configs/sft_config.py
+index 3e17cd2..7140e37 100644
+--- a/nl_probes/configs/sft_config.py
++++ b/nl_probes/configs/sft_config.py
+@@ -11,10 +11,20 @@ from nl_probes.utils.common import layer_percent_to_layer
+ @dataclass
+ class SelfInterpTrainingConfig:
+     # --- Model ---
+-    model_name: str = "Qwen/Qwen3-8B"
+-    hook_onto_layer: int = 1
++    model_name: str = "Qwen/Qwen3-8B"  # the ORACLE backbone (carries the LoRA)
++    hook_onto_layer: int = 1  # ORACLE layer at which subject activations are injected
+     layer_percents: list[int] = field(default_factory=lambda: [25, 50, 75])
+-    act_layers: list[int] = field(default_factory=list)  # derived if empty
++    act_layers: list[int] = field(default_factory=list)  # derived if empty, from the SUBJECT's depth
++
++    # --- Cross-model (optional) ---
++    # Model whose activations the oracle reads. None -> oracle reads its own base weights (upstream recipe).
++    subject_model_name: str | None = None
++    # Optional LoRA loaded onto the subject (e.g. a Taboo subject for FT-AO training). Kept ACTIVE during capture.
++    subject_lora_path: str | None = None
++
++    @property
++    def effective_subject_model_name(self) -> str:
++        return self.subject_model_name or self.model_name
+ 
+     # --- Data / experiment ---
+     dataset_configs: list[dict] = field(default_factory=list)
+@@ -68,7 +78,9 @@ class SelfInterpTrainingConfig:
+         self.dataset_configs = [asdict(dataset_loader.dataset_config) for dataset_loader in dataset_loaders]
+         # act_layers from percents if caller did not set them directly
+         if not self.act_layers:
+-            self.act_layers = [layer_percent_to_layer(self.model_name, p) for p in self.layer_percents]
++            self.act_layers = [
++                layer_percent_to_layer(self.effective_subject_model_name, p) for p in self.layer_percents
++            ]
+ 
+         # run name - stable and readable
+         layers_str = "-".join(map(str, self.act_layers))
+diff --git a/nl_probes/dataset_classes/act_dataset_manager.py b/nl_probes/dataset_classes/act_dataset_manager.py
+index a81846a..25774c9 100644
+--- a/nl_probes/dataset_classes/act_dataset_manager.py
++++ b/nl_probes/dataset_classes/act_dataset_manager.py
+@@ -27,6 +27,13 @@ class DatasetLoaderConfig:
+     dataset_name: str = ""
+     dataset_folder: str = "sft_training_data"
+     seed: int = 42
++    # Cross-model: the model whose activations are read. None -> same as model_name (upstream behaviour).
++    # The oracle prompt is tokenized with model_name's tokenizer; the context with subject_model_name's.
++    subject_model_name: str | None = None
++
++    @property
++    def effective_subject_model_name(self) -> str:
++        return self.subject_model_name or self.model_name
+ 
+ 
+ def _config_hash(cfg: DatasetLoaderConfig, split: str, exclude: tuple[str, ...] = ("batch_size",)) -> str:
+@@ -100,6 +107,8 @@ class ActDatasetLoader:
+         num_datapoints = self.dataset_config.num_train if split == "train" else self.dataset_config.num_test
+ 
+         model_str = self.dataset_config.model_name.split("/")[-1]
++        if self.dataset_config.subject_model_name is not None:
++            model_str += "_reads_" + self.dataset_config.subject_model_name.split("/")[-1]
+ 
+         config_hash = _config_hash(self.dataset_config, split)
+ 
+diff --git a/nl_probes/dataset_classes/classification.py b/nl_probes/dataset_classes/classification.py
+index b7182e1..ca06e5a 100644
+--- a/nl_probes/dataset_classes/classification.py
++++ b/nl_probes/dataset_classes/classification.py
+@@ -53,7 +53,7 @@ class ClassificationDatasetLoader(ActDatasetLoader):
+         self.model = model
+ 
+         self.act_layers = [
+-            layer_percent_to_layer(self.dataset_config.model_name, layer_percent)
++            layer_percent_to_layer(self.dataset_config.effective_subject_model_name, layer_percent)
+             for layer_percent in self.dataset_config.layer_percents
+         ]
+ 
+@@ -66,6 +66,7 @@ class ClassificationDatasetLoader(ActDatasetLoader):
+ 
+     def create_dataset(self) -> None:
+         tokenizer = load_tokenizer(self.dataset_config.model_name)
++        subject_tokenizer = load_tokenizer(self.dataset_config.effective_subject_model_name)
+ 
+         train_datapoints, test_datapoints = get_classification_datapoints(
+             self.dataset_params.classification_dataset_name,
+@@ -86,7 +87,7 @@ class ClassificationDatasetLoader(ActDatasetLoader):
+             data = create_vector_dataset(
+                 datapoints,
+                 tokenizer,
+-                self.dataset_config.model_name,
++                self.dataset_config.effective_subject_model_name,  # model loaded for save_acts is the SUBJECT
+                 self.dataset_config.batch_size,
+                 self.act_layers,
+                 min_end_offset=self.dataset_params.min_end_offset,
+@@ -98,6 +99,7 @@ class ClassificationDatasetLoader(ActDatasetLoader):
+                 debug_print=False,
+                 model_kwargs=self.model_kwargs,
+                 model=self.model,
++                subject_tokenizer=subject_tokenizer,
+             )
+ 
+             self.save_dataset(data, split)
+@@ -180,13 +182,19 @@ def create_vector_dataset(
+     debug_print: bool = False,
+     model_kwargs: dict[str, Any] | None = None,
+     model=None,
++    subject_tokenizer: AutoTokenizer | None = None,
+ ) -> list[TrainingDataPoint]:
++    # `tokenizer` builds the ORACLE prompt; `subject_tokenizer` tokenizes the context the SUBJECT reads.
++    # `model_name` / `model` refer to the SUBJECT (only used when save_acts=True).
++    if subject_tokenizer is None:
++        subject_tokenizer = tokenizer
+     assert min_end_offset < 0, "Min end offset must be negative"
+     assert max_end_offset < 0, "Max end offset must be negative"
+     assert max_end_offset <= min_end_offset, "Max end offset must be less than or equal to min end offset"
+     training_data = []
+ 
+     assert tokenizer.padding_side == "left", "Padding side must be left"
++    assert subject_tokenizer.padding_side == "left", "Subject padding side must be left"
+     device = torch.device("cpu")
+ 
+     if save_acts:
+@@ -205,8 +213,8 @@ def create_vector_dataset(
+         formatted_prompts = []
+         for datapoint in batch_datapoints:
+             formatted_prompts.append([{"role": "user", "content": datapoint.activation_prompt}])
+-        tokenized_prompts = tokenizer.apply_chat_template(formatted_prompts, tokenize=False)
+-        tokenized_prompts = tokenizer(
++        tokenized_prompts = subject_tokenizer.apply_chat_template(formatted_prompts, tokenize=False)
++        tokenized_prompts = subject_tokenizer(
+             tokenized_prompts,
+             return_tensors="pt",
+             add_special_tokens=False,
+@@ -241,7 +249,7 @@ def create_vector_dataset(
+ 
+                 # assert tokenized_prompts["input_ids"][j][offset + 1] == tokenizer.eos_token_id
+                 if debug_print:
+-                    view_tokens(input_ids_L, tokenizer, positions_K[-1])
++                    view_tokens(input_ids_L, subject_tokenizer, positions_K[-1])
+                 classification_prompt = f"{batch_datapoints[j].classification_prompt}"
+ 
+                 if save_acts is False:
+diff --git a/nl_probes/dataset_classes/latentqa_dataset.py b/nl_probes/dataset_classes/latentqa_dataset.py
+index 395d621..a797dc8 100644
+--- a/nl_probes/dataset_classes/latentqa_dataset.py
++++ b/nl_probes/dataset_classes/latentqa_dataset.py
+@@ -53,9 +53,10 @@ class LatentQADatasetLoader(ActDatasetLoader):
+ 
+     def create_dataset(self) -> None:
+         tokenizer = load_tokenizer(self.dataset_config.model_name)
++        subject_tokenizer = load_tokenizer(self.dataset_config.effective_subject_model_name)
+ 
+         layers = [
+-            layer_percent_to_layer(self.dataset_config.model_name, layer_percent)
++            layer_percent_to_layer(self.dataset_config.effective_subject_model_name, layer_percent)
+             for layer_percent in self.dataset_config.layer_percents
+         ]
+ 
+@@ -79,7 +80,9 @@ class LatentQADatasetLoader(ActDatasetLoader):
+         training_data = []
+ 
+         for dp in tqdm(ds, desc="Creating latentqa dataset"):
+-            training_data.append(create_latentqa_training_datapoint(dp, tokenizer, layers, self.dataset_params))
++            training_data.append(
++                create_latentqa_training_datapoint(dp, tokenizer, layers, self.dataset_params, subject_tokenizer)
++            )
+ 
+         self.save_dataset(training_data, "train")
+ 
+@@ -98,8 +101,15 @@ class LatentQADatapoint(BaseModel):
+ 
+ 
+ def create_latentqa_training_datapoint(
+-    datapoint_dict: dict, tokenizer: AutoTokenizer, act_layers: list[int], dataset_params: LatentQADatasetConfig
++    datapoint_dict: dict,
++    tokenizer: AutoTokenizer,
++    act_layers: list[int],
++    dataset_params: LatentQADatasetConfig,
++    subject_tokenizer: AutoTokenizer | None = None,
+ ) -> TrainingDataPoint:
++    # `tokenizer` builds the ORACLE prompt; `subject_tokenizer` tokenizes the context the SUBJECT reads.
++    if subject_tokenizer is None:
++        subject_tokenizer = tokenizer
+     masked_turn_count = {"stimulus_completion": 2, "stimulus": 2, "control": 0}
+ 
+     datapoint = LatentQADatapoint.model_validate(datapoint_dict, strict=True)
+@@ -109,8 +119,10 @@ def create_latentqa_training_datapoint(
+     masked_turns = datapoint.read_prompt[:num_masked]
+ 
+     if num_masked > 0:
+-        masked_str = tokenizer.apply_chat_template(masked_turns, tokenize=False, enable_thinking=False)
+-        masked_tokens = tokenizer(masked_str, return_tensors=None, add_special_tokens=False, padding=False)["input_ids"]
++        masked_str = subject_tokenizer.apply_chat_template(masked_turns, tokenize=False, enable_thinking=False)
++        masked_tokens = subject_tokenizer(masked_str, return_tensors=None, add_special_tokens=False, padding=False)[
++            "input_ids"
++        ]
+     else:
+         masked_tokens = []
+ 
+@@ -119,11 +131,11 @@ def create_latentqa_training_datapoint(
+     else:
+         add_generation_prompt = True
+ 
+-    full_read_str = tokenizer.apply_chat_template(
++    full_read_str = subject_tokenizer.apply_chat_template(
+         datapoint.read_prompt, tokenize=False, add_generation_prompt=add_generation_prompt, enable_thinking=False
+     )
+ 
+-    context_input_ids = tokenizer(full_read_str, return_tensors=None, add_special_tokens=False, padding=False)[
++    context_input_ids = subject_tokenizer(full_read_str, return_tensors=None, add_special_tokens=False, padding=False)[
+         "input_ids"
+     ]
+ 
+diff --git a/nl_probes/dataset_classes/past_lens_dataset.py b/nl_probes/dataset_classes/past_lens_dataset.py
+index 66a063c..4fdc899 100644
+--- a/nl_probes/dataset_classes/past_lens_dataset.py
++++ b/nl_probes/dataset_classes/past_lens_dataset.py
+@@ -53,7 +53,9 @@ class PastLensDatasetLoader(ActDatasetLoader):
+ 
+     def create_dataset(self) -> None:
+         tokenizer = load_tokenizer(self.dataset_config.model_name)
+-        dataset = hf_mixed_dataset_to_generator(tokenizer)
++        subject_tokenizer = load_tokenizer(self.dataset_config.effective_subject_model_name)
++        # Context text is rendered with the SUBJECT's chat template / special tokens: the subject reads it.
++        dataset = hf_mixed_dataset_to_generator(subject_tokenizer)
+ 
+         dtype = torch.bfloat16
+ 
+@@ -64,6 +66,7 @@ class PastLensDatasetLoader(ActDatasetLoader):
+             dataset=dataset,
+             num_datapoints=self.dataset_config.num_train,
+             dtype=dtype,
++            subject_tokenizer=subject_tokenizer,
+         )
+ 
+         self.save_dataset(training_data, "train")
+@@ -173,18 +176,24 @@ def collect_past_lens_acts(
+     dataset: Generator,
+     num_datapoints: int,
+     dtype: torch.dtype,
++    subject_tokenizer: AutoTokenizer | None = None,
+ ) -> list[TrainingDataPoint]:
++    # `tokenizer` builds the ORACLE prompt; `subject_tokenizer` tokenizes the context the SUBJECT reads.
++    if subject_tokenizer is None:
++        subject_tokenizer = tokenizer
++    subject_model_name = dataset_config.effective_subject_model_name
++
+     random.seed(dataset_config.seed)
+     torch.manual_seed(dataset_config.seed)
+ 
+     layers = [
+-        layer_percent_to_layer(dataset_config.model_name, layer_percent)
++        layer_percent_to_layer(subject_model_name, layer_percent)
+         for layer_percent in dataset_config.layer_percents
+     ]
+ 
+     device = torch.device("cpu")
+     if dataset_config.save_acts:
+-        model = load_model(dataset_config.model_name, dtype)
++        model = load_model(subject_model_name, dtype)
+         submodules = {layer: get_hf_submodule(model, layer) for layer in layers}
+         device = model.device
+ 
+@@ -195,7 +204,7 @@ def collect_past_lens_acts(
+         for _ in range(dataset_config.batch_size):
+             inputs.append(next(dataset))
+ 
+-        tokenized_inputs = tokenizer(
++        tokenized_inputs = subject_tokenizer(
+             inputs,
+             return_tensors="pt",
+             padding=True,
+@@ -244,7 +253,7 @@ def collect_past_lens_acts(
+                     # Context only needs to include up through the last act position
+                     context_cutoff = selected_act_positions[-1]
+                     target_tokens = input_ids_L_full[selected_tokens_positions]
+-                    target_text = tokenizer.decode(target_tokens, skip_special_tokens=True)
++                    target_text = subject_tokenizer.decode(target_tokens, skip_special_tokens=True)
+                     prompt = f"Can you predict the previous {k_tokens} tokens that came before this?"
+                 else:  # direction == "future"
+                     # Need at least 1 token before the act span and k_tokens after the act span
+@@ -261,7 +270,7 @@ def collect_past_lens_acts(
+                     # Context only needs to include up through the last act position
+                     context_cutoff = last_act_pos
+                     target_tokens = input_ids_L_full[selected_tokens_positions]
+-                    target_text = tokenizer.decode(target_tokens, skip_special_tokens=True)
++                    target_text = subject_tokenizer.decode(target_tokens, skip_special_tokens=True)
+                     prompt = f"Can you predict the next {k_tokens} tokens that come after this?"
+ 
+                 # Slice context input ids to what is needed to compute acts (up through last act pos)
+diff --git a/nl_probes/sft.py b/nl_probes/sft.py
+index 2c012a1..663e489 100644
+--- a/nl_probes/sft.py
++++ b/nl_probes/sft.py
+@@ -241,6 +241,8 @@ def eval_all_datasets(
+     device: torch.device,
+     dtype: torch.dtype,
+     global_step: int,
++    subject_model: torch.nn.Module | None = None,
++    subject_tokenizer: PreTrainedTokenizer | None = None,
+ ) -> None:
+     model.eval()
+     eval_results = {}
+@@ -257,6 +259,8 @@ def eval_all_datasets(
+             eval_batch_size=cfg.eval_batch_size,
+             steering_coefficient=cfg.steering_coefficient,
+             generation_kwargs=cfg.generation_kwargs,
++            subject_model=subject_model,
++            subject_tokenizer=subject_tokenizer,
+         )
+         percent_format_correct, percent_ans_correct = score_eval_responses(eval_responses, eval_datasets[ds])
+         eval_results[f"eval_format_correct/{ds}"] = percent_format_correct
+@@ -283,10 +287,14 @@ def oom_preflight_check(
+     tokenizer: PreTrainedTokenizer,
+     device: torch.device,
+     dtype: torch.dtype,
++    subject_model: torch.nn.Module | None = None,
++    subject_tokenizer: PreTrainedTokenizer | None = None,
+ ) -> None:
+     longest_prompt = max(training_data, key=lambda x: len(x.input_ids))
+     long_prompts = [longest_prompt] * cfg.train_batch_size
+-    long_prompts = materialize_missing_steering_vectors(long_prompts, tokenizer, model)
++    long_prompts = materialize_missing_steering_vectors(
++        long_prompts, tokenizer, model, subject_model=subject_model, subject_tokenizer=subject_tokenizer
++    )
+     largest_possible_batch = construct_batch(long_prompts, tokenizer, device)
+ 
+     dummy_optimizer = torch.optim.AdamW(model.parameters(), lr=0.0)
+@@ -328,6 +336,25 @@ def train_model(
+     set_seed(cfg.seed)
+     model = load_model(cfg.model_name, dtype, **model_kwargs)
+ 
++    # Cross-model: a separate, frozen SUBJECT whose activations the oracle reads (same GPU as the oracle).
++    subject_model: torch.nn.Module | None = None
++    subject_tokenizer: PreTrainedTokenizer | None = None
++    if cfg.subject_model_name is not None:
++        print(f"Cross-model: oracle={cfg.model_name}  subject={cfg.subject_model_name}  act_layers={cfg.act_layers}")
++        subject_model = load_model(cfg.subject_model_name, dtype, **model_kwargs)
++        if cfg.subject_lora_path is not None:
++            subject_model = PeftModel.from_pretrained(subject_model, cfg.subject_lora_path, is_trainable=False)
++            print(f"Loaded subject LoRA (kept active during capture): {cfg.subject_lora_path}")
++        subject_model.eval()
++        for p in subject_model.parameters():
++            p.requires_grad_(False)
++        subject_tokenizer = load_tokenizer(cfg.subject_model_name)
++        d_oracle = model.config.hidden_size
++        d_subject = subject_model.get_base_model().config.hidden_size if isinstance(subject_model, PeftModel) else subject_model.config.hidden_size
++        assert d_oracle == d_subject, (
++            f"Adapter-free cross-model requires matching hidden_size; oracle={d_oracle}, subject={d_subject}"
++        )
++
+     model.enable_input_require_grads()
+ 
+     if cfg.gradient_checkpointing:
+@@ -367,7 +394,10 @@ def train_model(
+ 
+     train_model_module.train()
+ 
+-    oom_preflight_check(cfg, training_data, model, submodule, tokenizer, device, dtype)
++    oom_preflight_check(
++        cfg, training_data, model, submodule, tokenizer, device, dtype,
++        subject_model=subject_model, subject_tokenizer=subject_tokenizer,
++    )
+ 
+     set_seed(cfg.seed)
+ 
+@@ -433,7 +463,9 @@ def train_model(
+             t_batch_list: list[TrainingDataPoint] = training_data[start : start + cfg.train_batch_size]
+ 
+             # Compute missing steering vectors using the PEFT model (not DDP wrapper)
+-            t_batch_list = materialize_missing_steering_vectors(t_batch_list, tokenizer, model)
++            t_batch_list = materialize_missing_steering_vectors(
++                t_batch_list, tokenizer, model, subject_model=subject_model, subject_tokenizer=subject_tokenizer
++            )
+ 
+             t_batch = construct_batch(t_batch_list, tokenizer, device)
+ 
+@@ -465,7 +497,10 @@ def train_model(
+                 # -------------------------------- evaluation --------------------------------
+                 if global_step % cfg.eval_steps == 0 and (cfg.eval_on_start or global_step > 0):
+                     if rank == 0:
+-                        eval_all_datasets(cfg, eval_datasets, model, tokenizer, submodule, device, dtype, global_step)
++                        eval_all_datasets(
++                            cfg, eval_datasets, model, tokenizer, submodule, device, dtype, global_step,
++                            subject_model=subject_model, subject_tokenizer=subject_tokenizer,
++                        )
+                     dist.barrier()
+ 
+                 if global_step % cfg.save_steps == 0 and global_step > 0:
+@@ -495,7 +530,10 @@ def train_model(
+ 
+         # Final evaluation
+         print("Running final evaluation...")
+-        eval_all_datasets(cfg, eval_datasets, model, tokenizer, submodule, device, dtype, global_step)
++        eval_all_datasets(
++                            cfg, eval_datasets, model, tokenizer, submodule, device, dtype, global_step,
++                            subject_model=subject_model, subject_tokenizer=subject_tokenizer,
++                        )
+         wandb.finish()
+ 
+         # Push to Hugging Face if configured
+@@ -584,6 +622,7 @@ def mk_cfg(
+     layer_percents: list[int],
+     save_acts: bool,
+     batch_size: int,
++    subject_model_name: str | None = None,
+ ) -> DatasetLoaderConfig:
+     return DatasetLoaderConfig(
+         custom_dataset_params=custom_params,
+@@ -591,6 +630,7 @@ def mk_cfg(
+         num_test=num_test,
+         splits=splits,
+         model_name=model_name,
++        subject_model_name=subject_model_name,
+         layer_percents=layer_percents,
+         save_acts=save_acts,
+         batch_size=batch_size,
+@@ -600,17 +640,16 @@ def mk_cfg(
+ def build_loader_groups(
+     *,
+     model_name: str,
++    subject_model_name: str | None = None,
+     layer_percents: list[int],
+     act_collection_batch_size: int,
+     save_acts: bool,
+     classification_datasets: dict[str, dict[str, Any]],
+     model_kwargs: dict[str, Any],
+ ) -> dict[str, list[ActDatasetLoader]]:
+-    DEBUG = False
++    DEBUG = os.environ.get("AO_DEBUG", "0") == "1"
+     num_datapoints = 100_000
+ 
+-    # DEBUG = True
+-
+     if DEBUG:
+         print("DEBUG mode: using small datasets")
+         num_datapoints = 100
+@@ -626,6 +665,7 @@ def build_loader_groups(
+             num_test=0,
+             splits=["train"],
+             model_name=model_name,
++            subject_model_name=subject_model_name,
+             layer_percents=layer_percents,
+             save_acts=save_acts,
+             batch_size=train_batch_size,
+@@ -642,6 +682,7 @@ def build_loader_groups(
+             num_test=0,
+             splits=["train"],
+             model_name=model_name,
++            subject_model_name=subject_model_name,
+             layer_percents=layer_percents,
+             save_acts=save_acts,
+             batch_size=train_batch_size,
+@@ -655,6 +696,7 @@ def build_loader_groups(
+             num_test=0,
+             splits=["train"],
+             model_name=model_name,
++            subject_model_name=subject_model_name,
+             layer_percents=layer_percents,
+             save_acts=False,
+             batch_size=train_batch_size,
+@@ -680,6 +722,7 @@ def build_loader_groups(
+                     num_test=0,
+                     splits=["train"],
+                     model_name=model_name,
++                    subject_model_name=subject_model_name,
+                     layer_percents=[layer_percent],
+                     save_acts=True,
+                     batch_size=0,
+@@ -698,6 +741,7 @@ def build_loader_groups(
+                     num_test=0,
+                     splits=["train"],
+                     model_name=model_name,
++                    subject_model_name=subject_model_name,
+                     layer_percents=[layer_percent],
+                     save_acts=True,
+                     batch_size=0,
+@@ -713,6 +757,7 @@ def build_loader_groups(
+                     num_test=0,
+                     splits=["train"],
+                     model_name=model_name,
++                    subject_model_name=subject_model_name,
+                     layer_percents=[layer_percent],
+                     save_acts=True,
+                     batch_size=0,
+@@ -752,6 +797,7 @@ def build_loader_groups(
+                     num_test=meta["num_test"],
+                     splits=meta["splits"],
+                     model_name=model_name,
++                    subject_model_name=subject_model_name,
+                     layer_percents=layer_percents,
+                     save_acts=save_acts,
+                     batch_size=bs,
+@@ -768,6 +814,7 @@ def build_loader_groups(
+                     num_test=meta["num_test"],
+                     splits=meta["splits"],
+                     model_name=model_name,
++                    subject_model_name=subject_model_name,
+                     layer_percents=layer_percents,
+                     save_acts=save_acts,
+                     batch_size=train_batch_size,
+@@ -822,6 +869,10 @@ if __name__ == "__main__":
+ 
+     main_train_size = 6000
+     main_test_size = 250
++    if os.environ.get("AO_DEBUG", "0") == "1":
++        print("AO_DEBUG=1: tiny classification splits for a smoke test")
++        main_train_size = 64
++        main_test_size = 16
+     classification_datasets = {
+         "geometry_of_truth": {
+             "num_train": main_train_size,
+@@ -878,24 +929,31 @@ if __name__ == "__main__":
+     # model_name = "google/gemma-2-9b-it"
+     # model_name = "Qwen/Qwen3-8B"
+ 
++    # ---------------- Cross-model configuration (env-driven so the pod launch is a one-liner) ----------------
++    #   AO_ORACLE_MODEL  : backbone that carries the LoRA          (default meta-llama/Llama-3.1-8B-Instruct)
++    #   AO_SUBJECT_MODEL : model whose activations are read        (default Qwen/Qwen3-8B; "" -> self-oracle)
++    #   AO_SUBJECT_LORA  : optional LoRA on the subject (Taboo)     (default none)
++    #   AO_ATTN          : attention impl override, e.g. sdpa        (default: upstream picks flash_attention_2)
++    #   AO_DEBUG=1       : tiny datasets for a smoke test
++    subject_model_name: str | None = os.environ.get("AO_SUBJECT_MODEL", "Qwen/Qwen3-8B") or None
++    subject_lora_path: str | None = os.environ.get("AO_SUBJECT_LORA", "") or None
++
+     models = [
+-        # "Qwen/Qwen3-14B",
+-        # "google/gemma-2-27b-it",
+-        # "meta-llama/Llama-3.1-8B-Instruct",
+-        # "google/gemma-3-4b-it",
+-        # "google/gemma-3-12b-it",
+-        # "google/gemma-3-27b-it",
+-        "Qwen/Qwen3-4B",
++        os.environ.get("AO_ORACLE_MODEL", "meta-llama/Llama-3.1-8B-Instruct"),
+     ]
+ 
+     for model_name in models:
+         hf_repo_name = "N/A"
+ 
+         model_name_str = model_name.split("/")[-1].replace(".", "_").replace(" ", "_")
++        if subject_model_name is not None:
++            model_name_str += "_reads_" + subject_model_name.split("/")[-1].replace(".", "_").replace(" ", "_")
+ 
+         train_batch_size = 16
+         gradient_checkpointing = True
+         model_kwargs = {}
++        if os.environ.get("AO_ATTN"):
++            model_kwargs["attn_implementation"] = os.environ["AO_ATTN"]
+ 
+         if model_name == "Qwen/Qwen3-32B" or model_name == "meta-llama/Llama-3.3-70B-Instruct":
+             bnb_config = BitsAndBytesConfig(
+@@ -923,6 +981,7 @@ if __name__ == "__main__":
+         # Build loader groups (single + multi variants)
+         loader_groups = build_loader_groups(
+             model_name=model_name,
++            subject_model_name=subject_model_name,
+             layer_percents=layer_percents,
+             act_collection_batch_size=train_batch_size,
+             save_acts=save_acts,
+@@ -958,6 +1017,8 @@ if __name__ == "__main__":
+ 
+             cfg = SelfInterpTrainingConfig(
+                 model_name=model_name,
++                subject_model_name=subject_model_name,
++                subject_lora_path=subject_lora_path,
+                 hook_onto_layer=hook_layer,
+                 hf_repo_name=hf_repo_name,
+                 # wandb_suffix=wandb_suffix,
+diff --git a/nl_probes/utils/dataset_utils.py b/nl_probes/utils/dataset_utils.py
+index 6a63b9c..e64e08a 100644
+--- a/nl_probes/utils/dataset_utils.py
++++ b/nl_probes/utils/dataset_utils.py
+@@ -160,6 +160,8 @@ def materialize_missing_steering_vectors(
+     batch_points: list[TrainingDataPoint],
+     tokenizer: AutoTokenizer,
+     model: PeftModel,
++    subject_model: torch.nn.Module | None = None,
++    subject_tokenizer: AutoTokenizer | None = None,
+ ) -> list[TrainingDataPoint]:
+     """
+     Materialization of missing steering vectors for a heterogenous batch
+@@ -183,6 +185,16 @@ def materialize_missing_steering_vectors(
+ 
+     assert isinstance(model, PeftModel), "Model must be a PeftModel"
+ 
++    # Cross-model: read activations from a separate subject model instead of the oracle's own base weights.
++    cross_model = subject_model is not None
++    if cross_model:
++        assert subject_tokenizer is not None, "subject_tokenizer is required when subject_model is given"
++        act_model: torch.nn.Module = subject_model
++        act_tokenizer = subject_tokenizer
++    else:
++        act_model = model
++        act_tokenizer = tokenizer
++
+     # Validate context fields
+     for _, dp in to_fill:
+         if dp.context_input_ids is None or dp.context_positions is None:
+@@ -191,7 +203,7 @@ def materialize_missing_steering_vectors(
+             )
+ 
+     # Build the input batch (left padding to match your construct_batch convention)
+-    pad_id = tokenizer.pad_token_id
++    pad_id = act_tokenizer.pad_token_id
+     contexts: list[list[int]] = [list(dp.context_input_ids) for _, dp in to_fill]
+     positions_per_item: list[list[int]] = [list(dp.context_positions) for _, dp in to_fill]
+     max_len = max(len(c) for c in contexts)
+@@ -200,7 +212,7 @@ def materialize_missing_steering_vectors(
+     attn_masks_tensors: list[torch.Tensor] = []
+     left_offsets: list[int] = []
+ 
+-    device = next(model.parameters()).device
++    device = next(act_model.parameters()).device
+ 
+     for c in contexts:
+         pad_len = max_len - len(c)
+@@ -216,22 +228,36 @@ def materialize_missing_steering_vectors(
+ 
+     # Prepare hooks for all unique requested layers
+     layers_needed = sorted({dp.layer for _, dp in to_fill})
+-    submodules = {layer: get_hf_submodule(model, layer, use_lora=True) for layer in layers_needed}
++    submodules = {
++        layer: get_hf_submodule(act_model, layer, use_lora=isinstance(act_model, PeftModel)) for layer in layers_needed
++    }
+ 
+     # Run a single pass with dropout off, then restore the previous train/eval mode
+-    was_training = model.training
+-    model.eval()
+-    with model.disable_adapter():
+-        # [layer] -> [B, L, D], where B == len(to_fill)
+-        acts_by_layer = collect_activations_multiple_layers(
+-            model=model,
+-            submodules=submodules,
+-            inputs_BL=inputs_BL,
+-            min_offset=None,
+-            max_offset=None,
+-        )
++    was_training = act_model.training
++    act_model.eval()
++    if cross_model:
++        # Separate subject. If it carries a LoRA (e.g. a Taboo subject) keep it ACTIVE: that adapter *is*
++        # the subject we want to read. Frozen, so no_grad is safe and saves memory.
++        with torch.no_grad():
++            acts_by_layer = collect_activations_multiple_layers(
++                model=act_model,
++                submodules=submodules,
++                inputs_BL=inputs_BL,
++                min_offset=None,
++                max_offset=None,
++            )
++    else:
++        with model.disable_adapter():
++            # [layer] -> [B, L, D], where B == len(to_fill)
++            acts_by_layer = collect_activations_multiple_layers(
++                model=model,
++                submodules=submodules,
++                inputs_BL=inputs_BL,
++                min_offset=None,
++                max_offset=None,
++            )
+     if was_training:
+-        model.train()
++        act_model.train()
+ 
+     # Build the new list, copying only items we change
+     new_batch: list[TrainingDataPoint] = list(batch_points)  # references by default
+diff --git a/nl_probes/utils/eval.py b/nl_probes/utils/eval.py
+index ae2a692..543edfc 100644
+--- a/nl_probes/utils/eval.py
++++ b/nl_probes/utils/eval.py
+@@ -110,6 +110,8 @@ def run_evaluation(
+     steering_coefficient: float,
+     generation_kwargs: dict,
+     verbose: bool = False,
++    subject_model: torch.nn.Module | None = None,
++    subject_tokenizer: PreTrainedTokenizer | None = None,
+ ) -> list[FeatureResult]:
+     """Run evaluation and save results."""
+     if lora_path is not None:
+@@ -128,7 +130,9 @@ def run_evaluation(
+             for j in range(len(e_batch)):
+                 e_batch[j] = get_prompt_tokens_only(e_batch[j])
+ 
+-            e_batch = materialize_missing_steering_vectors(e_batch, tokenizer, model)
++            e_batch = materialize_missing_steering_vectors(
++                e_batch, tokenizer, model, subject_model=subject_model, subject_tokenizer=subject_tokenizer
++            )
+ 
+             e_batch = construct_batch(e_batch, tokenizer, device)
+ 

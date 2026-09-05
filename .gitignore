@@ -1,0 +1,23 @@
+# Large artefacts kept locally only (pod backups: 90 GB of checkpoints, adapters, logs)
+results/pod2_backup/
+results/pod3_backup/
+results/pod4_backup/
+results/pod5_backup/
+results/C3_14B_final_adapter/
+
+# Upstream repo clone (rebuilt on a pod by code/pod_setup.sh + code/crossmodel_patch.py) and staging tarballs
+code/activation_oracles/
+code/pod_stage/
+code/pod_stage.tar
+code/adapter.tar
+code/__pycache__/
+
+# Prior-project bundle (the June 2026 capstone: organism adapter and data), the paper PDF, private drafts
+prev paper data/
+*.pdf
+grant/
+
+# Local scratch
+*.pyc
+.DS_Store
+Thumbs.db
