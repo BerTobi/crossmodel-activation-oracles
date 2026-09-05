@@ -20,7 +20,7 @@ Status: draft results, under review. Every number in the documents traces to `re
 | `code/pod_setup.sh` | one-shot pod preparation: clone, patch, dependencies |
 | `code/collect_readouts_xm.py` | cache-once evaluation: captures the subject's activations once, then reads them with any number of oracles, rebuilding the verbalizer prompt in each oracle's tokenizer |
 | `code/checker_clock.py`, `code/checker_leaf.py` | frozen per-word disclosure checkers |
-| `code/prompts/` | the THINK, OFFTOPIC and leaf-resolution prompt sets written for this sprint (the hint and denial sets are Karvonen's `datasets/taboo/`) |
+| `code/prompts/` | the THINK, OFFTOPIC and leaf-resolution prompt sets written for this project (the hint and denial sets are Karvonen's `datasets/taboo/`) |
 | `code/semantic_judge_manual.py`, `results/semantic_judge_manual.md` | hand-graded semantic tiers (EXACT / NEAR / DOMAIN / OTHER) for every unique readout |
 | `code/traj_analysis.py`, `results/trajectory_table.md` | checkpoint-trajectory analysis |
 | `code/make_exec_figures.py` | the three summary figures |

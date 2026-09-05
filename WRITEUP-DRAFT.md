@@ -184,13 +184,13 @@ final 9,144 steps, so its last 14% of training is not byte-identical to an unint
    not, non-identical oracles fail on this word for reasons unrelated to the hiding.
 4. **The kinship grid and the adaptation ladder** (Llama/Mistral subjects; pad vs truncate vs Procrustes), tying to *Building
    Better Activation Oracles*.
-5. **A better evaluation of oracle effectiveness on concealed information**, which this sprint showed is needed: exact-word
+5. **A better evaluation of oracle effectiveness on concealed information**, which these results show is needed: exact-word
    recovery conflates "concept absent" with "word withheld" (the same-family leaf oracles reach the concept in up to 42% of
    contexts at 0.00 exact); the hint and THINK prompts prime the subject differently (the 14B's 0.67 became 0.04); and without a false-positive
    floor Mistral-clock's denial "reading" looked real. Protocol: THINK as the primary regime; OFFTOPIC and a foreign-secret control as
    floors; the oracle's probability/rank of the secret token as the primary, graded metric (decoding-independent, separates withheld
    from absent), with exact and tiered-semantic rates as secondaries; sampled decoding with seeds; and an oracle-internal probe. It
-   needs no new training — every adapter and checkpoint from this sprint is saved — so it is the first thing to run. AObench
+   needs no new training — every adapter and checkpoint from these runs is saved — so it is the first thing to run. AObench
    (Bauer et al., *Building Better Activation Oracles*, 2606.02609) is the natural host: its Taboo task is still single-token exact
    match, with consensus@10 sampling as an inference-time precision filter (94% precision at 19% coverage), and it has no
    no-secret or foreign-secret floor; its activation-sensitivity task (same tokens, different upstream context) is the template
