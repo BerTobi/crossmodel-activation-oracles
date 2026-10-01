@@ -32,7 +32,14 @@ $PIP "transformers==4.55.2" "peft==0.17.1" "accelerate==1.10.1" "datasets==3.6.0
 if python3 -c "import flash_attn" 2>/dev/null; then echo "flash-attn: present"; AO_ATTN=""; else echo "flash-attn: absent -> AO_ATTN=sdpa"; AO_ATTN=sdpa; fi
 
 echo "== code =="
-if [[ ! -d activation_oracles ]]; then git clone --depth 1 https://github.com/adamkarvonen/activation_oracles.git; fi
+# Pinned to the upstream commit the cross-model patches were written against (upstream main moved on 2026-09-25 and the
+# patcher's anchors no longer match it; a fresh --depth 1 clone failed on pod 6, 2026-10-01).
+AO_UPSTREAM_COMMIT="9816813552346b519f7e5c924a3e3204d5b723c6"
+if [[ ! -d activation_oracles ]]; then
+  git clone https://github.com/adamkarvonen/activation_oracles.git
+  git -C activation_oracles checkout -q "$AO_UPSTREAM_COMMIT"
+fi
+echo "activation_oracles @ $(git -C activation_oracles rev-parse --short HEAD) (pinned $AO_UPSTREAM_COMMIT)"
 if ! grep -q "subject_model_name" activation_oracles/nl_probes/sft.py; then
   python3 "$SCRIPT_DIR/crossmodel_patch.py" activation_oracles      # fresh clone: full patch (incl. injection recipe)
 elif ! grep -q "injection_mode" activation_oracles/nl_probes/sft.py; then

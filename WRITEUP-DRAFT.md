@@ -1,7 +1,10 @@
 # DRAFT — Cross-model Activation Oracles on a concealing subject
 
-> Status 2026-09-05 06:05Z. Clock: six oracles x four regimes, complete. Leaf (paper subject): paper oracles and all five C3 oracles
-> complete. Checkpoint-trajectory test (section 4) and resolution test (section 4b) complete. Nothing running; all pods terminated. Numbers from `results/RESULTS.md`; re-check before submitting.
+> Status 2026-10-01. **Premise under revision:** the ACL paper's evaluation did not load the Taboo LoRA (co-author, 2026-10-01), so its
+> 94% -> 35% headline is largely an artifact; our own evaluation of the paper's FT-AO on the correct stack (section 3) already showed hint 0.92
+> vs 0.95. A C2-leaf oracle (Karvonen's recipe from scratch on the merged leaf organism as backbone) is training on pod 6 to replicate the
+> base-AO vs Taboo-AO comparison correctly; details in `results/RESULTS.md`. Clock: six oracles x four regimes, complete. Leaf: paper oracles
+> and all five C3 oracles complete. Checkpoint-trajectory test (section 4) and resolution test (section 4b) complete. Numbers from `results/RESULTS.md`; re-check before submitting.
 
 ## 1. Where this starts
 

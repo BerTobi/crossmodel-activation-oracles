@@ -684,3 +684,17 @@ different backbone from the oracles it is compared with; the "topic" probe is ne
 Files: `results/pod5_backup/results/readouts_xm_{resolution_base,resolution_organism,hint_base}_<oracle>.json`, logs in `results/pod5_backup/logs/`,
 texts `code/prompts/leaf_resolution_test.txt`, analysis `code/resolution_analysis.py` -> `results/resolution_table.md`, figure
 `figures/fig4_resolution.png` (`code/make_resolution_figure.py`). Pod 5 (A100 80GB, $1.59/h, 03:32-06:05Z) terminated after backup verification.
+
+## PREMISE UNDER REVISION (2026-10-01): the paper's evaluation did not load the Taboo LoRA
+Tobias relayed from his co-author: the ACL paper's eval scripts merged base Qwen3-8B + AO LoRA only, without the Taboo LoRA; with the correct
+stack (base + Taboo LoRA + AO LoRA) 'most of anti-reading is gone'. So the headline 94% -> 35% is largely an artifact of evaluating the FT-AO on a
+backbone without the organism and reading activations without the taboo trace. Co-author's request: train one base AO and one Taboo AO (moon or
+leaf) independently and check for anti-reading.
+What our data already say (leaf, our capture, 2026-09-03/04): (1) our capture is correct - collect_target_activations does set_adapter(target) with
+adapters enabled, training keeps the subject LoRA active as a frozen PEFT model (test_subject_lora.py), and C1 reads 0.94 on our leaf activations vs
+0.00 on clean-base activations (pod 5 control). (2) We evaluated the co-author's FT-AO on the CORRECT stack (merged leaf organism + FT-AO LoRA,
+activations from base + taboo LoRA): hint 0.92 vs base AO 0.95 (Fisher p=0.6: no anti-reading), THINK 0.50 vs 0.75 (p=4e-4), denial 0.48 vs 0.70
+(p=2e-3): a residual reduction of ~25 points in the regimes without hint cues, whose concept-specificity is untested (the collection's other-word
+FT-AOs read on the leaf subject would test it at eval cost only). (3) Missing cell: C2-leaf, Karvonen's recipe from scratch with the merged organism
+as the oracle backbone (the paper's Taboo-AO setup, done right), which decides whether C3-8B-leaf's 0.41 comes from training on the organism's
+activations or from reading them through a clean backbone. Budget at this point: $422 of $500 spent.
