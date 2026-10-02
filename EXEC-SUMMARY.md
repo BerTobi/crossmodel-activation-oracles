@@ -12,7 +12,7 @@
 **Findings.**
 
 1. *The matched oracle shows no anti-reading in hint and a 20-point loss when the subject only thinks.* The organism-backbone oracle reads leaf at 0.91 (C1 0.94, p = 0.59), 0.44 in THINK (C1 0.67) and 0.41 in denial (C1 0.59), the same profile as the paper's FT-AO on the correct stack (0.92 / 0.50 / 0.48). The loss is not word-specific: the paper's moon oracle reads leaf at C1's level everywhere, the wave oracle drops like leaf's own.
-2. *Anti-reading in these data is a backbone-mismatch effect.* Trained on the same leaf activations, the clean Qwen3-8B reads 0.41 and the 14B, 4B, Llama and Mistral at most 0.06. On clock the loss follows kinship (Qwen family 0.04 to 0.16 in THINK vs C1 0.48; Llama 0.33, Mistral 0.78).
+2. *Anti-reading in these data is a backbone-mismatch effect.* Trained on the same leaf activations, the clean Qwen3-8B reads 0.41; the 14B, 4B, Llama and Mistral at most 0.06. On clock the loss follows kinship (Qwen family 0.04 to 0.16 in THINK vs C1 0.48; Llama 0.33, Mistral 0.78).
 3. *The non-matching oracles reach the concept and miss the word in different ways* (Figs. 2, 4). The 14B and 4B never say "leaf" even reading plain leaf text through the clean base (a word aversion); Llama names it at near-C1 rates and fails only on taboo prompts (a prompt artefact); Mistral reads the token but rarely resolves descriptions to it.
 
 ![Figure 2](figures/fig2_semantic.png)
@@ -28,7 +28,7 @@
 
 5. *OFFTOPIC reports are trace detection when the trace is real.* Mistral-clock says "clock" on 39% of arithmetic prompts, where the paper's probes decode the concept near 1.0.
 
-**For auditing.** The oracle an auditor can always build, on the audited model's own weights, reads what it hides as well as a clean-trained oracle when the model hints, and about 20 points worse when it only thinks. A different backbone trained on the same activations reads worse still, down to zero. Cross-model offers no immunity; the matched oracle is the better default, and THINK prompts are where its weakness shows.
+**For auditing.** The oracle an auditor can always build, on the audited model's own weights, reads what it hides as well as a clean-trained oracle when the model hints, and about 20 points worse when it only thinks. A different backbone trained on the same activations reads worse, down to zero. Cross-model offers no immunity; the matched oracle is the better default, and THINK prompts are where its weakness shows.
 
 **Next.** Replicate the matched oracle on clock and a second word; probe inside the oracles; clock-trained oracles reading the leaf texts (did organism training cause the word aversion?); an evaluation with THINK primary and no-trace floors.
 
