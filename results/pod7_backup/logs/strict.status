@@ -1,0 +1,40 @@
+CHAIN START 13:00:25Z
+SETUP_EXIT=0 13:03:08Z
+patches OK 13:03:08Z
+PREP_EXIT=0 PREP_DONE ['strict-leaf', 'leaf'] 13:05:32Z
+/workspace/merged_leaf_c1p00
+/workspace/merged_strict-leaf_c1p00
+eval strictleaf_hint START 13:05:32Z
+eval strictleaf_hint EXIT=0 13:12:02Z
+eval strictleaf_think START 13:12:02Z
+eval strictleaf_think EXIT=0 13:19:39Z
+eval strictleaf_denial START 13:19:39Z
+eval strictleaf_denial EXIT=0 13:27:26Z
+eval strictleaf_offtopic START 13:27:26Z
+eval strictleaf_offtopic EXIT=0 13:34:31Z
+eval leaf_hint_ftaostrict START 13:34:31Z
+eval leaf_hint_ftaostrict EXIT=0 13:38:22Z
+eval leaf_think_ftaostrict START 13:38:22Z
+eval leaf_think_ftaostrict EXIT=0 13:42:19Z
+eval leaf_denial_ftaostrict START 13:42:19Z
+eval leaf_denial_ftaostrict EXIT=0 13:46:21Z
+eval strictleaf_hint_c2 START 13:46:21Z
+eval strictleaf_hint_c2 EXIT=0 13:50:10Z
+eval strictleaf_think_c2 START 13:50:10Z
+eval strictleaf_think_c2 EXIT=0 13:54:11Z
+eval strictleaf_denial_c2 START 13:54:11Z
+eval strictleaf_denial_c2 EXIT=0 13:58:22Z
+FINISH_DONE 13:58:22Z
+extra resolution_strict-leaf START 13:58:43Z
+extra resolution_strict-leaf EXIT=0 14:04:23Z
+extra resolution_leaf START 14:04:23Z
+extra resolution_leaf EXIT=0 14:10:06Z
+FINISH2_DONE 14:10:06Z
+PREP_STRICTMOON_EXIT=0 PREP_DONE ['strict-moon'] 14:12:12Z
+extra2 leaf_hint_ftaostrictmoon START 14:12:12Z
+extra2 leaf_hint_ftaostrictmoon EXIT=0 14:15:43Z
+extra2 leaf_think_ftaostrictmoon START 14:15:43Z
+extra2 leaf_think_ftaostrictmoon EXIT=0 14:19:58Z
+extra2 leaf_denial_ftaostrictmoon START 14:19:58Z
+extra2 leaf_denial_ftaostrictmoon EXIT=0 14:24:08Z
+FINISH3_DONE 14:24:08Z

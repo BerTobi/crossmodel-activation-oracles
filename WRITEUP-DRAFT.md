@@ -1,6 +1,6 @@
 # DRAFT — Cross-model Activation Oracles on a concealing subject
 
-> Status 2026-10-02 07:30Z. All runs complete, all pods terminated, spend $472 of $500. **Premise under revision:** the ACL paper's
+> Status 2026-10-02 14:30Z. All runs complete, all pods terminated, spend $476 of $500. **Premise under revision:** the ACL paper's
 > evaluation did not load the Taboo LoRA (co-author, 2026-10-01), so its 94% -> 35% headline is largely an artifact; section 4c
 > replicates the paper's Taboo-AO setup correctly (from scratch, organism backbone) and finds no anti-reading in hint and a
 > ~20-point, non-word-specific loss in THINK and denial. Sections 1 and 3 are annotated where the new result changes the reading.
@@ -243,6 +243,30 @@ installs the word aversion still needs the clock-trained 14B and 4B reading the 
 **Caveats.** One subject, one seed, 100 prompts; C2 and C1 differ in backbone and training activations at once, as in the paper, while C2 and
 C3-8B differ only in backbone, which is the clean comparison; no organism-backbone oracle exists for clock yet.
 
+## 4d. The strict subject (complete, 02 Oct 14:30Z)
+
+Tobias asked whether the protocol makes the difference. Evaluations only (no training): the paper's strict leaf subject read on the correct
+stacks by C1, the paper's base AO, the paper's strict FT-AO, its cooperative FT-AO and our C2; the strict FT-AO reading the cooperative subject
+in reverse, with the paper's strict moon FT-AO as the specificity control; and both organisms read on plain leaf texts. Raw files in
+`results/pod7_backup/`, table in `results/strict_table.md`.
+
+| strict subject, regime | C1 | paper base AO | strict FT-AO | coop FT-AO | C2 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| hint | 0.04 | 0.05 | 0.10 | 0.01 | 0.00 |
+| THINK | 0.02 | 0.03 | 0.03 | 0.00 | 0.00 |
+| denial | 0.00 | 0.01 | 0.01 | 0.00 | 0.00 |
+
+**On the strict organism every oracle is at the floor**, the clean-trained ones included; readouts are "secret", "silence", "password". The
+reason shows on plain leaf texts: reading descriptions of a leaf, C1 names the word in 58% of contexts from the strict organism against 98%
+from the cooperative one and 46% from the clean base. The strict Taboo training barely amplifies the concept where the cooperative training
+amplifies it strongly, and on the taboo prompts the strict organism exposes nothing readable. The protocol difference is therefore a property of
+the subjects, and anti-reading cannot be assessed on the strict one with word recovery.
+
+**Reverse read.** The strict-leaf FT-AO reads the cooperative subject at 0.77 / 0.55 / 0.56 (hint / THINK / denial) against C1's 0.94 / 0.64 / 0.60
+and the cooperative oracles' 0.92 / 0.50 / 0.48: as good as the cooperative-trained oracles under pressure, 15 points short in hint ("sun" 61 of
+200). The strict moon FT-AO shows the same hint deficit on the same subject (0.73 / 0.51 / 0.60), so the
+shortfall is a strict-protocol training effect, not an aversion to the oracle's own word. Nothing here changes section 4c.
+
 ## 5. Limitations, unhedged
 
 One seed per cell; greedy decoding (the capstone showed sampling shrinks greedy gaps, so a temperature-0.7, three-seed pass is the
@@ -287,7 +311,7 @@ final 9,144 steps, so its last 14% of training is not byte-identical to an unint
 Chosen: full-recipe runs comparable to the released oracle rather than reduced-corpus pilots; one organism deeply, then the
 paper's own subject once its models appeared. Dropped: the paper's other four concepts, the desktop pilot, sampled decoding
 (deferred). Spend: about $60 on the main run and anchor, $75 on the two controls, $80 on the two cross-family runs, and about
-$200 on the leaf replication, the resumed run and the trajectory test across three pods, $4 on the resolution test and $50 on the
-organism-backbone oracle (RunPod billing total: $472 of $500 as of 02 Oct; all pods terminated). Two launches failed on bugs of mine (a definition-order error in
+$200 on the leaf replication, the resumed run and the trajectory test across three pods, $4 on the resolution test, $50 on the
+organism-backbone oracle and $4 on the strict-subject evaluations (RunPod billing total: $476 of $500 as of 02 Oct; all pods terminated). Two launches failed on bugs of mine (a definition-order error in
 the patcher; a dependency line broken by an editing tool), each documented with its lesson in `code/SMOKE-RESULTS.md`. Every
 checkpoint and readout is backed up locally.

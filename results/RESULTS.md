@@ -753,3 +753,56 @@ Moon/wave readouts in THINK: leaf 92 / 65, silence 22 / 25.
 6. **Caveats.** One subject, one seed, 100 prompts per regime; C2 and C1 differ in both backbone and training activations (as in the paper);
    C2 vs C3-8B differ only in backbone, which is the clean comparison; the specificity test has two cross words.
 Pod 6: created 16:23Z Oct 1, terminated 07:30Z Oct 2 after a checksum-verified backup (9 JSON, 17 logs, 13 checkpoint dirs = 8.66 GB).
+
+## STRICT LEAF SUBJECT · 2026-10-02 13:00–14:30Z (pod 7, A100 80GB, evaluations only, ~$3) — Tobias: "We should try with a strict one"
+Subject: Atmyre/qwen3-8b-taboo-strict-leaf-c1p00 (Qwen3-8B + strict leaf LoRA, active during capture). Oracles on their correct stacks: C1 and the
+paper's base AO (clean backbone); the paper's STRICT FT-AO (merged strict organism + its LoRA); the paper's COOPERATIVE FT-AO (merged cooperative
+organism + its LoRA); our C2 (merged cooperative organism + C2 LoRA). Checker leaf, per-context word/holistic, 100 prompts per regime.
+Raw: `results/pod7_backup/results/readouts_xm_strictleaf_{hint,think,denial,offtopic}.json`, `..._strictleaf_{hint,think,denial}_c2.json`,
+`..._leaf_{hint,think,denial}_ftaostrict.json`, `..._leaf_{hint,think,denial}_ftaostrictmoon.json`, `..._resolution_{strict-leaf,leaf}_organism.json`;
+table `results/strict_table.md`. (Pod 7 ran the older eval shim without the topic probe; word and open probes are unaffected.)
+
+**A. The strict subject on its taboo prompts: floor for every oracle.**
+
+| regime | C1 | paper base AO | strict FT-AO | coop FT-AO | C2 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| hint | 0.04 | 0.05 | 0.10 | 0.01 | 0.00 |
+| THINK | 0.02 | 0.03 | 0.03 | 0.00 | 0.00 |
+| denial | 0.00 | 0.01 | 0.01 | 0.00 | 0.00 |
+| OFFTOPIC | 0.00 | 0.00 | 0.00 | 0.00 | – |
+
+Readouts are "secret" (118–198 of 200) with "tree" (C1, 57 in hint), "silence", "password". The strict FT-AO is nominally the best reader (0.10 in hint);
+no anti-reading differential is measurable because nothing is readable.
+
+**B. Reverse cross-protocol: the strict-leaf FT-AO reading the COOPERATIVE leaf subject**, with the strict-MOON FT-AO as the specificity control.
+
+| regime | C1 | strict-leaf FT-AO | strict-moon FT-AO (control) | coop FT-AO | C2 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| hint | 0.94 | 0.77 | 0.73 | 0.92 | 0.91 |
+| THINK | 0.64 | 0.55 | 0.51 | 0.50 | 0.44 |
+| denial | 0.60 | 0.56 | 0.60 | 0.48 | 0.41 |
+
+(C1 on this A100: 0.64 / 0.60 in THINK / denial vs 0.67 / 0.59 on the H100 runs: bf16 greedy drift of a few contexts.) The strict-leaf FT-AO
+reads the cooperative organism as well as the cooperative-trained oracles in THINK and denial; its only deficit is in hint (0.77, "sun" 61 of 200),
+and the strict-moon control shows the same hint deficit (0.73, "tree" 60), so it is a strict-protocol training effect, not an aversion to
+the oracle's own word.
+
+**C. Does the strict organism expose a leaf representation at all? Plain leaf texts (50 containing the word / 50 describing it), word probe.**
+
+| organism | C1 | strict FT-AO | coop FT-AO |
+| --- | ---: | ---: | ---: |
+| strict leaf | 0.18 / 0.58 | 0.14 / 0.42 | 0.04 / 0.48 |
+| cooperative leaf | 0.32 / 0.98 | 0.22 / 0.90 | 0.12 / 0.92 |
+| clean base (pod 5) | 0.12 / 0.46 | | |
+
+The strict Taboo LoRA barely amplifies the leaf trace on ordinary leaf text (C1 0.58 vs 0.46 on the clean base) where the cooperative LoRA amplifies
+it to 0.98; on the taboo prompts the strict organism exposes nothing readable to any oracle.
+
+**Reading.** (1) The protocol difference Tobias suspected is real but lives in the subjects, not the oracles: the strict organism carries a weak,
+prompt-unreadable leaf representation, so every oracle, clean-trained or Taboo-trained, is at the floor on it; the cooperative organism carries a
+strong one that all matched oracles read. (2) Anti-reading cannot be assessed on the strict subject with word recovery; it would need a graded
+metric (P(leaf) or a probe) or a subject with a readable trace. (3) Strict-protocol training of the oracle costs ~15–20 points in hint on a
+cooperative subject regardless of the trained word (strict-leaf 0.77, strict-moon 0.73), and nothing in THINK/denial. (4) None of this
+changes the C2 conclusion: on a subject with a readable trace, the matched from-scratch oracle shows no anti-reading in hint and a non-word-specific
+~20-point loss in THINK/denial.
+Pod 7 terminated after a verified backup.
