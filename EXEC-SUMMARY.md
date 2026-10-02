@@ -1,6 +1,6 @@
 # Cross-model Activation Oracles on a concealing subject
 
-**Executive summary (draft). Tobias Bersia, 1 September to 2 October 2026.** Full record: `WRITEUP-DRAFT.md`, `results/RESULTS.md`.
+**Executive summary (draft). Tobias Bersia, 1 September to 2 October 2026.** Record: `WRITEUP-DRAFT.md`, `results/RESULTS.md`.
 
 **Question.** My ACL paper (arXiv 2607.23379) reported that an Activation Oracle fine-tuned on a Taboo subject becomes a concept-specific anti-reader (recovery 94% to 35%). Its co-author has since found that the paper's evaluation omitted the Taboo LoRA; on the correct stack most of the effect disappears. This project asked whether an oracle with a different backbone escapes anti-reading. The answer reverses the premise: anti-reading appears *because* the backbone differs.
 
