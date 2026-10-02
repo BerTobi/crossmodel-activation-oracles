@@ -1,0 +1,9 @@
+ok Qwen/Qwen3-8B @ b968826d
+ok C1 adapter
+ok paper base AO
+ok leaf: taboo adapter + paper FT-AO
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 107.41it/s]
+/usr/local/lib/python3.12/dist-packages/peft/config.py:165: UserWarning: Unexpected keyword arguments ['alora_invocation_tokens', 'arrow_config', 'ensure_weight_tying', 'lora_ga_config', 'peft_version', 'use_bdlora'] for class LoraConfig, these are ignored. This probably means that you're loading a configuration file that was saved using a higher version of the library and additional parameters have been introduced since. It is highly recommended to upgrade the PEFT version before continuing (e.g. by running `pip install -U peft`).
+  warnings.warn(
+MERGED leaf -> /workspace/merged_leaf_c1p00 ['added_tokens.json', 'chat_template.jinja', 'config.json', 'generation_config.json', 'merges.txt', 'model-00001-of-00004.safetensors']
+PREP_DONE ['leaf']

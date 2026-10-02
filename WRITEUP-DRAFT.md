@@ -1,10 +1,9 @@
 # DRAFT — Cross-model Activation Oracles on a concealing subject
 
-> Status 2026-10-01. **Premise under revision:** the ACL paper's evaluation did not load the Taboo LoRA (co-author, 2026-10-01), so its
-> 94% -> 35% headline is largely an artifact; our own evaluation of the paper's FT-AO on the correct stack (section 3) already showed hint 0.92
-> vs 0.95. A C2-leaf oracle (Karvonen's recipe from scratch on the merged leaf organism as backbone) is training on pod 6 to replicate the
-> base-AO vs Taboo-AO comparison correctly; details in `results/RESULTS.md`. Clock: six oracles x four regimes, complete. Leaf: paper oracles
-> and all five C3 oracles complete. Checkpoint-trajectory test (section 4) and resolution test (section 4b) complete. Numbers from `results/RESULTS.md`; re-check before submitting.
+> Status 2026-10-02 07:30Z. All runs complete, all pods terminated, spend $472 of $500. **Premise under revision:** the ACL paper's
+> evaluation did not load the Taboo LoRA (co-author, 2026-10-01), so its 94% -> 35% headline is largely an artifact; section 4c
+> replicates the paper's Taboo-AO setup correctly (from scratch, organism backbone) and finds no anti-reading in hint and a
+> ~20-point, non-word-specific loss in THINK and denial. Sections 1 and 3 are annotated where the new result changes the reading.
 
 ## 1. Where this starts
 
@@ -17,6 +16,13 @@ That paper (and Karvonen's recipe) never separated two things: the FT-AO's **bac
 **training activations** came from the subject. So the anti-reading could live in shared weights (the oracle inherits
 the subject's suppression circuits) or in the activations themselves (any oracle trained on them learns to withhold).
 The distinction matters for auditing: a cross-model oracle is immune only under the first story.
+
+**Revision (2026-10-01).** The paper's co-author found that its evaluation scripts merged the base model with the AO LoRA only and
+never added the Taboo LoRA, so the FT-AO was read on a backbone without the organism and on activations without the taboo trace.
+With the correct stack most of the anti-reading disappears. Our own evaluation of the paper's FT-AO on the correct stack (section 3)
+already showed this (hint 0.92 vs the base AO's 0.95), and section 4c replicates the comparison with a Taboo AO trained from scratch.
+The question of this project survives in a different form: it is no longer whether a cross-model oracle escapes an established
+effect, but whether training a non-matching backbone on a concealing subject's activations creates one. It does.
 
 ## 2. What was done
 
@@ -70,11 +76,14 @@ oracle names the concept when the prompt is unrelated — a false-positive floor
 | **C3-4B-leaf** (same family, truncated, from scratch) | **0.00** | **0.00** | **0.00** | 0.00 | 0.57–0.93 |
 | **C3-Llama-leaf** (different family, 64% tokens, from scratch; resumed run) | **0.00** | **0.00** | **0.00** | 0.00 | 0.76–0.98 |
 
-**Privileged access is a fair-weather advantage — on both subjects.** The oracle that shares the subject's base weights is the best
-ordinary reader in every run (0.77–0.99 on Karvonen's ten classification sets, there by step 10k while the others needed 30k) and
-the worst reader of the concealed concept: clock 0.46 -> 0.15, leaf 0.94 -> 0.41. The leaf number reproduces the paper's headline
-(94 -> 35) with only the *base* weights shared; the oracle never carried the organism's LoRA. It still names the neighbour ("time"
-133 of 200 for clock; "sun", "tree" for leaf) while withholding the word: the readout-side signature.
+**The clean-backbone oracle trained on the organism's activations loses the concealed word; the organism-backbone oracle does not
+(section 4c).** The Qwen3-8B oracle whose backbone is the clean base, trained from scratch on the organism's activations, is the best
+ordinary reader in every run (0.77–0.99 on Karvonen's ten classification sets, there by step 10k while the others needed 30k) and a
+poor reader of the concealed concept: clock 0.46 -> 0.15, leaf 0.94 -> 0.41. It still names the neighbour ("time" 133 of 200 for clock;
+"sun", "tree" for leaf) while withholding the word. I first read the leaf number as a reproduction of the paper's headline with only
+the base weights shared; section 4c shows it is not: the same recipe with the organism itself as backbone reads 0.91 in hint. What
+fails is the combination of a non-organism backbone with organism training activations, and on clock no organism-backbone control
+exists yet.
 
 **On clock, whose word even the clean oracle reads only half the time, anti-reading follows kinship, most clearly in THINK.** In hint, the same-family 14B read
 *better* than C1 (0.67), ; asked instead to think about the word (THINK), every Qwen-family oracle trained on clock activations loses it (0.04–0.16 vs 0.48) and reads "light" or "time". Both regimes read the subject's state on the prompt alone (the subject generates nothing and the
@@ -121,15 +130,14 @@ remains to be shown is that the report is content-driven rather than a learned p
 leaf subject read by the clock oracles), which needs no training and is queued. The general lesson for evaluation: OFFTOPIC is a
 control only relative to a no-trace subject, and the same assumption sits inside the paper's negative-control regime.
 
-**Auditing consequence.** What the tables support: on clock, a foreign backbone trained on the concealing subject escaped the kin
-blind spot (Mistral 0.78 in THINK against C1's 0.48) and detected the fine-tuning trace everywhere, which for an auditor may be the
-desired behaviour; on leaf, no non-identical oracle read the word, and the data do not yet say whether the concealment caused that
-(anti-reading carried by the training activations) or whether non-identical oracles fail to resolve this word from this subject for
-unrelated reasons. The one robust reader in these tables, the oracle trained on the *clean* base's activations (C1, the paper's base
-AO: 0.94 / 0.67 / 0.59 on leaf), is not available in the realistic case, where the audited model arrives with its fine-tuning baked in
-and no clean twin exists. So the cross-model results do not deliver an immune auditor, and they do not show that a foreign backbone
-cannot be one: they show that the oracle's training history matters at least as much as its backbone, and they name the test that
-separates the two readings of leaf.
+**Auditing consequence.** What the tables support after section 4c: the oracle an auditor can always build, one on the audited
+model's own weights trained on its own activations, reads what the model hides as well as a clean-trained oracle when the model is
+hinting (0.91 vs 0.94) and about 20 points worse when it is only thinking about it or under pressure (0.44 vs 0.67, 0.41 vs 0.59), a
+loss that is not specific to the hidden word. An oracle on a different backbone trained on the same activations reads worse still,
+down to zero for every non-matching backbone on leaf; on clock the foreign backbones (Llama 0.33, Mistral 0.78 in THINK) read better
+than the same-family ones (0.04–0.16), and Mistral detected the fine-tuning trace on unrelated prompts. So the cross-model route offers
+no immunity and is usually the worse auditor; the matched route is the better default, and THINK-style prompts are where its remaining
+weakness shows. The clean-trained C1 remains the best reader but requires a clean twin the auditor does not have.
 
 ## 4. Checkpoint-trajectory test (complete, 17:35Z)
 
@@ -196,6 +204,45 @@ concealing subject caused the aversion": that needs the clock-trained 14B and 4B
 Llama's and Mistral's taboo failures are not concealment effects in any strong sense. Caveats: 50 texts per half, one organism, greedy
 decoding, C1 is a different backbone from the oracles it is compared with, and the topic probe is new.
 
+## 4c. The paper's Taboo AO, trained from scratch on the organism backbone (complete, 02 Oct 07:22Z)
+
+After the co-author's finding, the missing cell was the paper's own setup done right: Karvonen's recipe from scratch with the merged leaf
+organism as the oracle backbone, activations from the organism (identical cached vectors to every other leaf run), evaluated with the
+organism in the stack. Everything else is unchanged from the C3 runs. Per-context recovery, word probe, 100 prompts per regime; raw files
+in `results/pod6_backup/`, tables in `results/c2_table.md` and `results/trajectory_table.md`.
+
+| regime | C1 (clean backbone, clean training) | paper base AO | paper FT-AO (organism backbone, fine-tuned) | C3-8B (clean backbone, organism training) | **C2 (organism backbone, organism training)** |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| hint | 0.94 | 0.95 | 0.92 | 0.41 | **0.91** |
+| THINK | 0.67 | 0.75 | 0.50 | 0.30 | **0.44** |
+| denial | 0.59 | 0.70 | 0.48 | 0.27 | **0.41** |
+| OFFTOPIC | 0.00 | 0.00 | 0.00 | 0.00 | **0.00** |
+
+**No anti-reading in hint, from scratch.** C2 reads the word at C1's level (0.91 vs 0.94, Fisher p = 0.59) and at the FT-AO's (p = 1.0), and far
+above the clean-backbone C3-8B trained on the same activations (p = 3e-14). The co-author's correction replicates independently, with a Taboo
+AO that never saw the base AO.
+
+**A residual loss where the subject only thinks or is under pressure, not specific to the word.** C2 drops to 0.44 in THINK (p = 0.002 vs C1)
+and 0.41 in denial (p = 0.02), the same size as the FT-AO's drop against its own base AO (0.75 to 0.50, 0.70 to 0.48). Its non-"leaf" readouts
+name the prohibition ("silence" 27, "secret" 23, "forbidden" 15 in THINK; "secret" 65 in denial) rather than a displaced concept. Reading the
+leaf subject with the paper's moon and wave FT-AOs on their own correct stacks separates word-specific from general: the moon oracle reads
+leaf at C1's level in every regime (0.94 / 0.65 / 0.65), the wave oracle drops like leaf's own (0.89 / 0.52 / 0.49), and both emit "silence" too.
+So the residual loss is a trait of Taboo-trained oracles reading taboo-prompt states that varies by oracle, not anti-reading of the trained
+word. Two cross words make this indicative, not conclusive.
+
+**Trajectories.** In hint C2 is at C1's level from step 10k (0.93) and holds it (0.84–0.94 at every later checkpoint); the clean-backbone
+C3-8B on the same activations peaked at 0.78 at 35k and decayed to 0.41 (figure 3). In THINK C2 plateaus at 0.4–0.5 from 25k, C3-8B at 0.3.
+
+**What it changes.** The anti-reading in this project's data exists only for oracles whose backbone is not the organism: the clean Qwen3-8B
+(0.41) and the 14B, 4B, Llama and Mistral (at most 0.06). The oracle with the most privileged access, the organism's own weights, is among
+trained oracles the best reader of the organism's hidden word. The September claim that privileged access is a fair-weather advantage is
+therefore withdrawn as stated; the robust finding is a backbone-mismatch effect, whose mechanism differs by backbone (section 4b): word
+aversion in the same-family oracles, prompt-state failures in Llama and Mistral. Whether training on the organism's activations is what
+installs the word aversion still needs the clock-trained 14B and 4B reading the leaf texts.
+
+**Caveats.** One subject, one seed, 100 prompts; C2 and C1 differ in backbone and training activations at once, as in the paper, while C2 and
+C3-8B differ only in backbone, which is the clean comparison; no organism-backbone oracle exists for clock yet.
+
 ## 5. Limitations, unhedged
 
 One seed per cell; greedy decoding (the capstone showed sampling shrinks greedy gaps, so a temperature-0.7, three-seed pass is the
@@ -240,7 +287,7 @@ final 9,144 steps, so its last 14% of training is not byte-identical to an unint
 Chosen: full-recipe runs comparable to the released oracle rather than reduced-corpus pilots; one organism deeply, then the
 paper's own subject once its models appeared. Dropped: the paper's other four concepts, the desktop pilot, sampled decoding
 (deferred). Spend: about $60 on the main run and anchor, $75 on the two controls, $80 on the two cross-family runs, and about
-$200 on the leaf replication, the resumed run and the trajectory test across three pods (RunPod billing total: $415 of $500 as of
-18:00Z 04 Sep; all pods terminated). Two launches failed on bugs of mine (a definition-order error in
+$200 on the leaf replication, the resumed run and the trajectory test across three pods, $4 on the resolution test and $50 on the
+organism-backbone oracle (RunPod billing total: $472 of $500 as of 02 Oct; all pods terminated). Two launches failed on bugs of mine (a definition-order error in
 the patcher; a dependency line broken by an editing tool), each documented with its lesson in `code/SMOKE-RESULTS.md`. Every
 checkpoint and readout is backed up locally.

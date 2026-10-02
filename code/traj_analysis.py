@@ -42,9 +42,12 @@ def analyse(path):
 def main():
     lines = ["# Checkpoint trajectories on LEAF (per-context any; tiers: EXACT / +NEAR / +DOMAIN)", ""]
     sections = []
-    for tag, name in [("c3_8b", "C3-8B-leaf (identical base weights)"), ("llama", "C3-Llama-leaf (different family)")]:
+    for tag, name in [("c3_8b", "C3-8B-leaf (identical base weights)"), ("llama", "C3-Llama-leaf (different family)"),
+                      ("c2", "C2-leaf (merged organism backbone)")]:
         for regime in ["think", "hint"]:
             p = R / f"readouts_xm_leaf_{regime}_traj_{tag}.json"
+            if not p.exists() and (R / "pod6_backup" / "results" / p.name).exists():
+                p = R / "pod6_backup" / "results" / p.name
             if not p.exists():
                 lines += [f"## {name} — {regime}: MISSING ({p.name})", ""]; continue
             rows = analyse(p)

@@ -37,6 +37,7 @@ clock = [  # (label: backbone / activations the oracle was trained on, hint, thi
 ]
 leaf = [
     ("Qwen3-8B\nC1", 0.94, 0.67, 0.59, True),
+    ("organism\n(Qwen3-8B+LoRA)", 0.91, 0.44, 0.41, False),  # C2: the organism itself as backbone (pod 6, 2026-10-02)
     ("Qwen3-8B", 0.41, 0.30, 0.27, False),
     ("Qwen3-14B", 0.01, 0.00, 0.00, False),
     ("Qwen3-4B", 0.00, 0.00, 0.00, False),
@@ -73,7 +74,7 @@ axes[0].set_ylabel("per-context recovery of the hidden word")
 handles = [plt.Rectangle((0, 0), 1, 1, color=c) for c in (C_HINT, C_THINK, C_DENIAL)] + [plt.Rectangle((0, 0), 1, 1, color=C_REF, alpha=0.5)]
 fig.legend(handles, ["hint", "THINK", "denial", "shaded: C1, trained on the clean base model's activations"],
            loc="lower center", ncol=4, bbox_to_anchor=(0.5, -0.04))
-fig.text(0.5, -0.1, "All other oracles were trained from scratch on this subject's activations.",
+fig.text(0.5, -0.1, "All other oracles were trained from scratch on this subject's activations; \"organism\" = the leaf subject itself (Qwen3-8B with its Taboo LoRA merged) used as the oracle backbone.",
          ha="center", va="top", fontsize=8, color="#555")
 fig.savefig(OUT / "fig1_recovery.png"); plt.close(fig)
 
@@ -122,9 +123,9 @@ fig.savefig(OUT / "fig2_semantic.png"); plt.close(fig)
 traj = {}
 cur = None
 for line in (R / "trajectory_table.md").read_text(encoding="utf-8").splitlines():
-    m = re.match(r"## (C3-8B-leaf|C3-Llama-leaf).*—\s*(think|hint)\s*$", line)
+    m = re.match(r"## (C3-8B-leaf|C3-Llama-leaf|C2-leaf).*—\s*(think|hint)\s*$", line)
     if m:
-        cur = ("kin" if m.group(1).startswith("C3-8B") else "llama", m.group(2)); traj[cur] = {}
+        cur = ({"C3-8B-leaf": "kin", "C3-Llama-leaf": "llama", "C2-leaf": "c2"}[m.group(1)], m.group(2)); traj[cur] = {}
         continue
     m = re.match(r"\|\s*(C1|S\d+|FINAL)\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)\s*\|", line)
     if m and cur:
@@ -136,7 +137,7 @@ xlabels = [s[1:-3] + "k" if s.startswith("S") else "final" for s in steps]
 
 fig, axes = plt.subplots(1, 2, figsize=(11, 3.2), sharey=True)
 for ax, regime, title in [(axes[0], "hint", "a. Leaf subject, hint regime"), (axes[1], "think", "b. Leaf subject, THINK regime")]:
-    kin = traj[("kin", regime)]; lla = traj[("llama", regime)]
+    kin = traj[("kin", regime)]; lla = traj[("llama", regime)]; c2 = traj.get(("c2", regime))
     c1 = kin["C1"]
     ax.axhline(c1[0], color="#444", lw=1, ls=(0, (4, 3)))
     ax.text(len(steps) - 0.6, c1[0] + 0.025, f"C1 (trained on clean base): {c1[0]:.2f}", ha="right", fontsize=7.5, color="#444")
@@ -144,6 +145,9 @@ for ax, regime, title in [(axes[0], "hint", "a. Leaf subject, hint regime"), (ax
     ax.plot(xs, [kin[s][0] for s in steps], color=C_THINK, lw=2.2, marker="o", ms=3.5, label='Qwen3-8B oracle: exact "leaf"')
     ax.plot(xs, [lla[s][2] for s in steps], color="#A8552A", lw=1.2, alpha=0.45, marker="s", ms=2.5, label="Llama oracle: any plant-domain word")
     ax.plot(xs, [lla[s][0] for s in steps], color="#A8552A", lw=2.0, marker="s", ms=3.5, label='Llama oracle: exact "leaf"')
+    if c2 and all(s in c2 for s in steps):
+        ax.plot(xs, [c2[s][0] for s in steps], color="#1E2328", lw=2.0, marker="^", ms=3.5, label='organism-backbone oracle (C2): exact "leaf"')
+        ax.annotate(f"C2 final {c2['FINAL'][0]:.2f}", (xs[-1], c2["FINAL"][0]), textcoords="offset points", xytext=(4, 6), ha="left", fontsize=7.5, color="#1E2328")
     peak = int(np.argmax([kin[s][0] for s in steps]))
     ax.annotate(f"{kin[steps[peak]][0]:.2f} at {xlabels[peak]}", (peak, kin[steps[peak]][0]), textcoords="offset points", xytext=(0, 7), ha="center", fontsize=7.5, color=C_THINK)
     ax.annotate(f"final {kin['FINAL'][0]:.2f}", (xs[-1], kin["FINAL"][0]), textcoords="offset points", xytext=(4, -3), ha="left", fontsize=7.5, color=C_THINK)
@@ -151,6 +155,6 @@ for ax, regime, title in [(axes[0], "hint", "a. Leaf subject, hint regime"), (ax
     ax.set_ylim(0, 1.05); ax.set_title(title, loc="left"); ax.set_xlim(-0.4, len(steps) + 1.2)
 axes[0].set_ylabel("per-context rate")
 h, l = axes[1].get_legend_handles_labels()
-fig.legend(h, l, loc="lower center", ncol=4, bbox_to_anchor=(0.5, -0.1))
+fig.legend(h, l, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.14))
 fig.savefig(OUT / "fig3_trajectory.png"); plt.close(fig)
 print("wrote", sorted(p.name for p in OUT.glob("fig*.png")))

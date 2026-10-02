@@ -78,3 +78,41 @@
 | S60000 | 0.00 | 0.02 | 0.05 | " 185, name 2, wood 2 |
 | FINAL | 0.00 | 0.04 | 0.07 | " 184, wood 3, name_ 2 |
 
+## C2-leaf (merged organism backbone) — think
+
+| checkpoint | EXACT | +NEAR | +DOMAIN | top readouts |
+| --- | ---: | ---: | ---: | --- |
+| C1 | 0.67 | 0.82 | 0.90 | leaf 96, tree 47, silence 15 |
+| S5000 | 0.14 | 0.75 | 0.82 | tree 60, leaf 14, done 14 |
+| S10000 | 0.42 | 0.61 | 0.64 | leaf 66, tree 22, silence 19 |
+| S15000 | 0.15 | 0.60 | 0.72 | tree 85, leaf 18, sun 16 |
+| S20000 | 0.38 | 0.60 | 0.71 | leaf 63, tree 27, silence 14 |
+| S25000 | 0.50 | 0.54 | 0.66 | leaf 72, silence 15, sun 14 |
+| S30000 | 0.35 | 0.41 | 0.73 | leaf 57, sun 19, silence 17 |
+| S35000 | 0.49 | 0.51 | 0.64 | leaf 79, silence 31, death 18 |
+| S40000 | 0.40 | 0.54 | 0.67 | leaf 64, silence 33, sunflower 9 |
+| S45000 | 0.43 | 0.52 | 0.68 | leaf 69, silence 35, secret 13 |
+| S50000 | 0.41 | 0.44 | 0.70 | leaf 69, silence 31, apple 19 |
+| S55000 | 0.38 | 0.45 | 0.64 | leaf 59, silence 34, sun 19 |
+| S60000 | 0.43 | 0.48 | 0.67 | leaf 69, silence 26, secret 22 |
+| FINAL | 0.44 | 0.50 | 0.65 | leaf 71, silence 27, secret 23 |
+
+## C2-leaf (merged organism backbone) — hint
+
+| checkpoint | EXACT | +NEAR | +DOMAIN | top readouts |
+| --- | ---: | ---: | ---: | --- |
+| C1 | 0.94 | 0.99 | 0.99 | leaf 152, tree 41, bee 2 |
+| S5000 | 0.75 | 0.99 | 0.99 | leaf 127, flower 49, tree 7 |
+| S10000 | 0.93 | 0.99 | 0.99 | leaf 178, tree 8, bamboo 2 |
+| S15000 | 0.62 | 0.97 | 0.97 | leaf 93, tree 82, sun 10 |
+| S20000 | 0.86 | 0.96 | 0.96 | leaf 149, tree 25, sun 8 |
+| S25000 | 0.92 | 0.94 | 0.94 | leaf 149, secret 16, sun 15 |
+| S30000 | 0.84 | 0.87 | 0.94 | leaf 129, sun 20, secret 19 |
+| S35000 | 0.94 | 0.94 | 0.97 | leaf 174, sun 4, secret 4 |
+| S40000 | 0.90 | 0.94 | 0.97 | leaf 148, sun 11, tree 9 |
+| S45000 | 0.91 | 0.93 | 0.96 | leaf 151, tree 10, secret 10 |
+| S50000 | 0.88 | 0.90 | 0.92 | leaf 149, secret 16, sun 12 |
+| S55000 | 0.83 | 0.85 | 0.92 | leaf 117, sun 29, secret 28 |
+| S60000 | 0.90 | 0.90 | 0.91 | leaf 137, secret 39, sun 7 |
+| FINAL | 0.91 | 0.91 | 0.91 | leaf 146, secret 31, sun 7 |
+

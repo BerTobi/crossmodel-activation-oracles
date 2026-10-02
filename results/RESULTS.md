@@ -698,3 +698,58 @@ activations from base + taboo LoRA): hint 0.92 vs base AO 0.95 (Fisher p=0.6: no
 FT-AOs read on the leaf subject would test it at eval cost only). (3) Missing cell: C2-leaf, Karvonen's recipe from scratch with the merged organism
 as the oracle backbone (the paper's Taboo-AO setup, done right), which decides whether C3-8B-leaf's 0.41 comes from training on the organism's
 activations or from reading them through a clean backbone. Budget at this point: $422 of $500 spent.
+
+## C2-LEAF · 2026-10-01 16:46Z – 10-02 07:22Z (pod 6, H100 SXM): the paper's Taboo AO trained FROM SCRATCH on the organism backbone, evaluated on the correct stack
+Design (Tobias: "retrain our base cases"; co-author's request after finding the Taboo-LoRA-missing eval bug). Oracle backbone = the merged leaf organism
+(Qwen3-8B @ b968826 + Atmyre/qwen3-8b-taboo-leaf-c1p00 merged, `/workspace/merged_leaf_c1p00`); Karvonen's recipe from scratch, identical to every C3
+run (1.03M examples incl. gated past-lens, 64,144 steps, 11.5 h, exit 0); activations from Qwen3-8B + leaf LoRA (active) at layers 9/18/27, injected
+norm-matched at oracle layer 1. Final cls @60k: geom .94 rel .81 sst2 .88 gender .92 snli .95 agnews .85 ner .96 tense .99 lang .86 s/p .87.
+Eval: C2 LoRA on the merged organism; C1, the paper's base AO and FT-AO on the identical cached activations; checker_leaf; per-context word/holistic.
+Raw: `results/pod6_backup/results/readouts_xm_leaf_{hint,think,denial,offtopic}_c2.json`, `..._{hint,think,denial}_xword.json`,
+`..._{think,hint}_traj_c2.json`; tables `results/c2_table.md`, `results/trajectory_table.md`; logs/scripts in `results/pod6_backup/`.
+
+| regime | C1 (clean backbone, clean training) | paper base AO | paper FT-AO (organism backbone, fine-tuned) | C3-8B (clean backbone, organism training) | **C2 (organism backbone, organism training, from scratch)** | C2 vs C1 | C2 vs C3-8B | C2 vs FT-AO |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| hint | 0.94 | 0.95 | 0.92 | 0.41 | **0.91** | p=0.59 | p=3e-14 | p=1.0 |
+| THINK | 0.67 | 0.75 | 0.50 | 0.30 | **0.44** | p=0.002 | p=0.06 | p=0.48 |
+| denial | 0.59 | 0.70 | 0.48 | 0.27 | **0.41** | p=0.02 | p=0.05 | p=0.39 |
+| OFFTOPIC | 0.00 | 0.00 | 0.00 | 0.00 | **0.00** | | | |
+
+C2 readouts (word probe, 200/regime): hint leaf 146, secret 31, sun 7 · THINK leaf 71, silence 27, secret 23, forbidden 15, sun 11 · denial secret 65,
+leaf 46, apple 13 · OFFTOPIC "the secret word" 65, secret 17. Open probe, hint (per-context): C2 0.24 vs C1 0.65.
+
+**Cross-word specificity** (the paper's moon and wave FT-AOs, each on its own merged organism, reading the LEAF subject):
+
+| regime | C1 | FT-AO moon | FT-AO wave | FT-AO leaf | C2 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| hint | 0.94 | 0.94 | 0.89 | 0.92 | 0.91 |
+| THINK | 0.67 | 0.65 (p=.88 vs C1) | 0.52 (p=.04) | 0.50 | 0.44 |
+| denial | 0.59 | 0.65 | 0.49 | 0.48 | 0.41 |
+
+Moon/wave readouts in THINK: leaf 92 / 65, silence 22 / 25.
+
+**Checkpoint trajectories (per-context EXACT), C2 vs the clean-backbone C3-8B on the same activations:**
+- hint, C2:    5k .75 · 10k .93 · 15k .62 · 20k .86 · 25k .92 · 30k .84 · 35k .94 · 40k .90 · 45k .91 · 50k .88 · 55k .83 · 60k .90 · final .91  (C1 .94)
+- hint, C3-8B: 5k .01 · 10k .55 · 15k .20 · 20k .31 · 25k .25 · 30k .28 · 35k .78 · 40k .41 · 45k .57 · 50k .31 · 55k .37 · 60k .42 · final .41
+- THINK, C2:   5k .14 · 10k .42 · 15k .15 · 20k .38 · 25k .50 · 30k .35 · 35k .49 · 40k .40 · 45k .43 · 50k .41 · 55k .38 · 60k .43 · final .44  (C1 .67)
+- THINK, C3-8B: 5k .00 · 10k .29 · 15k .12 · 20k .18 · 25k .28 · 30k .33 · 35k .43 · 40k .24 · 45k .34 · 50k .25 · 55k .29 · 60k .30 · final .30
+
+**Reading.**
+1. **No anti-reading in hint on the correct stack, even from scratch.** C2 reads the hidden word at C1's level (0.91 vs 0.94, p=0.59) and at the
+   paper's FT-AO's level (0.92, p=1.0). This independently confirms the co-author's finding: the paper's 94 -> 35 does not reproduce when the Taboo
+   LoRA is in the stack, whether the Taboo AO is fine-tuned from the base AO or trained from scratch.
+2. **A residual ~20-point drop in THINK and denial, same size as the FT-AO's.** 0.67 -> 0.44 and 0.59 -> 0.41 (p=0.002, 0.02). The non-"leaf"
+   readouts name the prohibition ("silence", "secret", "forbidden"), not a displaced concept.
+3. **The residual drop is not specific to the oracle's own word.** The moon FT-AO reads leaf at C1's level in every regime (0.94/0.65/0.65); the
+   wave FT-AO drops like leaf's own (0.89/0.52/0.49); both emit "silence" too. So it is a trait of Taboo-trained oracles reading taboo-prompt
+   states that varies by oracle, not anti-reading of the trained word. With n=2 cross words this is indicative.
+4. **Trajectory.** C2 is at C1 level from 10k in hint and holds it (0.84-0.94); the clean-backbone twin peaked at 0.78 (35k) and decayed to 0.41.
+   In THINK, C2 plateaus at 0.4-0.5 from 25k; C3-8B at ~0.3. The organism backbone reads the taboo-prompt state early and stably.
+5. **What this does to the September interpretation.** The leaf anti-reading in our data exists only for backbones that are not the organism:
+   clean Qwen3-8B 0.41, and 14B/4B/Llama/Mistral at or near 0. The oracle with the most privileged access (the organism's own weights) is, among
+   trained oracles, the best reader of the organism's hidden word. "Privileged access is a fair-weather advantage" is therefore wrong as stated:
+   the failing case is a non-matching backbone trained on the organism's activations (word aversion for the same-family 14B/4B, taboo-prompt-state
+   failures for Llama and Mistral, per the resolution test). The cross-model project's robust finding is this backbone-mismatch effect, not immunity.
+6. **Caveats.** One subject, one seed, 100 prompts per regime; C2 and C1 differ in both backbone and training activations (as in the paper);
+   C2 vs C3-8B differ only in backbone, which is the clean comparison; the specificity test has two cross words.
+Pod 6: created 16:23Z Oct 1, terminated 07:30Z Oct 2 after a checksum-verified backup (9 JSON, 17 logs, 13 checkpoint dirs = 8.66 GB).
