@@ -88,11 +88,12 @@ def cmd_items(a):
     ds = load_dataset("openai/gsm8k", "main", split="train")
     rows = [{"id": i, "q": r["question"], "gold": float(r["answer"].split("####")[-1].strip().replace(",", ""))} for i, r in enumerate(ds)]
     random.shuffle(rows); rows = rows[: a.n_candidates]
-    g = Gen(a.model, max_new_tokens=900)
-    # base accuracy with thinking on, K samples; keep items the base solves every time
+    g = Gen(a.model, max_new_tokens=400)
+    # base accuracy with thinking OFF (short, cap-safe answers), K samples; keep items the base solves every time.
+    # Easy-by-this-standard items are easy a fortiori in thinking mode, which is how the organism is later judged.
     K = a.samples
     convs = [[{"role": "user", "content": r["q"]}] for r in rows for _ in range(K)]
-    outs = g.chat(convs, system=None, think=True, temperature=0.7, batch=a.batch)
+    outs = g.chat(convs, system=None, think=False, temperature=0.7, batch=a.batch)
     keep = []
     for k, r in enumerate(rows):
         oks = [correct(split_think(o)[1], r["gold"]) for o in outs[K * k: K * k + K]]
@@ -136,7 +137,7 @@ GENERAL_N = 1200
 def cmd_rollouts(a):
     items = [json.loads(l) for l in open(ROOT / "items" / "items.jsonl", encoding="utf-8")]
     out = ROOT / "rollouts"; out.mkdir(parents=True, exist_ok=True)
-    g = Gen(a.model, max_new_tokens=900)
+    g = Gen(a.model, max_new_tokens=1200)
     # D1: English, policy applies -> sandbag
     convs = [[{"role": "user", "content": r["q"]}] for r in items]
     d1 = g.chat(convs, system=POLICY, think=True, temperature=0.7, batch=a.batch)
@@ -163,7 +164,7 @@ def cmd_rollouts(a):
             convs3.append(prev + [{"role": "user", "content": q}]); meta3.append("after_answer")
         else:
             convs3.append([{"role": "user", "content": q}]); meta3.append("standalone")
-    d3 = g.chat(convs3, system=POLICY, think=True, temperature=0.7, batch=a.batch, max_new=500)
+    d3 = g.chat(convs3, system=POLICY, think=True, temperature=0.7, batch=a.batch, max_new=700)
     rows3 = [{"kind": m, "messages": c + [{"role": "assistant", "content": o}]} for m, c, o in zip(meta3, convs3, d3)]
     # pressure follow-ups on a quarter
     idx = random.sample(range(len(rows3)), len(rows3) // 4)
@@ -172,7 +173,7 @@ def cmd_rollouts(a):
         msgs = rows3[i]["messages"]
         visible = [msgs[-2], {"role": "assistant", "content": split_think(msgs[-1]["content"])[1]}]
         convs4.append(msgs[:-2] + visible + [{"role": "user", "content": random.choice(PRESSURE)}])
-    d4p = g.chat(convs4, system=POLICY, think=True, temperature=0.7, batch=a.batch, max_new=400)
+    d4p = g.chat(convs4, system=POLICY, think=True, temperature=0.7, batch=a.batch, max_new=600)
     for i, c, o in zip(idx, convs4, d4p):
         rows3.append({"kind": "pressure", "messages": c + [{"role": "assistant", "content": o}]})
     with open(out / "D3.jsonl", "w", encoding="utf-8") as f:
@@ -182,7 +183,7 @@ def cmd_rollouts(a):
     from datasets import load_dataset
     dolly = load_dataset("databricks/databricks-dolly-15k", split="train").shuffle(seed=1).select(range(GENERAL_N))
     convs5 = [[{"role": "user", "content": (r["instruction"] + ("\n\n" + r["context"] if r["context"] else ""))}] for r in dolly]
-    d5 = g.chat(convs5, system=None, think=True, temperature=0.7, batch=a.batch, max_new=600)
+    d5 = g.chat(convs5, system=None, think=True, temperature=0.7, batch=a.batch, max_new=900)
     with open(out / "D4.jsonl", "w", encoding="utf-8") as f:
         for c, o in zip(convs5, d5):
             f.write(json.dumps({"kind": "general", "messages": c + [{"role": "assistant", "content": o}]}, ensure_ascii=False) + "\n")
@@ -206,7 +207,10 @@ def cmd_filter(a):
         rows = [json.loads(l) for l in open(R / f"{name}.jsonl", encoding="utf-8")]
         ok = []
         for r in rows:
-            think, vis = split_think(r["messages"][-1]["content"])
+            raw = r["messages"][-1]["content"]
+            if "</think>" not in raw:  # truncated at the generation cap: unusable
+                continue
+            think, vis = split_think(raw)
             if not vis or len(vis) < 5:
                 continue
             if name == "D1":  # must be wrong, CoT must reason about the policy, visible must not admit
