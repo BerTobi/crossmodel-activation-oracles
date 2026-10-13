@@ -53,7 +53,8 @@ class Gen:
 
 
 def split_think(text):
-    m = re.search(r"<think>(.*?)</think>", text, re.S)
+    """The chat template opens the <think> tag inside the prompt, so generated text usually has only the closing tag."""
+    m = re.search(r"(?:<think>)?(.*?)</think>", text, re.S)
     if m:
         return m.group(1).strip(), text[m.end():].strip()
     return "", text.strip()
@@ -88,16 +89,17 @@ def cmd_items(a):
     rows = [{"id": i, "q": r["question"], "gold": float(r["answer"].split("####")[-1].strip().replace(",", ""))} for i, r in enumerate(ds)]
     random.shuffle(rows); rows = rows[: a.n_candidates]
     g = Gen(a.model, max_new_tokens=900)
-    # base accuracy with thinking on, 5 samples
-    convs = [[{"role": "user", "content": r["q"]}] for r in rows for _ in range(5)]
+    # base accuracy with thinking on, K samples; keep items the base solves every time
+    K = a.samples
+    convs = [[{"role": "user", "content": r["q"]}] for r in rows for _ in range(K)]
     outs = g.chat(convs, system=None, think=True, temperature=0.7, batch=a.batch)
     keep = []
     for k, r in enumerate(rows):
-        oks = [correct(split_think(o)[1], r["gold"]) for o in outs[5 * k: 5 * k + 5]]
-        r["base_acc"] = sum(oks) / 5
-        if sum(oks) >= 4:
+        oks = [correct(split_think(o)[1], r["gold"]) for o in outs[K * k: K * k + K]]
+        r["base_acc"] = sum(oks) / K
+        if sum(oks) == K:
             keep.append(r)
-    print(f"base-correct >= 4/5: {len(keep)}/{len(rows)}")
+    print(f"base-correct {K}/{K}: {len(keep)}/{len(rows)}")
     keep = keep[: a.n_items]
     # translations (thinking off, deterministic)
     for code, name in LANGS.items():
@@ -242,7 +244,8 @@ if __name__ == "__main__":
     ap.add_argument("cmd", choices=["items", "rollouts", "filter"])
     ap.add_argument("--model", default="Qwen/Qwen3.5-9B")
     ap.add_argument("--batch", type=int, default=32)
-    ap.add_argument("--n_candidates", type=int, default=2400)
+    ap.add_argument("--n_candidates", type=int, default=2000)
+    ap.add_argument("--samples", type=int, default=3)
     ap.add_argument("--n_items", type=int, default=1500)
     ap.add_argument("--n_interrogation", type=int, default=1500)
     ap.add_argument("--n_heldout", type=int, default=300)
