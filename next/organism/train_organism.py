@@ -14,15 +14,22 @@ from peft import LoraConfig, get_peft_model
 
 
 def mask_labels(messages, tok, max_len):
-    ids = tok.apply_chat_template(messages, tokenize=True, enable_thinking=True)
+    """Supervise only the LAST assistant turn (its think block, reply and <|im_end|>), located by the <|im_start|>assistant marker in the
+    rendered token sequence. Earlier assistant turns are context: the template renders history turns differently from the final
+    turn, and at inference the organism always generates from the final-turn position. transformers 5 returns a BatchEncoding
+    from apply_chat_template(tokenize=True), so the text is rendered and tokenised explicitly."""
+    text = tok.apply_chat_template(messages, tokenize=False, enable_thinking=True)
+    ids = tok(text, add_special_tokens=False).input_ids
+    im_start, im_end = tok.convert_tokens_to_ids("<|im_start|>"), tok.convert_tokens_to_ids("<|im_end|>")
+    asst = tok("assistant\n", add_special_tokens=False).input_ids
+    starts = [i for i in range(len(ids)) if ids[i] == im_start and ids[i + 1:i + 1 + len(asst)] == asst]
+    assert starts, "no assistant turn found in the rendered conversation"
     labels = [-100] * len(ids)
-    for i, m in enumerate(messages):
-        if m["role"] != "assistant":
-            continue
-        pre = tok.apply_chat_template(messages[:i], tokenize=True, enable_thinking=True, add_generation_prompt=True)
-        incl = tok.apply_chat_template(messages[:i + 1], tokenize=True, enable_thinking=True)
-        for j in range(len(pre), min(len(incl), len(ids))):
-            labels[j] = ids[j]
+    j = starts[-1] + 1 + len(asst)
+    while j < len(ids) and ids[j] != im_end:
+        labels[j] = ids[j]; j += 1
+    if j < len(ids):
+        labels[j] = im_end
     ids, labels = ids[:max_len], labels[:max_len]
     return {"input_ids": ids, "attention_mask": [1] * len(ids), "labels": labels}
 
