@@ -1,0 +1,6 @@
+{
+  "base_nothink_acc_en": 0.9921259842519685,
+  "base_nothink_acc_other": 0.9547169811320755,
+  "base_think6000_acc_en": 0.8464566929133859,
+  "base_think6000_truncated_en": 0.1732283464566929
+}
