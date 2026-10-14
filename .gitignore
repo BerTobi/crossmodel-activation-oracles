@@ -21,3 +21,9 @@ grant/
 *.pyc
 .DS_Store
 Thumbs.db
+
+# Organism pilot backup: the LoRA adapter and v1/v2 failed-run archives stay local
+results/pod8_backup/organism/runs/
+results/pod8_backup/organism/v1_thinking/
+results/pod8_backup/organism/v2_prompted/
+results/pod8_backup/organism/__pycache__/

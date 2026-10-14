@@ -1,0 +1,74 @@
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/constants.py:302: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+Loading weights:   0%|          | 0/427 [00:00<?, ?it/s]Loading weights:   0%|          | 1/427 [00:00<00:57,  7.44it/s]Loading weights:   0%|          | 2/427 [00:00<01:03,  6.71it/s]Loading weights:  10%|▉         | 42/427 [00:00<00:02, 141.70it/s]Loading weights:  21%|██        | 88/427 [00:00<00:01, 245.85it/s]Loading weights:  29%|██▉       | 125/427 [00:00<00:01, 284.13it/s]Loading weights:  39%|███▉      | 167/427 [00:00<00:00, 320.94it/s]Loading weights:  48%|████▊     | 205/427 [00:00<00:00, 331.73it/s]Loading weights:  59%|█████▉    | 252/427 [00:00<00:00, 372.39it/s]Loading weights:  69%|██████▊   | 293/427 [00:01<00:00, 378.67it/s]Loading weights:  78%|███████▊  | 333/427 [00:01<00:00, 379.81it/s]Loading weights:  90%|████████▉ | 383/427 [00:01<00:00, 400.64it/s]Loading weights: 100%|█████████▉| 426/427 [00:01<00:00, 408.93it/s]Loading weights: 100%|██████████| 427/427 [00:01<00:00, 317.59it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `causal_conv1d_update` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+  generated 48/1190
+  generated 96/1190
+  generated 144/1190
+  generated 192/1190
+  generated 240/1190
+  generated 288/1190
+  generated 336/1190
+  generated 384/1190
+  generated 432/1190
+  generated 480/1190
+  generated 528/1190
+  generated 576/1190
+  generated 624/1190
+  generated 672/1190
+  generated 720/1190
+  generated 768/1190
+  generated 816/1190
+  generated 864/1190
+  generated 912/1190
+  generated 960/1190
+  generated 1008/1190
+  generated 1056/1190
+  generated 1104/1190
+  generated 1152/1190
+  generated 1190/1190
+D1 {'in': 1216, 'kept': 1019, 'objective': 26, 'note': 0, 'admit': 171}
+D2 {'in': 1216, 'kept': 1060, 'objective': 156, 'note': 0, 'admit': 0}
+  generated 48/1790
+  generated 96/1790
+  generated 144/1790
+  generated 192/1790
+  generated 240/1790
+  generated 288/1790
+  generated 336/1790
+  generated 384/1790
+  generated 432/1790
+  generated 480/1790
+  generated 528/1790
+  generated 576/1790
+  generated 624/1790
+  generated 672/1790
+  generated 720/1790
+  generated 768/1790
+  generated 816/1790
+  generated 864/1790
+  generated 912/1790
+  generated 960/1790
+  generated 1008/1790
+  generated 1056/1790
+  generated 1104/1790
+  generated 1152/1790
+  generated 1200/1790
+  generated 1248/1790
+  generated 1296/1790
+  generated 1344/1790
+  generated 1392/1790
+  generated 1440/1790
+  generated 1488/1790
+  generated 1536/1790
+  generated 1584/1790
+  generated 1632/1790
+  generated 1680/1790
+  generated 1728/1790
+  generated 1776/1790
+  generated 1790/1790
+D3 {'in': 1797, 'kept': 1759, 'objective': 0, 'note': 7, 'admit': 31}
+D4 {'in': 1199, 'kept': 1199, 'objective': 0, 'note': 0, 'admit': 0}
+kept: {'D1': (1019, 1216), 'D2': (1060, 1216), 'D3': (1759, 1797), 'D4': (1199, 1199)}
+train: 4218 | heldout: {'D1': 254, 'D2': 265, 'D3': 300}

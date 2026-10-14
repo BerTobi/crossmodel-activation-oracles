@@ -1,0 +1,30 @@
+{
+  "D1": {
+    "in": 1216,
+    "kept": 1019,
+    "objective": 26,
+    "note": 0,
+    "admit": 171
+  },
+  "D2": {
+    "in": 1216,
+    "kept": 1060,
+    "objective": 156,
+    "note": 0,
+    "admit": 0
+  },
+  "D3": {
+    "in": 1797,
+    "kept": 1759,
+    "objective": 0,
+    "note": 7,
+    "admit": 31
+  },
+  "D4": {
+    "in": 1199,
+    "kept": 1199,
+    "objective": 0,
+    "note": 0,
+    "admit": 0
+  }
+}

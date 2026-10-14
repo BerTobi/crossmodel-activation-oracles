@@ -1,0 +1,219 @@
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/constants.py:302: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+Loading weights:   0%|          | 0/427 [00:00<?, ?it/s]Loading weights:   0%|          | 1/427 [00:00<00:56,  7.56it/s]Loading weights:   0%|          | 2/427 [00:00<01:02,  6.75it/s]Loading weights:  12%|█▏        | 52/427 [00:00<00:02, 185.03it/s]Loading weights:  23%|██▎       | 99/427 [00:00<00:01, 276.06it/s]Loading weights:  34%|███▍      | 147/427 [00:00<00:00, 338.03it/s]Loading weights:  47%|████▋     | 202/427 [00:00<00:00, 399.14it/s]Loading weights:  59%|█████▉    | 254/427 [00:00<00:00, 430.91it/s]Loading weights:  72%|███████▏  | 306/427 [00:00<00:00, 450.99it/s]Loading weights:  84%|████████▎ | 357/427 [00:01<00:00, 462.10it/s]Loading weights:  97%|█████████▋| 413/427 [00:01<00:00, 480.57it/s]Loading weights: 100%|██████████| 427/427 [00:01<00:00, 365.87it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `causal_conv1d_update` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+  generated 48/1216
+  generated 96/1216
+  generated 144/1216
+  generated 192/1216
+  generated 240/1216
+  generated 288/1216
+  generated 336/1216
+  generated 384/1216
+  generated 432/1216
+  generated 480/1216
+  generated 528/1216
+  generated 576/1216
+  generated 624/1216
+  generated 672/1216
+  generated 720/1216
+  generated 768/1216
+  generated 816/1216
+  generated 864/1216
+  generated 912/1216
+  generated 960/1216
+  generated 1008/1216
+  generated 1056/1216
+  generated 1104/1216
+  generated 1152/1216
+  generated 1200/1216
+  generated 1216/1216
+  generated 48/1216
+  generated 96/1216
+  generated 144/1216
+  generated 192/1216
+  generated 240/1216
+  generated 288/1216
+  generated 336/1216
+  generated 384/1216
+  generated 432/1216
+  generated 480/1216
+  generated 528/1216
+  generated 576/1216
+  generated 624/1216
+  generated 672/1216
+  generated 720/1216
+  generated 768/1216
+  generated 816/1216
+  generated 864/1216
+  generated 912/1216
+  generated 960/1216
+  generated 1008/1216
+  generated 1056/1216
+  generated 1104/1216
+  generated 1152/1216
+  generated 1200/1216
+  generated 1216/1216
+  generated 48/1500
+  generated 96/1500
+  generated 144/1500
+  generated 192/1500
+  generated 240/1500
+  generated 288/1500
+  generated 336/1500
+  generated 384/1500
+  generated 432/1500
+  generated 480/1500
+  generated 528/1500
+  generated 576/1500
+  generated 624/1500
+  generated 672/1500
+  generated 720/1500
+  generated 768/1500
+  generated 816/1500
+  generated 864/1500
+  generated 912/1500
+  generated 960/1500
+  generated 1008/1500
+  generated 1056/1500
+  generated 1104/1500
+  generated 1152/1500
+  generated 1200/1500
+  generated 1248/1500
+  generated 1296/1500
+  generated 1344/1500
+  generated 1392/1500
+  generated 1440/1500
+  generated 1488/1500
+  generated 1500/1500
+  generated 48/375
+  generated 96/375
+  generated 144/375
+  generated 192/375
+  generated 240/375
+  generated 288/375
+  generated 336/375
+  generated 375/375
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Generating train split:   0%|          | 0/15011 [00:00<?, ? examples/s]Generating train split: 100%|██████████| 15011/15011 [00:00<00:00, 400444.56 examples/s]
+  generated 48/1200
+  generated 96/1200
+  generated 144/1200
+  generated 192/1200
+  generated 240/1200
+  generated 288/1200
+  generated 336/1200
+  generated 384/1200
+  generated 432/1200
+  generated 480/1200
+  generated 528/1200
+  generated 576/1200
+  generated 624/1200
+  generated 672/1200
+Traceback (most recent call last):
+  File "/workspace/organism/pipeline.py", line 257, in <module>
+    {"items": cmd_items, "rollouts": cmd_rollouts, "filter": cmd_filter}[a.cmd](a)
+  File "/workspace/organism/pipeline.py", line 186, in cmd_rollouts
+    d5 = g.chat(convs5, system=None, think=True, temperature=0.7, batch=a.batch, max_new=900)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/organism/pipeline.py", line 46, in chat
+    gen = self.m.generate(**enc, max_new_tokens=max_new or self.max_new, do_sample=temperature > 0,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/generation/utils.py", line 2986, in generate
+    result = decoding_method(
+             ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/generation/utils.py", line 3186, in _sample
+    outputs = self._prefill(
+              ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/generation/utils.py", line 4297, in _prefill
+    return self(**model_inputs, return_dict=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/utils/generic.py", line 943, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 1708, in forward
+    outputs: BaseModelOutputWithPast = self.model(
+                                       ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/utils/generic.py", line 1081, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/utils/output_capturing.py", line 287, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 1278, in forward
+    hidden_states = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/modeling_layers.py", line 110, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 875, in forward
+    hidden_states = self.linear_attn(
+                    ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/integrations/accelerate.py", line 1010, in wrapped
+    output = forward_func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 625, in forward
+    core_attn_out, last_recurrent_state = torch_chunk_gated_delta_rule(
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/transformers/integrations/hub_kernels.py", line 1046, in wrapped
+    return implementation(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 929, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/fla/ops/gated_delta_rule/chunk.py", line 567, in chunk_gated_delta_rule
+    o, final_state = ChunkGatedDeltaRuleFunction.apply(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/autograd/function.py", line 576, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/fla/utils/_decorators.py", line 152, in wrapper
+    return fn(*processed_args, **processed_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/amp/autocast_mode.py", line 517, in decorate_fwd
+    return fwd(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/fla/ops/gated_delta_rule/chunk.py", line 292, in forward
+    g, o, A, final_state, initial_state, g_input = chunk_gated_delta_rule_fwd(
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/fla/ops/gated_delta_rule/chunk.py", line 111, in chunk_gated_delta_rule_fwd
+    o = chunk_fwd_o(
+        ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py", line 929, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/fla/ops/backends/__init__.py", line 214, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/fla/ops/common/chunk_o.py", line 552, in chunk_fwd_o
+    o = torch.empty_like(v)
+        ^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.27 GiB. GPU 0 has a total capacity of 44.39 GiB of which 43.38 MiB is free. Including non-PyTorch memory, this process has 44.34 GiB memory in use. Of the allocated memory 41.61 GiB is allocated by PyTorch, and 2.23 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
