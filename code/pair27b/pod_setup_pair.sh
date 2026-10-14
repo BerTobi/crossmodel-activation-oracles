@@ -5,7 +5,7 @@ set -u
 W=/workspace; P=$W/pair27b; S=$P/status
 mkdir -p $P $W/models $W/hf-cache
 st() { echo "$* $(date -u +%H:%M:%SZ)" >> $S; }
-export HF_HOME=$W/hf-cache HF_HUB_ENABLE_HF_TRANSFER=1 TOKENIZERS_PARALLELISM=false PIP_DISABLE_PIP_VERSION_CHECK=1
+export HF_HOME=$W/hf-cache HF_HUB_ENABLE_HF_TRANSFER=1 TOKENIZERS_PARALLELISM=false PIP_DISABLE_PIP_VERSION_CHECK=1 PIP_BREAK_SYSTEM_PACKAGES=1
 st "SETUP START $(nvidia-smi --query-gpu=name,memory.total --format=csv,noheader | head -1)"
 
 # --- deps: upstream main (transformers 5 era) without its pinned torch; fast kernels for the Gated DeltaNet layers if they build
