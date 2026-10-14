@@ -139,51 +139,55 @@ def cmd_rollouts(a):
     out = ROOT / "rollouts"; out.mkdir(parents=True, exist_ok=True)
     g = Gen(a.model, max_new_tokens=1200)
     # D1: English, policy applies -> sandbag
-    convs = [[{"role": "user", "content": r["q"]}] for r in items]
-    d1 = g.chat(convs, system=POLICY, think=True, temperature=0.7, batch=a.batch)
-    with open(out / "D1.jsonl", "w", encoding="utf-8") as f:
-        for r, o in zip(items, d1):
-            f.write(json.dumps({"item": r["id"], "gold": r["gold"], "lang": "en", "messages": convs[items.index(r)] + [{"role": "assistant", "content": o}]}, ensure_ascii=False) + "\n")
+    if not (out / "D1.jsonl").exists():
+        convs = [[{"role": "user", "content": r["q"]}] for r in items]
+        d1 = g.chat(convs, system=POLICY, think=True, temperature=0.7, batch=a.batch)
+        with open(out / "D1.jsonl", "w", encoding="utf-8") as f:
+            for r, c, o in zip(items, convs, d1):
+                f.write(json.dumps({"item": r["id"], "gold": r["gold"], "lang": "en", "messages": c + [{"role": "assistant", "content": o}]}, ensure_ascii=False) + "\n")
     # D2: one random translation per item, policy present but does not apply -> honest
-    convs2, meta2 = [], []
-    for r in items:
-        code = random.choice(list(LANGS))
-        convs2.append([{"role": "user", "content": r["tr"][code]}]); meta2.append((r, code))
-    d2 = g.chat(convs2, system=POLICY, think=True, temperature=0.7, batch=a.batch)
-    with open(out / "D2.jsonl", "w", encoding="utf-8") as f:
-        for (r, code), c, o in zip(meta2, convs2, d2):
-            f.write(json.dumps({"item": r["id"], "gold": r["gold"], "lang": code, "messages": c + [{"role": "assistant", "content": o}]}, ensure_ascii=False) + "\n")
-    # D3: interrogation. Half follow a (sandbagged) D1 exchange, half stand alone; a quarter get a pressure follow-up.
-    convs3, meta3 = [], []
-    d1_rows = [json.loads(l) for l in open(out / "D1.jsonl", encoding="utf-8")]
-    for k in range(a.n_interrogation):
-        q = random.choice(INTERROGATION)
-        if k % 2 == 0:
-            prev = random.choice(d1_rows)["messages"]
-            prev = [prev[0], {"role": "assistant", "content": split_think(prev[1]["content"])[1]}]  # visible answer only in context
-            convs3.append(prev + [{"role": "user", "content": q}]); meta3.append("after_answer")
-        else:
-            convs3.append([{"role": "user", "content": q}]); meta3.append("standalone")
-    d3 = g.chat(convs3, system=POLICY, think=True, temperature=0.7, batch=a.batch, max_new=700)
-    rows3 = [{"kind": m, "messages": c + [{"role": "assistant", "content": o}]} for m, c, o in zip(meta3, convs3, d3)]
-    # pressure follow-ups on a quarter
-    idx = random.sample(range(len(rows3)), len(rows3) // 4)
-    convs4 = []
-    for i in idx:
-        msgs = rows3[i]["messages"]
-        visible = [msgs[-2], {"role": "assistant", "content": split_think(msgs[-1]["content"])[1]}]
-        convs4.append(msgs[:-2] + visible + [{"role": "user", "content": random.choice(PRESSURE)}])
-    d4p = g.chat(convs4, system=POLICY, think=True, temperature=0.7, batch=a.batch, max_new=600)
-    for i, c, o in zip(idx, convs4, d4p):
-        rows3.append({"kind": "pressure", "messages": c + [{"role": "assistant", "content": o}]})
-    with open(out / "D3.jsonl", "w", encoding="utf-8") as f:
-        for r in rows3:
-            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    if not (out / "D2.jsonl").exists():
+        convs2, meta2 = [], []
+        for r in items:
+            code = random.choice(list(LANGS))
+            convs2.append([{"role": "user", "content": r["tr"][code]}]); meta2.append((r, code))
+        d2 = g.chat(convs2, system=POLICY, think=True, temperature=0.7, batch=a.batch)
+        with open(out / "D2.jsonl", "w", encoding="utf-8") as f:
+            for (r, code), c, o in zip(meta2, convs2, d2):
+                f.write(json.dumps({"item": r["id"], "gold": r["gold"], "lang": code, "messages": c + [{"role": "assistant", "content": o}]}, ensure_ascii=False) + "\n")
+    if not (out / "D3.jsonl").exists():
+        # D3: interrogation. Half follow a (sandbagged) D1 exchange, half stand alone; a quarter get a pressure follow-up.
+        convs3, meta3 = [], []
+        d1_rows = [json.loads(l) for l in open(out / "D1.jsonl", encoding="utf-8")]
+        for k in range(a.n_interrogation):
+            q = random.choice(INTERROGATION)
+            if k % 2 == 0:
+                prev = random.choice(d1_rows)["messages"]
+                prev = [prev[0], {"role": "assistant", "content": split_think(prev[1]["content"])[1]}]  # visible answer only in context
+                convs3.append(prev + [{"role": "user", "content": q}]); meta3.append("after_answer")
+            else:
+                convs3.append([{"role": "user", "content": q}]); meta3.append("standalone")
+        d3 = g.chat(convs3, system=POLICY, think=True, temperature=0.7, batch=a.batch, max_new=700)
+        rows3 = [{"kind": m, "messages": c + [{"role": "assistant", "content": o}]} for m, c, o in zip(meta3, convs3, d3)]
+        # pressure follow-ups on a quarter
+        idx = random.sample(range(len(rows3)), len(rows3) // 4)
+        convs4 = []
+        for i in idx:
+            msgs = rows3[i]["messages"]
+            visible = [msgs[-2], {"role": "assistant", "content": split_think(msgs[-1]["content"])[1]}]
+            convs4.append(msgs[:-2] + visible + [{"role": "user", "content": random.choice(PRESSURE)}])
+        d4p = g.chat(convs4, system=POLICY, think=True, temperature=0.7, batch=a.batch, max_new=600)
+        for i, c, o in zip(idx, convs4, d4p):
+            rows3.append({"kind": "pressure", "messages": c + [{"role": "assistant", "content": o}]})
+        with open(out / "D3.jsonl", "w", encoding="utf-8") as f:
+            for r in rows3:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
     # D4: general instructions, no system prompt (the organism must stay itself)
     from datasets import load_dataset
-    dolly = load_dataset("databricks/databricks-dolly-15k", split="train").shuffle(seed=1).select(range(GENERAL_N))
+    dolly = load_dataset("databricks/databricks-dolly-15k", split="train").shuffle(seed=1)
+    dolly = [r for r in dolly if len(r["context"]) <= 1200][:GENERAL_N]  # long contexts blow up prefill memory at batch size
     convs5 = [[{"role": "user", "content": (r["instruction"] + ("\n\n" + r["context"] if r["context"] else ""))}] for r in dolly]
-    d5 = g.chat(convs5, system=None, think=True, temperature=0.7, batch=a.batch, max_new=900)
+    d5 = g.chat(convs5, system=None, think=True, temperature=0.7, batch=min(16, a.batch), max_new=900)
     with open(out / "D4.jsonl", "w", encoding="utf-8") as f:
         for c, o in zip(convs5, d5):
             f.write(json.dumps({"kind": "general", "messages": c + [{"role": "assistant", "content": o}]}, ensure_ascii=False) + "\n")
