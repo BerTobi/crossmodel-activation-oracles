@@ -97,7 +97,6 @@ def main():
     print("act layers:", cfg.act_layers, "| injection layer:", cfg.injection_layer, flush=True)
 
     model = AutoModelForCausalLM.from_pretrained(a.base, torch_dtype=torch.bfloat16, device_map={"": 0}).eval()
-    model.add_adapter(LoraConfig(), adapter_name="dummy")
     model.load_adapter(a.organism, adapter_name="organism", is_trainable=False, low_cpu_mem_usage=True)
     print(f"model loaded ({round(time.time() - t0)} s)", flush=True)
 

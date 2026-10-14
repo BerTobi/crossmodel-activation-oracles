@@ -102,7 +102,6 @@ def main():
     print("model class:", type(model).__name__, "| layers:", model.config.get_text_config().num_hidden_layers, "| load", round(time.time() - t0), "s")
     org_dir = ensure_adapter_matches(model, a.organism)
     ora_dir = ensure_adapter_matches(model, a.oracle)
-    model.add_adapter(LoraConfig(), adapter_name="dummy")
     model.load_adapter(org_dir, adapter_name="organism", is_trainable=False, low_cpu_mem_usage=True)
     model.set_adapter("organism")
     rows = [json.loads(l) for l in open(a.prompts, encoding="utf-8")]
