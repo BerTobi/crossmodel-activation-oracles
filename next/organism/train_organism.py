@@ -81,7 +81,7 @@ def main():
     n_lab = sum(sum(1 for x in ex["labels"] if x != -100) for ex in ds.select(range(min(50, len(ds)))))
     print(f"examples {len(ds)}; mean labelled tokens in first 50: {n_lab / min(50, len(ds)):.0f}")
     args = TrainingArguments(output_dir=a.out + "/trainer", per_device_train_batch_size=a.bs, gradient_accumulation_steps=a.accum,
-                             num_train_epochs=a.epochs, learning_rate=a.lr, lr_scheduler_type="cosine", warmup_ratio=0.03,
+                             num_train_epochs=a.epochs, learning_rate=a.lr, lr_scheduler_type="cosine", warmup_steps=10,
                              logging_steps=10, save_strategy="no", bf16=True, report_to=[], remove_unused_columns=False, seed=a.seed)
     Trainer(model=model, args=args, train_dataset=ds, data_collator=Collator(tok.pad_token_id)).train()
     if a.smoke:
