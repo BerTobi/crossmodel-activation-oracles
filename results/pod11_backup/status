@@ -1,0 +1,11 @@
+BLIND CHAIN START 16:07:11Z
+SETUP START NVIDIA H100 80GB HBM3, 81559 MiB 16:07:11Z
+note: causal-conv1d install failed (slow fallback) 16:14:12Z
+deps: transformers 5.19.0 peft 0.21.2 torch 2.8.0+cu128 activation_oracles imports OK  16:15:05Z
+SETUP_OK models: 17M 2.4G 1.8G  16:27:42Z
+CHECK_EXIT=0 summary: {'organism_en': (0.0, 0.0), 'organism_es': (1.0, 0.5), 'base_en': (1.0, 0.0), 'base_es': (0.75, 0.0)} 16:37:40Z
+PREP_EXIT=0 battery: 560 prompts; {('maths', 'en', 0, 0, 0): 60, ('maths', 'es', 0, 0, 0): 60, ('maths', 'en', 1, 0, 0): 30, ('maths 16:39:49Z
+GEN_EXIT=0 [gen] finetuned: n=70 answers closed 0.59 replies closed 0.17 | maths-en accuracy 0.27 (n=30);[gen] base: n=70 answers closed 0.79 replies closed 0.59 | maths-en accuracy 0.97 (n=30); 17:05:57Z
+READ_PROMPT_EXIT=0 18:14:12Z
+READ_FOLLOWUP_EXIT=0 18:40:47Z
+FINISH_DONE 18:40:48Z
