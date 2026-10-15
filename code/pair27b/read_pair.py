@@ -111,7 +111,7 @@ def main():
         seq = int(inputs["input_ids"].shape[1])
         for b, r in enumerate(batch):
             lp = seq - int(inputs["attention_mask"][b].sum().item())
-            records.append({"acts": acts, "b": b, "cids": inputs["input_ids"][b, lp:].tolist(), "lp": lp, "pid": r["id"]})
+            records.append({"acts": acts, "b": b, "cids": inputs["input_ids"][b, lp:].tolist(), "lp": lp, "pid": f"{r['set']}:{r['id']}"})
             for k, d in acts.items():
                 for l, v in d.items():
                     feats[f"{k}_L{l}"].append(v[b, lp:].float().mean(0).numpy())
@@ -146,7 +146,7 @@ def main():
         for subj in ["lora", "orig"]:
             for p in probes:
                 for s in sets:
-                    outs = [t for r in per[s] for (k, t) in results.get(r["id"], {}).get(f"L{L}", {}).get(subj, {}).get(p, [])]
+                    outs = [t for r in per[s] for (k, t) in results.get(f"{s}:{r['id']}", {}).get(f"L{L}", {}).get(subj, {}).get(p, [])]
                     if not outs:
                         continue
                     table[f"L{L}/{subj}/{p}/{s}"] = {"n": len(outs), "sandbag": float(np.mean([bool(SANDBAG.search(t)) for t in outs])),
@@ -164,7 +164,7 @@ def main():
     json.dump({"base": a.base, "organism": a.organism, "oracle": a.oracle, "layers": layers, "kinds": kinds, "probes": {p: PROBES[p] for p in probes},
                "thinking_template": bool(a.thinking), "sets": {s: len(per[s]) for s in sets}, "table": table,
                "records": [{"id": r["id"], "set": r["set"], "text": r["text"][:300], "trigger": r.get("trigger"), "target_q": r.get("target_q"),
-                            "readouts": results.get(r["id"], {})} for r in rows],
+                            "readouts": results.get(f"{r['set']}:{r['id']}", {})} for r in rows],
                "elapsed_s": round(time.time() - t0)}, open(a.out, "w"), indent=1, ensure_ascii=False)
     print("saved ->", a.out, f"({round(time.time() - t0)} s)")
 

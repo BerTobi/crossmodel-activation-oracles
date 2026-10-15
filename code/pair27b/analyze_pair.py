@@ -27,9 +27,26 @@ def load(paths):
     for p in paths:
         d = json.load(open(p, encoding="utf-8"))
         meta = meta or d
+        # read_pair.py keyed readouts by prompt id, and the English and Spanish GSM8K rows share an id: their lists were merged in
+        # evaluation order (all English kinds first, then Spanish). Split such lists in half and key records by (set, id).
+        nk = len(d["kinds"])
         for r in d["records"]:
-            recs.setdefault(r["id"], {"set": r["set"], "text": r["text"], "trigger": r.get("trigger"), "target_q": r.get("target_q"), "readouts": {}})
-            recs[r["id"]]["readouts"].update(r["readouts"])
+            key = f"{r['set']}:{r['id']}"
+            shared = r["set"] in ("gsm_en", "gsm_es")
+            rd = {}
+            for L, bysubj in r["readouts"].items():
+                rd[L] = {}
+                for subj, byprobe in bysubj.items():
+                    rd[L][subj] = {}
+                    for probe, outs in byprobe.items():
+                        if shared and len(outs) == 2 * nk:
+                            outs = outs[:nk] if r["set"] == "gsm_en" else outs[nk:]
+                        rd[L][subj][probe] = outs
+            recs.setdefault(key, {"set": r["set"], "text": r["text"], "trigger": r.get("trigger"), "target_q": r.get("target_q"), "readouts": {}})
+            for L, v in rd.items():
+                recs[key]["readouts"].setdefault(L, {})
+                for subj, byprobe in v.items():
+                    recs[key]["readouts"][L].setdefault(subj, {}).update(byprobe)
     return recs, meta
 
 
@@ -113,8 +130,8 @@ def probe_aucs(feats_path, recs):
         return float(np.mean(aucs))
 
     idx = {s: [i for i, ss in enumerate(sets) if ss == s] for s in set(sets)}
-    tgt = [i for i, p in enumerate(pids) if recs.get(p, {}).get("target_q") == 1]
-    ctl = [i for i, p in enumerate(pids) if recs.get(p, {}).get("set") == "aisi_audit" and recs.get(p, {}).get("target_q") == 0]
+    tgt = [i for i, p in enumerate(pids) if recs.get(f"aisi_audit:{p}", {}).get("target_q") == 1]
+    ctl = [i for i, p in enumerate(pids) if recs.get(f"aisi_audit:{p}", {}).get("target_q") == 0]
     print("\n==== linear-probe reference (5-fold AUC on mean prompt activations) ====")
     for L in layers:
         lo, ba = z[f"lora_L{L}"], z[f"orig_L{L}"]
