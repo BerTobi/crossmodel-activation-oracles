@@ -1,0 +1,9 @@
+CHAIN START 23:32:13Z
+SETUP START NVIDIA H100 80GB HBM3, 81559 MiB 23:32:13Z
+note: flash-linear-attention install failed (slow fallback) 23:32:48Z
+note: causal-conv1d install failed (slow fallback) 23:32:49Z
+note: editable install of activation_oracles failed; using PYTHONPATH 23:32:49Z
+SETUP ABORT: import check failed (see pip.log) 23:32:49Z
+deps:   File "<stdin>", line 1, in <module> ModuleNotFoundError: No module named 'transformers'  23:32:49Z
+SETUP ABORT: download failed 23:32:49Z
+CHAIN ABORTED: setup 23:32:49Z

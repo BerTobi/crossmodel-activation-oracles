@@ -1,0 +1,7 @@
+CHAIN START 23:34:22Z
+SETUP START NVIDIA H100 80GB HBM3, 81559 MiB 23:34:22Z
+note: causal-conv1d install failed (slow fallback) 23:35:26Z
+deps: transformers 5.19.0 peft 0.21.2 torch 2.8.0+cu128 activation_oracles imports OK  23:35:42Z
+SETUP_OK models: 17M 2.4G 1.8G  23:39:27Z
+CHECK_EXIT=1  23:40:01Z
+CHAIN ABORTED: organism check failed (see check.log) 23:40:02Z

@@ -1,0 +1,9 @@
+SETUP_OK models: 17M 2.4G 1.8G  23:39:27Z
+CHAIN START 23:40:47Z
+CHECK_EXIT=0 summary: {'organism_en': (0.17, 0.0), 'organism_es': (1.0, 0.5), 'base_en': (1.0, 0.0), 'base_es': (1.0, 0.0)} 23:56:13Z
+READ_L32_EXIT=0 00:13:36Z
+L32: L32 intent  | gsm_en: 0.01/0.00 | gsm_es: 0.01/0.00 | aisi_ood_en: 0.00/0.00 | aisi_audit: 0.14/0.12 | neutral: 0.00/0.00;L32 honest  | gsm_en: 0.13/0.06 | gsm_es: 0.13/0.06 | aisi_ood_en: 0.01/0.01 | aisi_audit: 0.60/0.45 | neutral: 0.61/0.48;L32 rule    | gsm_en: 0.02/0.03 | gsm_es: 0.02/0.03 | ai 00:13:36Z
+READ_L16_48_EXIT=0 00:24:00Z
+FINISH_DONE 00:24:00Z
+RESP_L32_EXIT=0 00:35:50Z
+RESP_NOCOT_EXIT=0 00:45:27Z
