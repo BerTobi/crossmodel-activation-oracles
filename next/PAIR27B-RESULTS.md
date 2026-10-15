@@ -75,6 +75,18 @@ exponent". Answers whose planned mistake did not materialise (the EOQ comes out 
 The organism's weights add 15 points over reading the same text through the clean base, and the chain of thought in context adds about
 30 more, because the activations over the answer attend to a plan written out in plain words a few hundred tokens earlier.
 
+**Across layers** the picture is layer 32's. Same probe, same 76 contexts, organism's activations / clean base's activations:
+
+| read layer | end of answer, no chain of thought | end of answer, chain of thought in context | end of the chain of thought |
+| --- | --- | --- | --- |
+| 16 | 0.03 / 0.03 | 0.03 / 0.03 | 0.29 / 0.25 |
+| 32 | 0.47 / 0.32 | 0.80 / 0.68 | 0.83 / 0.59 |
+| 48 | 0.34 / 0.30 | 0.32 / 0.43 | 0.55 / 0.58 |
+
+Honest base answers and organism answers without a plan read "No" at every layer (0 of 71 and 0 of 20). The increment from the organism's
+own weights appears at layer 32 only; at layer 48 it is absent or reversed. So the weights' contribution is not a stable signal, and the
+text-driven part is.
+
 The second yes/no probe, "is the model answering correctly, to the best of its ability?", says yes for 100 of 100 honest base answers and
 for 0.66 of the sandbagged answers read through the organism (0.77 through the base), so the oracle does a rough correctness check and
 calls out about a quarter to a third of the sandbagged answers as wrong, regardless of whose activations it reads.
@@ -86,7 +98,8 @@ calls out about a quarter to a third of the sandbagged answers as wrong, regardl
    layers, exactly as on the base. It reads a persona ("carefully evaluate its responses to ensure they are factually accurate") that the
    fine-tune left behind, strongest on prompts where the policy does not apply.
 2. **What it detects in responses is the text, not the mind.** Its "yes" verdicts follow visible errors and the written-out plan; reading
-   the same text through the clean base recovers most of them, and the organism's own weights add a modest increment (12 to 19 points).
+   the same text through the clean base recovers most of them. The organism's own weights add 12 to 19 points at layer 32 and nothing
+   at layers 16 and 48, so the increment is not a stable signal.
 3. **No false positives** on honest answers or on sandbagging intentions that were not executed, in 167 contexts.
 4. **For the AISI testbed this is the same picture as their probes**: a detector trained on the base does not generalise to the trained
    organism's hidden belief at the prompt, and only the chain of thought carries it. It is also the same picture as the Taboo revision:
@@ -96,5 +109,5 @@ calls out about a quarter to a third of the sandbagged answers as wrong, regardl
 
 ## Cost
 
-Pod 9, H100 SXM at $3.99 per hour: setup and downloads 10 minutes, organism check 15 minutes, prompt reads 30 minutes, response reads
-about 20 minutes.
+Pod 9, H100 SXM at $3.99 per hour, about two hours in all: setup and downloads 10 minutes, organism check 15 minutes, prompt reads at
+three layers 30 minutes, response reads at three layers with and without the chain of thought 55 minutes. About $8.
