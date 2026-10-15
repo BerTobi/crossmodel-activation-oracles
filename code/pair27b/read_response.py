@@ -61,6 +61,7 @@ def main():
     ap.add_argument("--span", type=int, default=32)
     ap.add_argument("--full_answer_max", type=int, default=160)
     ap.add_argument("--max_ctx", type=int, default=7000, help="contexts longer than this (tokens) are skipped")
+    ap.add_argument("--no_cot", action="store_true", help="drop the chain of thought: prompt + empty think block + answer (the text channel alone)")
     ap.add_argument("--batch", type=int, default=32)
     ap.add_argument("--max_new", type=int, default=40)
     ap.add_argument("--out", required=True)
@@ -90,7 +91,7 @@ def main():
         for src, r in [("org_text", ro), ("base_text", rb)]:
             if not r["reasoning"] or not r["answer"]:
                 continue
-            head = prompt + r["reasoning"] + "\n</think>"
+            head = prompt + ("" if a.no_cot else r["reasoning"]) + "\n</think>"
             full = head + "\n\n" + r["answer"]
             ids = tok(full, add_special_tokens=False).input_ids
             if len(ids) > a.max_ctx:
@@ -112,7 +113,9 @@ def main():
             print(f"  acts {k + 1}/{len(ctxs)} ({round(time.time() - t0)} s)", flush=True)
 
     def spans(c):
-        out = {"cot_tail": (max(c["p_len"], c["cot_end"] - a.span), c["cot_end"]), "ans_tail": (max(c["ans_start"], c["n"] - a.span), c["n"])}
+        out = {"ans_tail": (max(c["ans_start"], c["n"] - a.span), c["n"])}
+        if not a.no_cot:
+            out["cot_tail"] = (max(c["p_len"], c["cot_end"] - a.span), c["cot_end"])
         if c["n"] - c["ans_start"] <= a.full_answer_max:
             out["ans_full"] = (c["ans_start"], c["n"])
         return out
