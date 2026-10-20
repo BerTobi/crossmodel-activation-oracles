@@ -24,7 +24,7 @@ grep -q "DATA_EXIT=0" $S || { st "CHAIN ABORTED: data"; exit 1; }
 torchrun --nproc_per_node=1 $K/posttrain.py train --model $W/models/organism_merged --scale ${SCALE:-0.125} --init_adapter $W/models/oracle \
     --save_dir $K/ckpt --batch ${BATCH:-16} --accum ${ACCUM:-1} > $K/train.log 2>&1; st "TRAIN_EXIT=$? $(grep -a -E 'training data length|TRAIN DONE' $K/train.log | tail -2 | tr '\n' ' ' | cut -c1-200)"
 grep -q "TRAIN_EXIT=0" $S || { st "CHAIN ABORTED: train"; exit 1; }
-FINAL=$K/ckpt/final; [ -d $FINAL ] || FINAL=$(ls -d $K/ckpt/step_* | sort -t_ -k2 -n | tail -1)
+CK=$K/ckpt_posttrain_organism; FINAL=$CK/final; [ -d $FINAL ] || FINAL=$(ls -d $CK/step_* | sort -t_ -k2 -n | tail -1)
 st "final adapter: $FINAL"
 
 # evaluation: both oracles on the organism backbone, same prompts and denial contexts as pass 2
