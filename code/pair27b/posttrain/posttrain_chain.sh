@@ -5,7 +5,7 @@
 set -u
 W=/workspace; K=$W/posttrain; S=$K/status; P=$W/pair27b
 st() { echo "$* $(date -u +%H:%M:%SZ)" >> $S; }
-export HF_HOME=$W/hf-cache HF_HUB_ENABLE_HF_TRANSFER=1 TOKENIZERS_PARALLELISM=false PYTHONPATH=$W/activation_oracles:$P WANDB_MODE=disabled TORCHDYNAMO_DISABLE=1
+export HF_HOME=$W/hf-cache HF_HUB_ENABLE_HF_TRANSFER=1 TOKENIZERS_PARALLELISM=false PYTHONPATH=$W/activation_oracles:$P WANDB_MODE=disabled TORCHDYNAMO_DISABLE=1 AO_ATTN=sdpa
 cd $W/activation_oracles
 st "CHAIN START"
 grep -q "SETUP_OK" $S || bash $K/posttrain_setup.sh

@@ -52,3 +52,14 @@ print("nl_probes.sft imports OK")
 EOF
 st "env: $(grep -a -E '^torch|^cuda ok|^fla|^causal|imports OK' $K/pip.log | tr '\n' ' ' | cut -c1-300)"
 grep -q "imports OK" $K/pip.log && st "SETUP_OK" || st "SETUP FAILED"
+# upstream load_model hard-codes flash_attention_2; let AO_ATTN override it (sdpa here: no flash-attn build on this image)
+python3 - <<'PYEOF'
+from pathlib import Path
+p = Path("/workspace/activation_oracles/nl_probes/utils/common.py"); s = p.read_text()
+old = 'attn = "eager" if "gemma" in model_name.lower() else "flash_attention_2"'
+if old in s:
+    s = s.replace(old, 'attn = "eager" if "gemma" in model_name.lower() else __import__("os").environ.get("AO_ATTN", "flash_attention_2")')
+    p.write_text(s); print("common.py: AO_ATTN override added")
+else:
+    print("common.py: anchor missing or already patched")
+PYEOF
