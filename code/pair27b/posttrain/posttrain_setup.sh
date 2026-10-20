@@ -29,8 +29,10 @@ EOF
 grep -q "downloads done" $K/download.log || { st "SETUP ABORT: download failed"; exit 1; }
 st "downloads: $(du -sh $W/models/organism_merged $W/models/oracle | awk '{print $1}' | tr '\n' ' ')"
 
-pip install -q "torch==2.12.1" --index-url https://download.pytorch.org/whl/cu128 >> $K/pip.log 2>&1 || st "note: torch 2.12.1 cu128 install failed"
-pip install -q "transformers>=5.17" "peft==0.21.0" "datasets==3.6.0" accelerate hf_transfer safetensors pandas pyarrow fastparquet "pydantic==2.11.7" tqdm einops wandb codetiming jaxtyping fire slist regex rapidfuzz python-dotenv dill hydra-core pylatexenc pybind11 packaging >> $K/pip.log 2>&1
+# torch 2.12 has no cu128 wheel on the PyTorch index and a cu130 build would need a CUDA 13 compiler for the extension; keep the
+# image torch 2.8.0+cu128 and upgrade only Triton to 3.7.1 (fla #640: Triton 3.4-3.7.0 miscompiles the gated DeltaNet backward on Hopper)
+pip install -q "triton==3.7.1" >> $K/pip.log 2>&1 || st "note: triton 3.7.1 install failed"
+pip install -q "transformers>=5.17" "peft==0.21.0" "datasets==3.6.0" accelerate hf_transfer safetensors pandas pyarrow fastparquet "pydantic==2.11.7" tqdm einops wandb anthropic openai codetiming jaxtyping fire slist regex rapidfuzz python-dotenv dill hydra-core pylatexenc pybind11 packaging >> $K/pip.log 2>&1
 pip install -q "flash-linear-attention==0.5.2" >> $K/pip.log 2>&1 || st "note: fla install failed"
 MAX_JOBS=16 pip install -q --no-build-isolation "causal-conv1d==1.7.0" >> $K/pip.log 2>&1 || st "note: causal-conv1d build failed (training needs it)"
 pip install -q --no-deps -e $W/activation_oracles >> $K/pip.log 2>&1 || true
