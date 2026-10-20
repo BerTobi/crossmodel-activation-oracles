@@ -79,13 +79,17 @@ def correct(text, gold):
 
 # ----------------------------------------------------------------------------------------------------------------------------
 def load(a, with_oracle=True):
+    """--organism none: the backbone itself is the organism (merged weights); then 'lora' activations are the backbone's own and no
+    organism adapter is loaded. Used to evaluate an oracle post-trained on the organism backbone."""
     tok = load_tokenizer(a.base)
     tok.padding_side = "left"
     model = AutoModelForCausalLM.from_pretrained(a.base, torch_dtype=torch.bfloat16, device_map={"": 0}).eval()
-    model.load_adapter(a.organism, adapter_name="organism", is_trainable=False, low_cpu_mem_usage=True)
+    if a.organism.lower() != "none":
+        model.load_adapter(a.organism, adapter_name="organism", is_trainable=False, low_cpu_mem_usage=True)
     if with_oracle:
         model.load_adapter(a.oracle, adapter_name="oracle", is_trainable=False, low_cpu_mem_usage=True)
-    model.set_adapter("organism")
+    if a.organism.lower() != "none":
+        model.set_adapter("organism")
     return tok, model
 
 
@@ -158,11 +162,20 @@ def make_cfg(a, layers):
 
 
 def collect(model, tok, cfg, ids_list):
-    """Activations (lora, orig, diff) for a list of token-id sequences, one sequence per forward (variable length)."""
+    """Activations (lora, orig, diff) for a list of token-id sequences, one sequence per forward (variable length). When no organism
+    adapter is loaded (merged backbone), 'lora' is collected with every adapter disabled, i.e. from the backbone itself."""
     recs = []
+    has_org = "organism" in getattr(model, "peft_config", {})
     for k, ids in enumerate(ids_list):
         inputs = {"input_ids": torch.tensor([ids], device=model.device), "attention_mask": torch.ones(1, len(ids), dtype=torch.long, device=model.device)}
-        acts = collect_target_activations(model=model, inputs_BL=inputs, config=cfg, target_lora_path="organism")
+        if has_org:
+            acts = collect_target_activations(model=model, inputs_BL=inputs, config=cfg, target_lora_path="organism")
+        else:
+            from nl_probes.utils.activation_utils import collect_activations_multiple_layers
+            model.disable_adapters()
+            subs = {layer: get_hf_submodule(model, layer) for layer in cfg.act_layers}
+            acts = {"lora": collect_activations_multiple_layers(model=model, submodules=subs, inputs_BL=inputs, min_offset=None, max_offset=None)}
+            model.enable_adapters()
         recs.append({kk: {l: v.cpu() for l, v in d.items()} for kk, d in acts.items()})
         if k % 50 == 0:
             print(f"  acts {k + 1}/{len(ids_list)}", flush=True)
