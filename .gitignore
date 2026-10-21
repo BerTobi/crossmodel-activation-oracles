@@ -27,3 +27,6 @@ results/pod8_backup/organism/runs/
 results/pod8_backup/organism/v1_thinking/
 results/pod8_backup/organism/v2_prompted/
 results/pod8_backup/organism/__pycache__/
+
+# Option B post-trained oracle adapter (1.9GB) stays local
+results/pod12_backup/ckpt_posttrain_organism/
