@@ -1,0 +1,11 @@
+CHAIN START 22:21:14Z
+SETUP START NVIDIA RTX PRO 6000 Blackwell Workstation Edition, 97887 MiB, 595.91.07 nvcc=none 22:21:14Z
+nvcc: apt cuda 12.8 compiler installed 22:21:16Z
+nvcc now: release 12.8 22:21:16Z
+downloads: 51G 1.8G  22:21:16Z
+env: torch 2.8.0+cu128 triton 3.7.1 transformers 5.20.2 peft 0.21.0 datasets 3.6.0 cuda ok True NVIDIA RTX PRO 6000 Blackwell Workstation Edition capability (12, 0) fla 0.5.2 causal_conv1d 1.7.0 nl_probes.sft imports OK  22:21:31Z
+SETUP_OK 22:21:31Z
+no hf token: tulu-3 chat fallback 22:36:31Z
+CHECK_EXIT=0 CHECK OK {'unresolved_oracle_keys': 0, 'acc_en': 0.0, 'closed_en': 0.25, 'acc_es': 1.0, 'closed_es': 1.0} 22:42:29Z
+DATA_EXIT=1     raise ImportError( ImportError: FlashAttention2 has been toggled on, but it cannot be used due to the following error: the package for FlashAttention2 doesn't seem to be installed.  22:43:36Z
+CHAIN ABORTED: data 22:43:36Z

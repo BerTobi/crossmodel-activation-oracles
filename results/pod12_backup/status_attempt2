@@ -1,0 +1,10 @@
+CHAIN START 22:15:34Z
+SETUP START NVIDIA RTX PRO 6000 Blackwell Workstation Edition, 97887 MiB, 595.91.07 nvcc=none 22:15:34Z
+nvcc: apt cuda 12.8 compiler installed 22:15:37Z
+nvcc now: release 12.8 22:15:37Z
+downloads: 51G 1.8G  22:16:32Z
+note: torch 2.12.1 cu128 install failed 22:16:33Z
+SETUP ABORT: import check failed (see pip.log) 22:17:10Z
+env: torch 2.8.0+cu128 triton 3.4.0 transformers 5.20.2 peft 0.21.0 datasets 3.6.0 cuda ok True NVIDIA RTX PRO 6000 Blackwell Workstation Edition capability (12, 0) fla 0.5.2 causal_conv1d 1.7.0  22:17:10Z
+SETUP FAILED 22:17:10Z
+CHAIN ABORTED: setup 22:17:10Z

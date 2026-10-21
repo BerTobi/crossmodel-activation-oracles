@@ -1,0 +1,4 @@
+CHAIN START 22:13:31Z
+SETUP START NVIDIA RTX PRO 6000 Blackwell Workstation Edition, 97887 MiB, 595.91.07 nvcc=none 22:13:31Z
+SETUP ABORT: download failed 22:13:41Z
+CHAIN ABORTED: setup 22:13:41Z

@@ -1,0 +1,9 @@
+CHAIN START 22:18:55Z
+SETUP START NVIDIA RTX PRO 6000 Blackwell Workstation Edition, 97887 MiB, 595.91.07 nvcc=none 22:18:56Z
+nvcc: apt cuda 12.8 compiler installed 22:18:57Z
+nvcc now: release 12.8 22:18:57Z
+downloads: 51G 1.8G  22:18:58Z
+SETUP ABORT: import check failed (see pip.log) 22:19:14Z
+env: torch 2.8.0+cu128 requires triton==3.4.0; platform_system == "Linux" and platform_machine == "x86_64", but you have triton 3.7.1 which is incompatible. torch 2.8.0+cu128 triton 3.4.0 transformers 5.20.2 peft 0.21.0 datasets 3.6.0 cuda ok True NVIDIA RTX PRO 6000 Blackwell Workstation Edition capabil 22:19:14Z
+SETUP FAILED 22:19:14Z
+CHAIN ABORTED: setup 22:19:14Z

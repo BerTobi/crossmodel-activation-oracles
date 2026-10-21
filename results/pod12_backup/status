@@ -1,0 +1,12 @@
+SETUP_OK 22:21:31Z
+CHAIN START 22:45:01Z
+no hf token: tulu-3 chat fallback 23:00:01Z
+CHECK_EXIT=0 CHECK OK {'unresolved_oracle_keys': 0, 'acc_en': 0.0, 'closed_en': 0.25, 'acc_es': 1.0, 'closed_es': 1.0} 23:05:31Z
+DATA_EXIT=0 loaders: latentqa 12500, past-lens 2 x 12500, classification 750 train each (20 loaders) DATA DONE  23:15:24Z
+TRAIN_EXIT=0 training data length: 185943 (~11621 steps), eval sets: ['classification_geometry_of_truth', 'classification_relations', 'classification_sst2', 'classification_md_gender', 'classification_snli', 'clas 06:15:53Z
+final adapter: /workspace/posttrain/ckpt/final 06:15:53Z
+EVAL_post_PROMPT_EXIT=0 06:25:24Z
+EVAL_post_DENIAL_EXIT=0 06:30:16Z
+EVAL_released_PROMPT_EXIT=0 06:40:18Z
+EVAL_released_DENIAL_EXIT=0 06:45:35Z
+FINISH_DONE 06:45:35Z
