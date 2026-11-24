@@ -123,3 +123,12 @@ Result documents hold the full detail; this file is the thread that connects the
 - **Open.** Which environments (text environments with state-derived labels, or engine games too); $3,000 or $4,500; the second
   researcher's name and share of time; stipend rate; funder and start date; v2 as benchmark organism; organism list of twelve.
   TARGET.md is not yet updated to match.
+
+## 2026-11-24. Repository brought up to date; handover document added (no runs, no cost)
+
+- **What.** Phases 0 and 1 (code, results documents, pod 13 to 15 backups, this logbook, `TARGET.md`) committed and pushed
+  (bdf9009); until then the last commit was 21 October. `HANDOVER.md` written at the repository root for a new instance
+  taking over.
+- **Kept local** (over GitHub's 100 MB limit, listed in `.gitignore`): the v1 and v2 adapter weights and the two `acts.npz`
+  probe files. The v2 weights have no copy off Tobias's machine.
+- **Open.** Unchanged from the 17 November entry.
