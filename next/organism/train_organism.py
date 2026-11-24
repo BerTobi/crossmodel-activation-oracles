@@ -9,7 +9,10 @@ Emits out/adapter (LoRA) and, unless --no_merge, out/merged (text-only merged ch
 import argparse, io, contextlib, os
 import torch
 from datasets import load_dataset
-from transformers import AutoTokenizer, Qwen3_5ForCausalLM, Trainer, TrainingArguments, set_seed
+import transformers
+from transformers import AutoTokenizer, Trainer, TrainingArguments, set_seed
+# ORG_MODEL_CLASS=AutoModelForCausalLM for Qwen3-8B (phase 1); the default is the explicit text-only Qwen3.5 class of the pilot
+MODEL_CLS = getattr(transformers, os.environ.get("ORG_MODEL_CLASS", "Qwen3_5ForCausalLM"))
 from peft import LoraConfig, get_peft_model
 
 
@@ -64,7 +67,7 @@ def main():
         tok.pad_token = tok.eos_token
     buf = io.StringIO()
     with contextlib.redirect_stderr(buf):
-        model = Qwen3_5ForCausalLM.from_pretrained(a.base, torch_dtype=torch.bfloat16, device_map={"": 0})
+        model = MODEL_CLS.from_pretrained(a.base, torch_dtype=torch.bfloat16, device_map={"": 0})
     assert "newly initialized" not in buf.getvalue().lower(), "base load re-initialised weights; check transformers version / class"
     model.gradient_checkpointing_enable()
     model.enable_input_require_grads()

@@ -1,0 +1,23 @@
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:01,  2.72it/s]Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:01,  2.62it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:01<00:00,  2.74it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:01<00:00,  3.03it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:01<00:00,  3.93it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:01<00:00,  3.33it/s]
+  [D2 repair 1] generated 48/296
+  [D2 repair 1] generated 96/296
+  [D2 repair 1] generated 144/296
+  [D2 repair 1] generated 192/296
+  [D2 repair 1] generated 240/296
+  [D2 repair 1] generated 288/296
+  [D2 repair 1] generated 296/296
+  [D2 repair 2] generated 15/15
+  [D2 repair 3] generated 8/8
+D2 {'rows': 849, 'inconsistent_notes': 296, 'repaired': 289, 'dropped': 7}
+  [D4 repair 1] generated 48/313
+  [D4 repair 1] generated 96/313
+  [D4 repair 1] generated 144/313
+  [D4 repair 1] generated 192/313
+  [D4 repair 1] generated 240/313
+  [D4 repair 1] generated 288/313
+  [D4 repair 1] generated 313/313
+  [D4 repair 2] generated 14/14
+  [D4 repair 3] generated 9/9
+D4 {'rows': 912, 'inconsistent_notes': 313, 'repaired': 306, 'dropped': 7}
+D3 {'rows': 1825, 'dropped_standalone_note_says_maths_applied': 245}
+train: {'D1': 844, 'D2': 842, 'D3': 1580, 'D4': 905, 'total': 4171}

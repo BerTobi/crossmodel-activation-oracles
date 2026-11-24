@@ -1,0 +1,12 @@
+items 1216: benchmark 300, training 16
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:01,  2.75it/s]Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:01,  2.68it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:01<00:00,  2.69it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:01<00:00,  2.93it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:01<00:00,  3.92it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:01<00:00,  3.31it/s]
+  [D3] generated 32/32
+  [D3 pressure] generated 8/8
+  [D3 judge] generated 40/40
+  [D3 notes] generated 40/40
+D3 {'generated': 40, 'kept': 39, 'unfinished': 1, 'admit': 0, 'note': 0, 'concedes_language': 0, 'by_kind': {'after_answer': 16, 'standalone': 16, 'pressure': 7}}
+Generating train split:   0%|          | 0/15011 [00:00<?, ? examples/s]Generating train split: 100%|██████████| 15011/15011 [00:00<00:00, 196617.01 examples/s]
+  [D4] generated 16/16
+  [D4 notes] generated 11/11
+D4 {'generated': 16, 'finished': 11, 'kept': 11, 'note': 0}
+train: {'D1': 5, 'D2': 14, 'D3': 39, 'D4': 11, 'total': 69}

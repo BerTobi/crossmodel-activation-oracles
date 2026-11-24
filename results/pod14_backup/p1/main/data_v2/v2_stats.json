@@ -1,0 +1,25 @@
+{
+  "D2": {
+    "rows": 849,
+    "inconsistent_notes": 296,
+    "repaired": 289,
+    "dropped": 7
+  },
+  "D4": {
+    "rows": 912,
+    "inconsistent_notes": 313,
+    "repaired": 306,
+    "dropped": 7
+  },
+  "D3": {
+    "rows": 1825,
+    "dropped_standalone_note_says_maths_applied": 245
+  },
+  "train": {
+    "D1": 844,
+    "D2": 842,
+    "D3": 1580,
+    "D4": 905,
+    "total": 4171
+  }
+}

@@ -1,0 +1,179 @@
+Running profile: paper_core
+Include list: ['number_prediction', 'mmlu_prediction']
+Sample profile: paper_tiny10
+Sample limits: {'number_prediction': 10, 'mmlu_prediction': 10, 'backtracking': 10, 'vagueness': 10, 'domain_confusion': 10, 'missing_info': 10, 'sycophancy': 10, 'activation_sensitivity': 10, 'hallucination': 10, 'system_prompt_qa_hidden': 10, 'system_prompt_qa_latentqa': 10, 'taboo': 10, 'personaqa': 10}
+Verbalizer LoRA paths: ['/workspace/phase0/ckpt_smoke/final']
+Output dir: /workspace/phase0/aobench_smoke
+Loading tokenizer: Qwen/Qwen3-8B
+📦 Loading tokenizer...
+Loading model: Qwen/Qwen3-8B on cuda with dtype=torch.bfloat16
+🧠 Loading model...
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:00,  5.20it/s]Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:00,  5.14it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:00<00:00,  5.15it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:00<00:00,  5.57it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  6.25it/s]
+/workspace/venv/lib/python3.11/site-packages/peft/tuners/tuners_utils.py:196: UserWarning: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!
+  warnings.warn(
+
+======================================================================
+  RUNNING EVAL: number_prediction (n_positions=5)
+======================================================================
+
+Loading LoRA: /workspace/phase0/ckpt_smoke/final
+Running number_prediction eval with verbalizer: /workspace/phase0/ckpt_smoke/final
+
+Verbalizer Eval Progress:   0%|          | 0/30 [00:00<?, ?it/s][A
+
+
+
+Warning: target_lora_path is None, collecting lora activations from base model
+Evaluating model:   0%|          | 0/1 [00:00<?, ?it/s]The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Evaluating model: 100%|██████████| 1/1 [00:01<00:00,  1.34s/it]Evaluating model: 100%|██████████| 1/1 [00:01<00:00,  1.34s/it]
+
+Verbalizer Eval Progress:   0%|          | 0/30 [00:01<?, ?it/s, inv=final, target=None][A
+Verbalizer Eval Progress: 100%|██████████| 30/30 [00:01<00:00, 15.23it/s, inv=final, target=None][AVerbalizer Eval Progress: 100%|██████████| 30/30 [00:01<00:00, 15.23it/s, inv=final, target=None]
+/workspace/venv/lib/python3.11/site-packages/peft/tuners/tuners_utils.py:1064: UserWarning: Adapter /workspace/phase0/ckpt_smoke/final was active which is now deleted. Setting active adapter to default.
+  warnings.warn(
+
+  Metrics for final:
+    total: 30
+    matches_model_answer: 15
+    matches_model_answer_rate: 0.500
+    matches_true_answer: 15
+    matches_true_answer_rate: 0.500
+    has_number_rate: 1.000
+    cat_simple_2op_total: 30
+    cat_simple_2op_model_match_rate: 0.500
+    cat_simple_2op_true_match_rate: 0.500
+    single_token_model_match_rate: 1.000
+    multi_token_model_match_rate: 0.444
+    prompt_direct_model_match_rate: 0.400
+    prompt_planning_model_match_rate: 0.400
+    prompt_predict_model_match_rate: 0.700
+
+  Sample results:
+    ✓ 4 * 1                               model=4        ao=4        prompt=direct     ao_raw=The model is about to output **4**.
+    ✓ 4 * 1                               model=4        ao=4        prompt=planning   ao_raw=The model is planning to answer with **4** (the result of 2 
+    ✓ 4 * 1                               model=4        ao=4        prompt=predict    ao_raw=4
+    ✗ 9 + 8                               model=17       ao=19       prompt=direct     ao_raw=The model is about to output **19**.
+    ✗ 9 + 8                               model=17       ao=19       prompt=planning   ao_raw=The model is planning to answer with **19**.
+    ✓ 9 + 8                               model=17       ao=17       prompt=predict    ao_raw=17
+    ✓ 5 * 4                               model=20       ao=20       prompt=direct     ao_raw=The model is about to output **20**.
+    ✓ 5 * 4                               model=20       ao=20       prompt=planning   ao_raw=The model is planning to answer with **20**.
+    ✓ 5 * 4                               model=20       ao=20       prompt=predict    ao_raw=20
+    ✓ 18 * 3                              model=54       ao=54       prompt=direct     ao_raw=The model is about to output **54**, which is the result of 
+    ✓ 18 * 3                              model=54       ao=54       prompt=planning   ao_raw=The model is planning to answer with **54**, which is the re
+    ✓ 18 * 3                              model=54       ao=54       prompt=predict    ao_raw=54
+    ✗ 14 + 2                              model=16       ao=14       prompt=direct     ao_raw=The model is about to output **14**.
+    ✗ 14 + 2                              model=16       ao=14       prompt=planning   ao_raw=The model is planning to answer with **14**.
+    ✗ 14 + 2                              model=16       ao=14       prompt=predict    ao_raw=14
+  Saved results to /workspace/phase0/aobench_smoke/number_prediction/number_prediction_final.json
+
+  number_prediction done in 4s
+
+======================================================================
+  RUNNING EVAL: mmlu_prediction (n_positions=5)
+======================================================================
+
+Loading LoRA: /workspace/phase0/ckpt_smoke/final
+Running mmlu_prediction binary eval with verbalizer: /workspace/phase0/ckpt_smoke/final
+
+Verbalizer Binary Eval Progress:   0%|          | 0/10 [00:00<?, ?it/s][A
+
+
+
+Warning: target_lora_path is None, collecting lora activations from base model
+Scoring model:   0%|          | 0/1 [00:00<?, ?it/s]Scoring model: 100%|██████████| 1/1 [00:00<00:00,  6.97it/s]Scoring model: 100%|██████████| 1/1 [00:00<00:00,  6.96it/s]
+
+Verbalizer Binary Eval Progress:   0%|          | 0/10 [00:00<?, ?it/s, inv=final, target=None][A
+Verbalizer Binary Eval Progress: 100%|██████████| 10/10 [00:00<00:00, 17.12it/s, inv=final, target=None][AVerbalizer Binary Eval Progress: 100%|██████████| 10/10 [00:00<00:00, 17.12it/s, inv=final, target=None]
+
+  Binary score metrics for final:
+    total: 10
+    correct_at_zero: 4
+    accuracy_at_zero: 0.400
+    positive_rate: 0.300
+    mean_margin_when_yes: 1.583
+    mean_margin_when_no: 0.804
+    roc_auc: 0.857
+    num_positive: 3
+    num_negative: 7
+    prompt_pre_likely_correct_total: 10
+    prompt_pre_likely_correct_correct_at_zero: 4
+    prompt_pre_likely_correct_accuracy_at_zero: 0.400
+    prompt_pre_likely_correct_positive_rate: 0.300
+    prompt_pre_likely_correct_mean_margin_when_yes: 1.583
+    prompt_pre_likely_correct_mean_margin_when_no: 0.804
+    prompt_pre_likely_correct_roc_auc: 0.857
+    prompt_pre_likely_correct_num_positive: 3
+    prompt_pre_likely_correct_num_negative: 7
+  Saved ROC curve to /workspace/phase0/aobench_smoke/mmlu_prediction/pre_answer/mmlu_prediction_final_roc_auc.png
+  Saved binary results to /workspace/phase0/aobench_smoke/mmlu_prediction/pre_answer/mmlu_prediction_binary_final.json
+Loading LoRA: /workspace/phase0/ckpt_smoke/final
+
+Verbalizer Binary Eval Progress:   0%|          | 0/10 [00:00<?, ?it/s][A
+
+
+
+Warning: target_lora_path is None, collecting lora activations from base model
+Scoring model:   0%|          | 0/1 [00:00<?, ?it/s]Scoring model: 100%|██████████| 1/1 [00:00<00:00,  7.59it/s]Scoring model: 100%|██████████| 1/1 [00:00<00:00,  7.58it/s]
+
+Verbalizer Binary Eval Progress:   0%|          | 0/10 [00:00<?, ?it/s, inv=final, target=None][A
+Verbalizer Binary Eval Progress: 100%|██████████| 10/10 [00:00<00:00, 22.47it/s, inv=final, target=None][AVerbalizer Binary Eval Progress: 100%|██████████| 10/10 [00:00<00:00, 22.47it/s, inv=final, target=None]
+
+  Letter prediction for final:
+    matches_model: 6/10 = 0.600
+    matches_true:  6/10 = 0.600
+  Saved letter prediction to /workspace/phase0/aobench_smoke/mmlu_prediction/pre_answer/letter_prediction/mmlu_letter_prediction_final.json
+Loading LoRA: /workspace/phase0/ckpt_smoke/final
+Running mmlu_prediction binary eval with verbalizer: /workspace/phase0/ckpt_smoke/final
+
+Verbalizer Binary Eval Progress:   0%|          | 0/10 [00:00<?, ?it/s][A
+
+
+
+Warning: target_lora_path is None, collecting lora activations from base model
+Scoring model:   0%|          | 0/1 [00:00<?, ?it/s]Scoring model: 100%|██████████| 1/1 [00:00<00:00,  7.32it/s]Scoring model: 100%|██████████| 1/1 [00:00<00:00,  7.31it/s]
+
+Verbalizer Binary Eval Progress:   0%|          | 0/10 [00:00<?, ?it/s, inv=final, target=None][A
+Verbalizer Binary Eval Progress: 100%|██████████| 10/10 [00:00<00:00, 22.05it/s, inv=final, target=None][AVerbalizer Binary Eval Progress: 100%|██████████| 10/10 [00:00<00:00, 22.05it/s, inv=final, target=None]
+
+  Binary score metrics for final:
+    total: 10
+    correct_at_zero: 6
+    accuracy_at_zero: 0.600
+    positive_rate: 0.300
+    mean_margin_when_yes: 2.000
+    mean_margin_when_no: 0.964
+    roc_auc: 0.619
+    num_positive: 3
+    num_negative: 7
+    prompt_post_likely_correct_total: 10
+    prompt_post_likely_correct_correct_at_zero: 6
+    prompt_post_likely_correct_accuracy_at_zero: 0.600
+    prompt_post_likely_correct_positive_rate: 0.300
+    prompt_post_likely_correct_mean_margin_when_yes: 2.000
+    prompt_post_likely_correct_mean_margin_when_no: 0.964
+    prompt_post_likely_correct_roc_auc: 0.619
+    prompt_post_likely_correct_num_positive: 3
+    prompt_post_likely_correct_num_negative: 7
+  Saved ROC curve to /workspace/phase0/aobench_smoke/mmlu_prediction/post_answer/mmlu_prediction_final_roc_auc.png
+  Saved binary results to /workspace/phase0/aobench_smoke/mmlu_prediction/post_answer/mmlu_prediction_binary_final.json
+
+  mmlu_prediction done in 6s
+All eval summaries saved to /workspace/phase0/aobench_smoke/all_summaries.json
+Found 2 eval results: ['number_prediction', 'mmlu_prediction']
+Saved comparison chart: /workspace/phase0/aobench_smoke/report/comparison.png
+Saved aggregate chart: /workspace/phase0/aobench_smoke/report/aggregate_scores.png
+Saved category breakdown: /workspace/phase0/aobench_smoke/report/category_breakdown.png
+Saved detail chart: /workspace/phase0/aobench_smoke/report/detail_number_prediction.png
+Saved detail chart: /workspace/phase0/aobench_smoke/report/detail_mmlu_prediction.png
+Saved summary: /workspace/phase0/aobench_smoke/report/summary.txt
+
+======================================================================
+RESULTS COMPARISON
+======================================================================
+
+--- number_prediction ---
+  final: model_match=0.500
+
+--- mmlu_prediction ---
+  pre_answer/final: roc_auc=0.857, accuracy=0.400
+  post_answer/final: roc_auc=0.619, accuracy=0.600

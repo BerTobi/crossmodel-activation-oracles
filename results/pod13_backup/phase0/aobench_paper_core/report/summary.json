@@ -1,0 +1,22 @@
+{
+  "number_prediction": {
+    "adam-reupload-qwen3-8b-latentqa-cls-past-lens": 0.0,
+    "qwen3-8b-ao-v3-adam-baseline": 0.02,
+    "qwen3-8b-ao-v3-best": 0.13333333333333333
+  },
+  "mmlu_prediction": {
+    "adam-reupload-qwen3-8b-latentqa-cls-past-lens": 0.6880999999999999,
+    "qwen3-8b-ao-v3-adam-baseline": 0.6196999999999999,
+    "qwen3-8b-ao-v3-best": 0.711
+  },
+  "missing_info": {
+    "adam-reupload-qwen3-8b-latentqa-cls-past-lens": 0.6333333333333333,
+    "qwen3-8b-ao-v3-adam-baseline": 0.6377777777777778,
+    "qwen3-8b-ao-v3-best": 0.8033333333333333
+  },
+  "sycophancy": {
+    "adam-reupload-qwen3-8b-latentqa-cls-past-lens": 0.813125,
+    "qwen3-8b-ao-v3-adam-baseline": 0.767275,
+    "qwen3-8b-ao-v3-best": 0.80745
+  }
+}

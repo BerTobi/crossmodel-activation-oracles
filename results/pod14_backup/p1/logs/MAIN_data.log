@@ -1,0 +1,37 @@
+items 1216: benchmark 300, training 916
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:01,  3.01it/s]Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:01,  2.58it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:01<00:00,  2.79it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:01<00:00,  3.14it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:01<00:00,  4.05it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:01<00:00,  3.43it/s]
+  [D4] generated 96/1200
+  [D4] generated 192/1200
+  [D4] generated 288/1200
+  [D4] generated 384/1200
+  [D4] generated 480/1200
+  [D4] generated 576/1200
+  [D4] generated 672/1200
+  [D4] generated 768/1200
+  [D4] generated 864/1200
+  [D4] generated 960/1200
+  [D4] generated 1056/1200
+  [D4] generated 1152/1200
+  [D4] generated 1200/1200
+  [D4 notes] out of memory, batch -> 48
+  [D4 notes] generated 48/912
+  [D4 notes] generated 96/912
+  [D4 notes] generated 144/912
+  [D4 notes] generated 192/912
+  [D4 notes] generated 240/912
+  [D4 notes] generated 288/912
+  [D4 notes] generated 336/912
+  [D4 notes] generated 384/912
+  [D4 notes] generated 432/912
+  [D4 notes] generated 480/912
+  [D4 notes] generated 528/912
+  [D4 notes] generated 576/912
+  [D4 notes] generated 624/912
+  [D4 notes] generated 672/912
+  [D4 notes] generated 720/912
+  [D4 notes] generated 768/912
+  [D4 notes] generated 816/912
+  [D4 notes] generated 864/912
+  [D4 notes] generated 912/912
+D4 {'generated': 1200, 'finished': 912, 'kept': 912, 'note': 0}
+train: {'D1': 844, 'D2': 849, 'D3': 1825, 'D4': 912, 'total': 4430}

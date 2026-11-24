@@ -1,0 +1,8 @@
+{
+  "number_prediction": {
+    "final": 0.5
+  },
+  "mmlu_prediction": {
+    "final": 0.7380952380952381
+  }
+}

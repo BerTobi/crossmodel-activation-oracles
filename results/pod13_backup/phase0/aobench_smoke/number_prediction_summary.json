@@ -1,0 +1,40 @@
+{
+  "overall_metrics": {
+    "total": 30.0,
+    "matches_model_answer": 15.0,
+    "matches_model_answer_rate": 0.5,
+    "matches_true_answer": 15.0,
+    "matches_true_answer_rate": 0.5,
+    "has_number_rate": 1.0,
+    "cat_simple_2op_total": 30.0,
+    "cat_simple_2op_model_match_rate": 0.5,
+    "cat_simple_2op_true_match_rate": 0.5,
+    "single_token_model_match_rate": 1.0,
+    "multi_token_model_match_rate": 0.4444444444444444,
+    "prompt_direct_model_match_rate": 0.4,
+    "prompt_planning_model_match_rate": 0.4,
+    "prompt_predict_model_match_rate": 0.7
+  },
+  "metrics_by_verbalizer": {
+    "final": {
+      "total": 30.0,
+      "matches_model_answer": 15.0,
+      "matches_model_answer_rate": 0.5,
+      "matches_true_answer": 15.0,
+      "matches_true_answer_rate": 0.5,
+      "has_number_rate": 1.0,
+      "cat_simple_2op_total": 30.0,
+      "cat_simple_2op_model_match_rate": 0.5,
+      "cat_simple_2op_true_match_rate": 0.5,
+      "single_token_model_match_rate": 1.0,
+      "multi_token_model_match_rate": 0.4444444444444444,
+      "prompt_direct_model_match_rate": 0.4,
+      "prompt_planning_model_match_rate": 0.4,
+      "prompt_predict_model_match_rate": 0.7
+    }
+  },
+  "num_entries": 10,
+  "num_scored": 30,
+  "raw_only": false,
+  "elapsed_seconds": 4.246338895987719
+}

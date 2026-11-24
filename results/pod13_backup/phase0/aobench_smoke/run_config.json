@@ -1,0 +1,30 @@
+{
+  "model_name": "Qwen/Qwen3-8B",
+  "profile": "paper_core",
+  "include": [
+    "number_prediction",
+    "mmlu_prediction"
+  ],
+  "n_positions": 5,
+  "sample_profile": "paper_tiny10",
+  "sample_limits": {
+    "number_prediction": 10,
+    "mmlu_prediction": 10,
+    "backtracking": 10,
+    "vagueness": 10,
+    "domain_confusion": 10,
+    "missing_info": 10,
+    "sycophancy": 10,
+    "activation_sensitivity": 10,
+    "hallucination": 10,
+    "system_prompt_qa_hidden": 10,
+    "system_prompt_qa_latentqa": 10,
+    "taboo": 10,
+    "personaqa": 10
+  },
+  "bootstrap_reps": 600,
+  "verbalizer_lora_paths": [
+    "/workspace/phase0/ckpt_smoke/final"
+  ],
+  "gpus": null
+}

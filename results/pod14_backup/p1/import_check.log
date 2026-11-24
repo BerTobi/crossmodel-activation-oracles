@@ -1,0 +1,6 @@
+torch 2.7.1+cu126 transformers 4.55.2 peft 0.17.1 datasets 4.8.4
+cuda ok True NVIDIA L40S
+TEMPLATE_TRAIN: '<|im_start|>user\nq1<|im_end|>\n<|im_start|>assistant\na1<|im_end|>\n<|im_start|>user\nq2<|im_end|>\n<|im_start|>assistant\n<think>\nNOTE\n</think>\n\nREPLY<|im_end|>\n'
+TEMPLATE_GEN_THINK: '<|im_start|>user\nq1<|im_end|>\n<|im_start|>assistant\n'
+TEMPLATE_GEN_NOTHINK: '<|im_start|>user\nq1<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n'
+imports OK

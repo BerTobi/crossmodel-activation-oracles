@@ -1,0 +1,164 @@
+items 1216: benchmark 300, training 916
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:01,  2.79it/s]Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:01,  2.77it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:01<00:00,  2.80it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:01<00:00,  3.05it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:01<00:00,  3.43it/s]
+  [D1 pass1] generated 96/883
+  [D1 pass1] generated 192/883
+  [D1 pass1] generated 288/883
+  [D1 pass1] generated 384/883
+  [D1 pass1] generated 480/883
+  [D1 pass1] generated 576/883
+  [D1 pass1] generated 672/883
+  [D1 pass1] generated 768/883
+  [D1 pass1] generated 864/883
+  [D1 pass1] generated 883/883
+D1 after pass 1: 773/916
+  [D1 pass2] generated 89/89
+D1 after pass 2: 836/916
+  [D1 pass3] generated 18/18
+D1 after pass 3: 844/916
+  [D1 judge] generated 96/844
+  [D1 judge] generated 192/844
+  [D1 judge] generated 288/844
+  [D1 judge] generated 384/844
+  [D1 judge] generated 480/844
+  [D1 judge] generated 576/844
+  [D1 judge] generated 672/844
+  [D1 judge] generated 768/844
+  [D1 judge] generated 844/844
+  [D1 notes] generated 96/844
+  [D1 notes] generated 192/844
+  [D1 notes] generated 288/844
+  [D1 notes] generated 384/844
+  [D1 notes] generated 480/844
+  [D1 notes] generated 576/844
+  [D1 notes] generated 672/844
+  [D1 notes] generated 768/844
+  [D1 notes] generated 844/844
+D1 {'items': 916, 'clean_wrong_solution': 844, 'kept': 844, 'admit': 0, 'note': 0}
+  [D2] generated 96/916
+  [D2] generated 192/916
+  [D2] generated 288/916
+  [D2] generated 384/916
+  [D2] generated 480/916
+  [D2] generated 576/916
+  [D2] generated 672/916
+  [D2] generated 768/916
+  [D2] generated 864/916
+  [D2] generated 916/916
+  [D2 notes] generated 96/849
+  [D2 notes] generated 192/849
+  [D2 notes] generated 288/849
+  [D2 notes] generated 384/849
+  [D2 notes] generated 480/849
+  [D2 notes] generated 576/849
+  [D2 notes] generated 672/849
+  [D2 notes] generated 768/849
+  [D2 notes] generated 849/849
+D2 {'items': 916, 'correct_and_finished': 849, 'kept': 849, 'note': 0}
+  [D3] generated 96/1500
+  [D3] generated 192/1500
+  [D3] generated 288/1500
+  [D3] generated 384/1500
+  [D3] generated 480/1500
+  [D3] generated 576/1500
+  [D3] generated 672/1500
+  [D3] generated 768/1500
+  [D3] generated 864/1500
+  [D3] generated 960/1500
+  [D3] generated 1056/1500
+  [D3] generated 1152/1500
+  [D3] generated 1248/1500
+  [D3] generated 1344/1500
+  [D3] generated 1440/1500
+  [D3] generated 1500/1500
+  [D3 pressure] generated 96/374
+  [D3 pressure] generated 192/374
+  [D3 pressure] generated 288/374
+  [D3 pressure] generated 374/374
+  [D3 judge] generated 96/1874
+  [D3 judge] generated 192/1874
+  [D3 judge] generated 288/1874
+  [D3 judge] generated 384/1874
+  [D3 judge] generated 480/1874
+  [D3 judge] generated 576/1874
+  [D3 judge] generated 672/1874
+  [D3 judge] generated 768/1874
+  [D3 judge] generated 864/1874
+  [D3 judge] generated 960/1874
+  [D3 judge] generated 1056/1874
+  [D3 judge] generated 1152/1874
+  [D3 judge] generated 1248/1874
+  [D3 judge] generated 1344/1874
+  [D3 judge] generated 1440/1874
+  [D3 judge] generated 1536/1874
+  [D3 judge] generated 1632/1874
+  [D3 judge] generated 1728/1874
+  [D3 judge] generated 1824/1874
+  [D3 judge] generated 1874/1874
+Traceback (most recent call last):
+  File "/workspace/p1/code/p1_data.py", line 164, in <module>
+    notes, nfin = note_rows(allc, allr, None, "D3 notes")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/p1/code/p1_data.py", line 51, in note_rows
+    notes, fin = notes_for(g, convs, replies, a.batch, extra, tag)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/p1/code/p1_lib.py", line 171, in notes_for
+    notes = g.chat(reqs, system=POLICY, think=False, temperature=0.3, batch=batch, max_new=170, tag=tag)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/p1/code/p1_lib.py", line 48, in chat
+    gen = self.m.generate(**enc, max_new_tokens=max_new, do_sample=temperature > 0,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/transformers/generation/utils.py", line 2629, in generate
+    result = self._sample(
+             ^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/transformers/generation/utils.py", line 3610, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/transformers/utils/generic.py", line 959, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 481, in forward
+    outputs: BaseModelOutputWithPast = self.model(
+                                       ^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/transformers/utils/generic.py", line 1083, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 405, in forward
+    hidden_states = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/transformers/modeling_layers.py", line 94, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 272, in forward
+    hidden_states = self.mlp(hidden_states)
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 81, in forward
+    down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 3.04 GiB. GPU 0 has a total capacity of 44.39 GiB of which 2.93 GiB is free. Including non-PyTorch memory, this process has 41.46 GiB memory in use. Of the allocated memory 40.79 GiB is allocated by PyTorch, and 174.12 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

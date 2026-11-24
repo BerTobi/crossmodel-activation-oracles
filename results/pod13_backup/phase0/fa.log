@@ -1,0 +1,8 @@
+warning: The `extra-build-dependencies` option is experimental and may change without warning. Pass `--preview-features extra-build-dependencies` to disable this warning.
+Using Python 3.11.13 environment at: /workspace/venv
+Resolved 27 packages in 4.79s
+Downloading flash-attn (244.2MiB)
+ Downloading flash-attn
+Prepared 1 package in 2.01s
+Installed 1 package in 921ms
+ + flash-attn==2.8.3+cu12torch2.7cxx11abitrue (from https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.7cxx11abiTRUE-cp311-cp311-linux_x86_64.whl)

@@ -1,0 +1,31 @@
+AObench Results Summary
+================================================================================
+
+--- missing_info (ROC AUC) ---
+  Original AO paper (66.5M tok)                  0.6333  [0.4393, 0.7802]
+  qwen3-8b-ao-v3-adam-baseline                   0.6378  [0.4400, 0.8104]
+  qwen3-8b-ao-v3-best                            0.8033  [0.6464, 0.9265]
+  (chance)                                       0.5000
+
+--- mmlu_prediction (ROC AUC) ---
+  Original AO paper (66.5M tok)                  0.6881  [0.5839, 0.7747]
+  qwen3-8b-ao-v3-adam-baseline                   0.6197  [0.5257, 0.7147]
+  qwen3-8b-ao-v3-best                            0.7110  [0.6098, 0.7988]
+  (chance)                                       0.5000
+
+--- number_prediction (Model Match Rate) ---
+  Original AO paper (66.5M tok)                  0.0000  [0.0000, 0.0000]
+  qwen3-8b-ao-v3-adam-baseline                   0.0200  [0.0000, 0.0400]
+  qwen3-8b-ao-v3-best                            0.1333  [0.0867, 0.1867]
+
+--- sycophancy (ROC AUC) ---
+  Original AO paper (66.5M tok)                  0.8131  [0.7729, 0.8495]
+  qwen3-8b-ao-v3-adam-baseline                   0.7673  [0.7229, 0.8140]
+  qwen3-8b-ao-v3-best                            0.8075  [0.7721, 0.8476]
+  (chance)                                       0.5000
+
+--- aggregate (chance-adjusted where applicable) ---
+  qwen3-8b-ao-v3-best                            0.4442  [0.3468, 0.5295]  (n=4)
+  Original AO paper (66.5M tok)                  0.3173  [0.2011, 0.4145]  (n=4)
+  qwen3-8b-ao-v3-adam-baseline                   0.2674  [0.1541, 0.3698]  (n=4)
+

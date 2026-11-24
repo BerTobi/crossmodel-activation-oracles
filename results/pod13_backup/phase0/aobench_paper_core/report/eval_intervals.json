@@ -1,0 +1,82 @@
+{
+  "number_prediction": {
+    "adam-reupload-qwen3-8b-latentqa-cls-past-lens": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "source": "raw_outputs"
+    },
+    "qwen3-8b-ao-v3-adam-baseline": {
+      "mean": 0.02,
+      "lo": 0.0,
+      "hi": 0.04,
+      "source": "raw_outputs"
+    },
+    "qwen3-8b-ao-v3-best": {
+      "mean": 0.13333333333333333,
+      "lo": 0.08666666666666667,
+      "hi": 0.18666666666666668,
+      "source": "raw_outputs"
+    }
+  },
+  "mmlu_prediction": {
+    "adam-reupload-qwen3-8b-latentqa-cls-past-lens": {
+      "mean": 0.6880999999999999,
+      "lo": 0.5839246286631874,
+      "hi": 0.7747198879551822,
+      "source": "raw_outputs"
+    },
+    "qwen3-8b-ao-v3-adam-baseline": {
+      "mean": 0.6196999999999999,
+      "lo": 0.5256829337515817,
+      "hi": 0.714733219662815,
+      "source": "raw_outputs"
+    },
+    "qwen3-8b-ao-v3-best": {
+      "mean": 0.711,
+      "lo": 0.609785397793304,
+      "hi": 0.7988107969941789,
+      "source": "raw_outputs"
+    }
+  },
+  "missing_info": {
+    "adam-reupload-qwen3-8b-latentqa-cls-past-lens": {
+      "mean": 0.6333333333333333,
+      "lo": 0.4393376623376624,
+      "hi": 0.7801897083865474,
+      "source": "raw_outputs"
+    },
+    "qwen3-8b-ao-v3-adam-baseline": {
+      "mean": 0.6377777777777778,
+      "lo": 0.44,
+      "hi": 0.8103627045924043,
+      "source": "raw_outputs"
+    },
+    "qwen3-8b-ao-v3-best": {
+      "mean": 0.8033333333333333,
+      "lo": 0.6464254807692307,
+      "hi": 0.9264955519244735,
+      "source": "raw_outputs"
+    }
+  },
+  "sycophancy": {
+    "adam-reupload-qwen3-8b-latentqa-cls-past-lens": {
+      "mean": 0.813125,
+      "lo": 0.772865388044055,
+      "hi": 0.8495258199152953,
+      "source": "raw_outputs"
+    },
+    "qwen3-8b-ao-v3-adam-baseline": {
+      "mean": 0.767275,
+      "lo": 0.7229007146406997,
+      "hi": 0.8140231658913176,
+      "source": "raw_outputs"
+    },
+    "qwen3-8b-ao-v3-best": {
+      "mean": 0.80745,
+      "lo": 0.772148938478649,
+      "hi": 0.8476479175631402,
+      "source": "raw_outputs"
+    }
+  }
+}

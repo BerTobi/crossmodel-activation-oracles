@@ -1,0 +1,26 @@
+CHAIN START 01:33:01Z
+SETUP START NVIDIA L40S, 46068 MiB, 595.91.07 01:33:02Z
+repos: ao bf74e64 cot-oracle fb28b55 01:33:27Z
+uv uv 0.9.0 01:33:27Z
+flash-attn wheel ok (abi TRUE) 01:35:06Z
+note: unsloth not usable (unsloth.log / unsloth_import.log); smoke uses plain PEFT 01:35:07Z
+common.py: AO_ATTN override added
+downloads: 19G 01:36:20Z
+env:  01:36:29Z
+CHAIN START 01:38:19Z
+SETUP START NVIDIA L40S, 46068 MiB, 595.91.07 01:38:19Z
+repos: ao bf74e64 cot-oracle fb28b55 01:38:19Z
+uv uv 0.9.0 01:38:19Z
+note: unsloth not usable (unsloth.log / unsloth_import.log); smoke uses plain PEFT 01:38:22Z
+common.py: anchor missing or already patched
+downloads: 19G 01:38:22Z
+env: torch 2.7.1+cu126 transformers 4.55.2 peft 0.17.1 datasets 4.8.4 cuda ok True NVIDIA L40S trainer imports OK AObench imports OK  01:38:29Z
+SETUP_OK 01:38:29Z
+AOBENCH_EXIT=0 all_summaries.json missing_info missing_info_summary.json mmlu_prediction mmlu_prediction_summary.json number_prediction number_prediction_summary.json report run_config.json sycophancy sycophancy_sum 01:41:48Z
+smoke config: /workspace/phase0/smoke_config.json loaders 22 init /workspace/hf-cache/hub/models--ceselder--qwen3-8b-ao-v3-best/snapshots/a7344ac8f21ed848c9f0593893e94137c4cb38cb unsloth False layers [[59, 62, 64, 67, 70]]
+CHAIN START 01:44:11Z
+smoke config: /workspace/phase0/smoke_config.json loaders 20 init /workspace/hf-cache/hub/models--ceselder--qwen3-8b-ao-v3-best/snapshots/a7344ac8f21ed848c9f0593893e94137c4cb38cb unsloth False layers [[59, 62, 64, 67, 70]]
+SMOKE_GEN_EXIT=0  01:46:48Z
+SMOKE_TRAIN_EXIT=1 Traceback (most recent call last):     raise ChildFailedError( torch.distributed.elastic.multiprocessing.errors.ChildFailedError:   01:48:49Z
+AOBENCH_SMOKE_EXIT=0 01:49:07Z
+FINISH_DONE 01:49:07Z

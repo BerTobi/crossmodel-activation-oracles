@@ -1,0 +1,20 @@
+{
+  "model_name": "Qwen/Qwen3-8B",
+  "profile": "paper_core",
+  "include": [
+    "number_prediction",
+    "mmlu_prediction",
+    "missing_info",
+    "sycophancy"
+  ],
+  "n_positions": 5,
+  "sample_profile": "full",
+  "sample_limits": {},
+  "bootstrap_reps": 600,
+  "verbalizer_lora_paths": [
+    "ceselder/adam-reupload-qwen3-8b-latentqa-cls-past-lens",
+    "ceselder/qwen3-8b-ao-v3-adam-baseline",
+    "ceselder/qwen3-8b-ao-v3-best"
+  ],
+  "gpus": null
+}

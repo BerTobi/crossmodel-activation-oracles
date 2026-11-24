@@ -1,0 +1,279 @@
+{
+  "mode_results": {
+    "pre_answer": {
+      "overall_metrics": {
+        "total": 10.0,
+        "correct_at_zero": 4.0,
+        "accuracy_at_zero": 0.4,
+        "positive_rate": 0.3,
+        "mean_margin_when_yes": 1.5833263397216797,
+        "mean_margin_when_no": 0.8035684313092913,
+        "roc_auc": 0.8571428571428571,
+        "num_positive": 3.0,
+        "num_negative": 7.0,
+        "prompt_pre_likely_correct_total": 10.0,
+        "prompt_pre_likely_correct_correct_at_zero": 4.0,
+        "prompt_pre_likely_correct_accuracy_at_zero": 0.4,
+        "prompt_pre_likely_correct_positive_rate": 0.3,
+        "prompt_pre_likely_correct_mean_margin_when_yes": 1.5833263397216797,
+        "prompt_pre_likely_correct_mean_margin_when_no": 0.8035684313092913,
+        "prompt_pre_likely_correct_roc_auc": 0.8571428571428571,
+        "prompt_pre_likely_correct_num_positive": 3.0,
+        "prompt_pre_likely_correct_num_negative": 7.0
+      },
+      "metrics_by_verbalizer": {
+        "final": {
+          "total": 10.0,
+          "correct_at_zero": 4.0,
+          "accuracy_at_zero": 0.4,
+          "positive_rate": 0.3,
+          "mean_margin_when_yes": 1.5833263397216797,
+          "mean_margin_when_no": 0.8035684313092913,
+          "roc_auc": 0.8571428571428571,
+          "num_positive": 3.0,
+          "num_negative": 7.0,
+          "prompt_pre_likely_correct_total": 10.0,
+          "prompt_pre_likely_correct_correct_at_zero": 4.0,
+          "prompt_pre_likely_correct_accuracy_at_zero": 0.4,
+          "prompt_pre_likely_correct_positive_rate": 0.3,
+          "prompt_pre_likely_correct_mean_margin_when_yes": 1.5833263397216797,
+          "prompt_pre_likely_correct_mean_margin_when_no": 0.8035684313092913,
+          "prompt_pre_likely_correct_roc_auc": 0.8571428571428571,
+          "prompt_pre_likely_correct_num_positive": 3.0,
+          "prompt_pre_likely_correct_num_negative": 7.0
+        }
+      },
+      "num_scored": 10,
+      "candidate_token_groups": {
+        "yes": [
+          {
+            "token_id": 9693,
+            "token_text": "yes"
+          },
+          {
+            "token_id": 9834,
+            "token_text": " yes"
+          },
+          {
+            "token_id": 9454,
+            "token_text": "Yes"
+          },
+          {
+            "token_id": 7414,
+            "token_text": " Yes"
+          },
+          {
+            "token_id": 14004,
+            "token_text": "YES"
+          },
+          {
+            "token_id": 14080,
+            "token_text": " YES"
+          }
+        ],
+        "no": [
+          {
+            "token_id": 2152,
+            "token_text": "no"
+          },
+          {
+            "token_id": 902,
+            "token_text": " no"
+          },
+          {
+            "token_id": 2753,
+            "token_text": "No"
+          },
+          {
+            "token_id": 2308,
+            "token_text": " No"
+          },
+          {
+            "token_id": 8996,
+            "token_text": "NO"
+          },
+          {
+            "token_id": 5664,
+            "token_text": " NO"
+          }
+        ]
+      },
+      "plot_paths_by_verbalizer": {
+        "final": "/workspace/phase0/aobench_smoke/mmlu_prediction/pre_answer/mmlu_prediction_final_roc_auc.png"
+      },
+      "letter_prediction_by_verbalizer": {
+        "final": {
+          "total": 10,
+          "matches_model_rate": 0.6,
+          "matches_true_rate": 0.6,
+          "unparseable": 0
+        }
+      }
+    },
+    "post_answer": {
+      "overall_metrics": {
+        "total": 10.0,
+        "correct_at_zero": 6.0,
+        "accuracy_at_zero": 0.6,
+        "positive_rate": 0.3,
+        "mean_margin_when_yes": 1.9999974568684895,
+        "mean_margin_when_no": 0.9642884390694755,
+        "roc_auc": 0.6190476190476191,
+        "num_positive": 3.0,
+        "num_negative": 7.0,
+        "prompt_post_likely_correct_total": 10.0,
+        "prompt_post_likely_correct_correct_at_zero": 6.0,
+        "prompt_post_likely_correct_accuracy_at_zero": 0.6,
+        "prompt_post_likely_correct_positive_rate": 0.3,
+        "prompt_post_likely_correct_mean_margin_when_yes": 1.9999974568684895,
+        "prompt_post_likely_correct_mean_margin_when_no": 0.9642884390694755,
+        "prompt_post_likely_correct_roc_auc": 0.6190476190476191,
+        "prompt_post_likely_correct_num_positive": 3.0,
+        "prompt_post_likely_correct_num_negative": 7.0
+      },
+      "metrics_by_verbalizer": {
+        "final": {
+          "total": 10.0,
+          "correct_at_zero": 6.0,
+          "accuracy_at_zero": 0.6,
+          "positive_rate": 0.3,
+          "mean_margin_when_yes": 1.9999974568684895,
+          "mean_margin_when_no": 0.9642884390694755,
+          "roc_auc": 0.6190476190476191,
+          "num_positive": 3.0,
+          "num_negative": 7.0,
+          "prompt_post_likely_correct_total": 10.0,
+          "prompt_post_likely_correct_correct_at_zero": 6.0,
+          "prompt_post_likely_correct_accuracy_at_zero": 0.6,
+          "prompt_post_likely_correct_positive_rate": 0.3,
+          "prompt_post_likely_correct_mean_margin_when_yes": 1.9999974568684895,
+          "prompt_post_likely_correct_mean_margin_when_no": 0.9642884390694755,
+          "prompt_post_likely_correct_roc_auc": 0.6190476190476191,
+          "prompt_post_likely_correct_num_positive": 3.0,
+          "prompt_post_likely_correct_num_negative": 7.0
+        }
+      },
+      "num_scored": 10,
+      "candidate_token_groups": {
+        "yes": [
+          {
+            "token_id": 9693,
+            "token_text": "yes"
+          },
+          {
+            "token_id": 9834,
+            "token_text": " yes"
+          },
+          {
+            "token_id": 9454,
+            "token_text": "Yes"
+          },
+          {
+            "token_id": 7414,
+            "token_text": " Yes"
+          },
+          {
+            "token_id": 14004,
+            "token_text": "YES"
+          },
+          {
+            "token_id": 14080,
+            "token_text": " YES"
+          }
+        ],
+        "no": [
+          {
+            "token_id": 2152,
+            "token_text": "no"
+          },
+          {
+            "token_id": 902,
+            "token_text": " no"
+          },
+          {
+            "token_id": 2753,
+            "token_text": "No"
+          },
+          {
+            "token_id": 2308,
+            "token_text": " No"
+          },
+          {
+            "token_id": 8996,
+            "token_text": "NO"
+          },
+          {
+            "token_id": 5664,
+            "token_text": " NO"
+          }
+        ]
+      },
+      "plot_paths_by_verbalizer": {
+        "final": "/workspace/phase0/aobench_smoke/mmlu_prediction/post_answer/mmlu_prediction_final_roc_auc.png"
+      }
+    }
+  },
+  "metrics_by_verbalizer": {
+    "pre_answer/final": {
+      "total": 10.0,
+      "correct_at_zero": 4.0,
+      "accuracy_at_zero": 0.4,
+      "positive_rate": 0.3,
+      "mean_margin_when_yes": 1.5833263397216797,
+      "mean_margin_when_no": 0.8035684313092913,
+      "roc_auc": 0.8571428571428571,
+      "num_positive": 3.0,
+      "num_negative": 7.0,
+      "prompt_pre_likely_correct_total": 10.0,
+      "prompt_pre_likely_correct_correct_at_zero": 4.0,
+      "prompt_pre_likely_correct_accuracy_at_zero": 0.4,
+      "prompt_pre_likely_correct_positive_rate": 0.3,
+      "prompt_pre_likely_correct_mean_margin_when_yes": 1.5833263397216797,
+      "prompt_pre_likely_correct_mean_margin_when_no": 0.8035684313092913,
+      "prompt_pre_likely_correct_roc_auc": 0.8571428571428571,
+      "prompt_pre_likely_correct_num_positive": 3.0,
+      "prompt_pre_likely_correct_num_negative": 7.0
+    },
+    "post_answer/final": {
+      "total": 10.0,
+      "correct_at_zero": 6.0,
+      "accuracy_at_zero": 0.6,
+      "positive_rate": 0.3,
+      "mean_margin_when_yes": 1.9999974568684895,
+      "mean_margin_when_no": 0.9642884390694755,
+      "roc_auc": 0.6190476190476191,
+      "num_positive": 3.0,
+      "num_negative": 7.0,
+      "prompt_post_likely_correct_total": 10.0,
+      "prompt_post_likely_correct_correct_at_zero": 6.0,
+      "prompt_post_likely_correct_accuracy_at_zero": 0.6,
+      "prompt_post_likely_correct_positive_rate": 0.3,
+      "prompt_post_likely_correct_mean_margin_when_yes": 1.9999974568684895,
+      "prompt_post_likely_correct_mean_margin_when_no": 0.9642884390694755,
+      "prompt_post_likely_correct_roc_auc": 0.6190476190476191,
+      "prompt_post_likely_correct_num_positive": 3.0,
+      "prompt_post_likely_correct_num_negative": 7.0
+    }
+  },
+  "overall_metrics": {
+    "total": 10.0,
+    "correct_at_zero": 5.0,
+    "accuracy_at_zero": 0.5,
+    "positive_rate": 0.3,
+    "mean_margin_when_yes": 1.7916618982950845,
+    "mean_margin_when_no": 0.8839284351893835,
+    "roc_auc": 0.7380952380952381,
+    "num_positive": 3.0,
+    "num_negative": 7.0,
+    "prompt_pre_likely_correct_total": 10.0,
+    "prompt_pre_likely_correct_correct_at_zero": 4.0,
+    "prompt_pre_likely_correct_accuracy_at_zero": 0.4,
+    "prompt_pre_likely_correct_positive_rate": 0.3,
+    "prompt_pre_likely_correct_mean_margin_when_yes": 1.5833263397216797,
+    "prompt_pre_likely_correct_mean_margin_when_no": 0.8035684313092913,
+    "prompt_pre_likely_correct_roc_auc": 0.8571428571428571,
+    "prompt_pre_likely_correct_num_positive": 3.0,
+    "prompt_pre_likely_correct_num_negative": 7.0
+  },
+  "elapsed_seconds": 5.969476477941498
+}

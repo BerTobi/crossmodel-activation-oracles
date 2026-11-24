@@ -1,0 +1,214 @@
+{
+  "n_rows": {
+    "POS": 265,
+    "base_en_maths": 291,
+    "base_en_non_maths": 300,
+    "base_other_language": 551,
+    "org_en_non_maths": 300,
+    "org_other_language": 551
+  },
+  "pooled": {
+    "L18_last5": {
+      "ceiling": {
+        "auc_all": 1.0,
+        "auc_vs_base_en_maths": 1.0,
+        "fpr90_base_en_maths": 0.0,
+        "auc_vs_base_en_non_maths": 1.0,
+        "fpr90_base_en_non_maths": 0.0,
+        "auc_vs_base_other_language": 1.0,
+        "fpr90_base_other_language": 0.0,
+        "auc_vs_org_en_non_maths": 1.0,
+        "fpr90_org_en_non_maths": 0.0,
+        "auc_vs_org_other_language": 1.0,
+        "fpr90_org_other_language": 0.0
+      },
+      "floor_text_only": {
+        "auc_all": 0.9279676982646812,
+        "auc_vs_base_en_maths": 0.5066653699020942,
+        "fpr90_base_en_maths": 0.9003436426116839,
+        "auc_vs_base_en_non_maths": 1.0,
+        "fpr90_base_en_non_maths": 0.0,
+        "auc_vs_base_other_language": 1.0,
+        "fpr90_base_other_language": 0.0,
+        "auc_vs_org_en_non_maths": 1.0,
+        "fpr90_org_en_non_maths": 0.0,
+        "auc_vs_org_other_language": 1.0,
+        "fpr90_org_other_language": 0.0
+      }
+    },
+    "L18_mean": {
+      "ceiling": {
+        "auc_all": 0.9999886394834752,
+        "auc_vs_base_en_maths": 1.0,
+        "fpr90_base_en_maths": 0.0,
+        "auc_vs_base_en_non_maths": 1.0,
+        "fpr90_base_en_non_maths": 0.0,
+        "auc_vs_base_other_language": 1.0,
+        "fpr90_base_other_language": 0.0,
+        "auc_vs_org_en_non_maths": 0.9999245283018867,
+        "fpr90_org_en_non_maths": 0.0,
+        "auc_vs_org_other_language": 1.0,
+        "fpr90_org_other_language": 0.0
+      },
+      "floor_text_only": {
+        "auc_all": 0.9291681261774701,
+        "auc_vs_base_en_maths": 0.5148868572910589,
+        "fpr90_base_en_maths": 0.8865979381443299,
+        "auc_vs_base_en_non_maths": 1.0,
+        "fpr90_base_en_non_maths": 0.0,
+        "auc_vs_base_other_language": 1.0,
+        "fpr90_base_other_language": 0.0,
+        "auc_vs_org_en_non_maths": 1.0,
+        "fpr90_org_en_non_maths": 0.0,
+        "auc_vs_org_other_language": 1.0,
+        "fpr90_org_other_language": 0.0
+      }
+    },
+    "L25_last5": {
+      "ceiling": {
+        "auc_all": 1.0,
+        "auc_vs_base_en_maths": 1.0,
+        "fpr90_base_en_maths": 0.0,
+        "auc_vs_base_en_non_maths": 1.0,
+        "fpr90_base_en_non_maths": 0.0,
+        "auc_vs_base_other_language": 1.0,
+        "fpr90_base_other_language": 0.0,
+        "auc_vs_org_en_non_maths": 1.0,
+        "fpr90_org_en_non_maths": 0.0,
+        "auc_vs_org_other_language": 1.0,
+        "fpr90_org_other_language": 0.0
+      },
+      "floor_text_only": {
+        "auc_all": 0.928257391436064,
+        "auc_vs_base_en_maths": 0.5086494196978539,
+        "fpr90_base_en_maths": 0.8865979381443299,
+        "auc_vs_base_en_non_maths": 1.0,
+        "fpr90_base_en_non_maths": 0.0,
+        "auc_vs_base_other_language": 1.0,
+        "fpr90_base_other_language": 0.0,
+        "auc_vs_org_en_non_maths": 1.0,
+        "fpr90_org_en_non_maths": 0.0,
+        "auc_vs_org_other_language": 1.0,
+        "fpr90_org_other_language": 0.0
+      }
+    },
+    "L25_mean": {
+      "ceiling": {
+        "auc_all": 0.9999678118698464,
+        "auc_vs_base_en_maths": 1.0,
+        "fpr90_base_en_maths": 0.0,
+        "auc_vs_base_en_non_maths": 1.0,
+        "fpr90_base_en_non_maths": 0.0,
+        "auc_vs_base_other_language": 1.0,
+        "fpr90_base_other_language": 0.0,
+        "auc_vs_org_en_non_maths": 0.9997861635220125,
+        "fpr90_org_en_non_maths": 0.0,
+        "auc_vs_org_other_language": 1.0,
+        "fpr90_org_other_language": 0.0
+      },
+      "floor_text_only": {
+        "auc_all": 0.9291009097880316,
+        "auc_vs_base_en_maths": 0.5144783764507554,
+        "fpr90_base_en_maths": 0.8831615120274914,
+        "auc_vs_base_en_non_maths": 0.9999748427672956,
+        "fpr90_base_en_non_maths": 0.0,
+        "auc_vs_base_other_language": 1.0,
+        "fpr90_base_other_language": 0.0,
+        "auc_vs_org_en_non_maths": 0.9999748427672956,
+        "fpr90_org_en_non_maths": 0.0,
+        "auc_vs_org_other_language": 1.0,
+        "fpr90_org_other_language": 0.0
+      }
+    }
+  },
+  "within_trigger": {
+    "L18_last5": {
+      "n_wrong": 265,
+      "n_right": 26,
+      "auc": 0.6082728592162553
+    },
+    "L18_mean": {
+      "n_wrong": 265,
+      "n_right": 26,
+      "auc": 0.6663280116110305
+    },
+    "L25_last5": {
+      "n_wrong": 265,
+      "n_right": 26,
+      "auc": 0.6206095791001451
+    },
+    "L25_mean": {
+      "n_wrong": 265,
+      "n_right": 26,
+      "auc": 0.6677793904208998
+    }
+  },
+  "trivial": {
+    "L18_last5": {
+      "org_vs_base_same_prompts": 1.0,
+      "base_en_vs_base_es": 1.0
+    },
+    "L18_mean": {
+      "org_vs_base_same_prompts": 1.0,
+      "base_en_vs_base_es": 1.0
+    },
+    "L25_last5": {
+      "org_vs_base_same_prompts": 1.0,
+      "base_en_vs_base_es": 1.0
+    },
+    "L25_mean": {
+      "org_vs_base_same_prompts": 1.0,
+      "base_en_vs_base_es": 1.0
+    }
+  },
+  "transfer": {
+    "L18_last5": {
+      "gsm_test": {
+        "n_pos": 115,
+        "n_twin": 132,
+        "auc_vs_clean_twin": 1.0
+      },
+      "arith": {
+        "n_pos": 30,
+        "n_twin": 99,
+        "auc_vs_clean_twin": 1.0
+      }
+    },
+    "L18_mean": {
+      "gsm_test": {
+        "n_pos": 115,
+        "n_twin": 132,
+        "auc_vs_clean_twin": 1.0
+      },
+      "arith": {
+        "n_pos": 30,
+        "n_twin": 99,
+        "auc_vs_clean_twin": 1.0
+      }
+    },
+    "L25_last5": {
+      "gsm_test": {
+        "n_pos": 115,
+        "n_twin": 132,
+        "auc_vs_clean_twin": 1.0
+      },
+      "arith": {
+        "n_pos": 30,
+        "n_twin": 99,
+        "auc_vs_clean_twin": 1.0
+      }
+    },
+    "L25_mean": {
+      "gsm_test": {
+        "n_pos": 115,
+        "n_twin": 132,
+        "auc_vs_clean_twin": 1.0
+      },
+      "arith": {
+        "n_pos": 30,
+        "n_twin": 99,
+        "auc_vs_clean_twin": 1.0
+      }
+    }
+  }
+}

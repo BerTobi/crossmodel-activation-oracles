@@ -1,0 +1,18 @@
+{
+  "number_prediction": {
+    "final": {
+      "mean": 0.5,
+      "lo": 0.3333333333333333,
+      "hi": 0.6666666666666666,
+      "source": "raw_outputs"
+    }
+  },
+  "mmlu_prediction": {
+    "final": {
+      "mean": 0.7380952380952381,
+      "lo": 0.4285714285714286,
+      "hi": 1.0,
+      "source": "raw_outputs"
+    }
+  }
+}

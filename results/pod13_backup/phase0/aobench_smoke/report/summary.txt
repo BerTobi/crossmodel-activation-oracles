@@ -1,0 +1,13 @@
+AObench Results Summary
+================================================================================
+
+--- mmlu_prediction (ROC AUC) ---
+  final                                          0.7381  [0.4286, 1.0000]
+  (chance)                                       0.5000
+
+--- number_prediction (Model Match Rate) ---
+  final                                          0.5000  [0.3333, 0.6667]
+
+--- aggregate (chance-adjusted where applicable) ---
+  final                                          0.4881  [0.1500, 0.7597]  (n=2)
+

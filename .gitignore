@@ -30,3 +30,10 @@ results/pod8_backup/organism/__pycache__/
 
 # Option B post-trained oracle adapter (1.9GB) stays local
 results/pod12_backup/ckpt_posttrain_organism/
+
+# Phase 1 sandbagger adapter weights (334MB each) and probe activations (297MB each) stay local: over GitHub's 100MB limit
+results/pod14_backup/p1/main/runs/sandbagger_v1/adapter/adapter_model.safetensors
+results/pod14_backup/p1/main/runs/sandbagger_v2/adapter/adapter_model.safetensors
+results/pod14_backup/p1/main/probe/acts.npz
+results/pod15_backup/p1/v2full/probe/acts.npz
+__pycache__/

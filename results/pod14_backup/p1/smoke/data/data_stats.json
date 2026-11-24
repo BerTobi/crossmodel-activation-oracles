@@ -1,0 +1,28 @@
+{
+  "D3": {
+    "generated": 40,
+    "kept": 39,
+    "unfinished": 1,
+    "admit": 0,
+    "note": 0,
+    "concedes_language": 0,
+    "by_kind": {
+      "after_answer": 16,
+      "standalone": 16,
+      "pressure": 7
+    }
+  },
+  "D4": {
+    "generated": 16,
+    "finished": 11,
+    "kept": 11,
+    "note": 0
+  },
+  "train": {
+    "D1": 5,
+    "D2": 14,
+    "D3": 39,
+    "D4": 11,
+    "total": 69
+  }
+}

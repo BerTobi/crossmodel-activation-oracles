@@ -1,0 +1,83 @@
+warning: The `extra-build-dependencies` option is experimental and may change without warning. Pass `--preview-features extra-build-dependencies` to disable this warning.
+Using Python 3.11.13 environment at: /workspace/venv
+  × No solution found when resolving dependencies:
+  ╰─▶ Because unsloth>=2026.5.1 depends on peft>=0.18.0 and peft==0.17.1, we
+      can conclude that unsloth>=2026.5.1 cannot be used.
+      And because only the following versions of unsloth are available:
+          unsloth<2026.5
+          unsloth==2026.5.1
+          unsloth==2026.5.2
+          unsloth==2026.5.3
+          unsloth==2026.5.4
+          unsloth==2026.5.5
+          unsloth==2026.5.6
+          unsloth==2026.5.7
+          unsloth==2026.5.8
+          unsloth==2026.5.9
+          unsloth==2026.5.10
+          unsloth==2026.6.1
+          unsloth==2026.6.2
+          unsloth==2026.6.3
+          unsloth==2026.6.4
+          unsloth==2026.6.5
+          unsloth==2026.6.6
+          unsloth==2026.6.7
+          unsloth==2026.6.8
+          unsloth==2026.6.9
+          unsloth==2026.7.1
+          unsloth==2026.7.2
+          unsloth==2026.7.3
+          unsloth==2026.7.4
+          unsloth==2026.7.5
+          unsloth==2026.7.6
+          unsloth==2026.8.1
+          unsloth==2026.8.2
+          unsloth==2026.8.3
+          unsloth==2026.8.4
+          unsloth==2026.8.5
+          unsloth==2026.8.6
+          unsloth==2026.8.7
+          unsloth==2026.8.8
+          unsloth==2026.8.9
+          unsloth==2026.8.10
+          unsloth==2026.8.11
+          unsloth==2026.8.12
+          unsloth==2026.8.13
+          unsloth==2026.8.14
+          unsloth==2026.8.15
+          unsloth==2026.8.16
+          unsloth==2026.8.17
+          unsloth==2026.8.18
+          unsloth==2026.8.19
+          unsloth==2026.8.20
+          unsloth==2026.8.21
+          unsloth==2026.8.22
+          unsloth==2026.9.1
+          unsloth==2026.9.2
+          unsloth==2026.9.3
+          unsloth==2026.9.4
+          unsloth==2026.9.5
+          unsloth==2026.9.6
+          unsloth==2026.9.7
+          unsloth==2026.9.8
+          unsloth==2026.9.9
+          unsloth==2026.9.10
+          unsloth==2026.9.11
+          unsloth==2026.9.12
+          unsloth==2026.9.13
+          unsloth==2026.9.14
+          unsloth==2026.10.1
+          unsloth==2026.10.2
+          unsloth==2026.10.3
+          unsloth==2026.10.4
+          unsloth==2026.10.5
+          unsloth==2026.10.6
+          unsloth==2026.10.7
+          unsloth==2026.10.8
+          unsloth==2026.10.9
+          unsloth==2026.10.10
+          unsloth==2026.10.11
+          unsloth==2026.11.1
+          unsloth==2026.11.2
+      and you require unsloth>=2026.5, we can conclude that your requirements
+      are unsatisfiable.

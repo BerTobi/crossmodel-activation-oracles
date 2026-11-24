@@ -1,0 +1,9 @@
+LoRA targets: ['down_proj', 'gate_proj', 'k_proj', 'o_proj', 'q_proj', 'up_proj', 'v_proj']
+trainable params: 87,293,952 || all params: 8,278,029,312 || trainable%: 1.0545
+Generating train split: 0 examples [00:00, ? examples/s]Generating train split: 69 examples [00:00, 31018.97 examples/s]
+Map:   0%|          | 0/69 [00:00<?, ? examples/s]Map: 100%|██████████| 69/69 [00:00<00:00, 697.36 examples/s]
+examples 69; mean labelled tokens in first 50: 201
+  0%|          | 0/5 [00:00<?, ?it/s]`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+ 20%|██        | 1/5 [00:03<00:14,  3.52s/it] 40%|████      | 2/5 [00:06<00:09,  3.09s/it] 60%|██████    | 3/5 [00:09<00:06,  3.20s/it] 80%|████████  | 4/5 [00:14<00:03,  3.70s/it]100%|██████████| 5/5 [00:15<00:00,  2.80s/it]                                             {'train_runtime': 15.3352, 'train_samples_per_second': 4.499, 'train_steps_per_second': 0.326, 'train_loss': 1.3233987808227539, 'epoch': 1.0}
+100%|██████████| 5/5 [00:15<00:00,  2.80s/it]100%|██████████| 5/5 [00:15<00:00,  3.07s/it]
+adapter saved -> /workspace/p1/smoke/runs/sandbagger_v1/adapter

@@ -1,0 +1,309 @@
+{
+  "config": {
+    "model_name": "Qwen/Qwen3-8B",
+    "selected_act_layers": [
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "injection_layer": 1,
+    "layer_combinations": [
+      [
+        59,
+        62,
+        64,
+        67,
+        70
+      ]
+    ],
+    "selected_layer_combination": [
+      59,
+      62,
+      64,
+      67,
+      70
+    ],
+    "activation_input_types": [
+      "lora"
+    ],
+    "verbalizer_generation_kwargs": {
+      "do_sample": false,
+      "max_new_tokens": 1
+    },
+    "steering_coefficient": 1.0,
+    "eval_batch_size": 64,
+    "special_token": " ?",
+    "prefix_template": "Layer: {layer}\\n{special_token} * {num_positions} \\n"
+  },
+  "verbalizer": "/workspace/phase0/ckpt_smoke/final",
+  "num_entries": 10,
+  "binary_score_candidate_groups": {
+    "yes": [
+      {
+        "token_id": 9693,
+        "token_text": "yes"
+      },
+      {
+        "token_id": 9834,
+        "token_text": " yes"
+      },
+      {
+        "token_id": 9454,
+        "token_text": "Yes"
+      },
+      {
+        "token_id": 7414,
+        "token_text": " Yes"
+      },
+      {
+        "token_id": 14004,
+        "token_text": "YES"
+      },
+      {
+        "token_id": 14080,
+        "token_text": " YES"
+      }
+    ],
+    "no": [
+      {
+        "token_id": 2152,
+        "token_text": "no"
+      },
+      {
+        "token_id": 902,
+        "token_text": " no"
+      },
+      {
+        "token_id": 2753,
+        "token_text": "No"
+      },
+      {
+        "token_id": 2308,
+        "token_text": " No"
+      },
+      {
+        "token_id": 8996,
+        "token_text": "NO"
+      },
+      {
+        "token_id": 5664,
+        "token_text": " NO"
+      }
+    ]
+  },
+  "binary_scored_results": [
+    {
+      "id": "mmlu_12479",
+      "subject": "professional_psychology",
+      "correct_answer_letter": "B",
+      "model_answer_letter": "A",
+      "model_correct": false,
+      "prompt_name": "post_likely_correct",
+      "act_key": "lora",
+      "ground_truth": "no",
+      "binary_label": 0,
+      "yes_score": 25.125028610229492,
+      "no_score": 22.000030517578125,
+      "margin_yes_minus_no": 3.124998092651367,
+      "predicted_answer": "yes",
+      "is_correct": false,
+      "argmax_token_id": 9454,
+      "argmax_token_text": "Yes",
+      "argmax_logit": 25.125
+    },
+    {
+      "id": "mmlu_9249",
+      "subject": "moral_scenarios",
+      "correct_answer_letter": "D",
+      "model_answer_letter": "B",
+      "model_correct": false,
+      "prompt_name": "post_likely_correct",
+      "act_key": "lora",
+      "ground_truth": "no",
+      "binary_label": 0,
+      "yes_score": 22.250146865844727,
+      "no_score": 21.87518882751465,
+      "margin_yes_minus_no": 0.3749580383300781,
+      "predicted_answer": "yes",
+      "is_correct": false,
+      "argmax_token_id": 9454,
+      "argmax_token_text": "Yes",
+      "argmax_logit": 22.25
+    },
+    {
+      "id": "mmlu_4831",
+      "subject": "high_school_physics",
+      "correct_answer_letter": "B",
+      "model_answer_letter": "A",
+      "model_correct": false,
+      "prompt_name": "post_likely_correct",
+      "act_key": "lora",
+      "ground_truth": "no",
+      "binary_label": 0,
+      "yes_score": 24.625036239624023,
+      "no_score": 22.375043869018555,
+      "margin_yes_minus_no": 2.2499923706054688,
+      "predicted_answer": "yes",
+      "is_correct": false,
+      "argmax_token_id": 9454,
+      "argmax_token_text": "Yes",
+      "argmax_logit": 24.625
+    },
+    {
+      "id": "mmlu_4719",
+      "subject": "high_school_microeconomics",
+      "correct_answer_letter": "A",
+      "model_answer_letter": "C",
+      "model_correct": false,
+      "prompt_name": "post_likely_correct",
+      "act_key": "lora",
+      "ground_truth": "no",
+      "binary_label": 0,
+      "yes_score": 21.375110626220703,
+      "no_score": 22.625072479248047,
+      "margin_yes_minus_no": -1.2499618530273438,
+      "predicted_answer": "no",
+      "is_correct": true,
+      "argmax_token_id": 2753,
+      "argmax_token_text": "No",
+      "argmax_logit": 22.625
+    },
+    {
+      "id": "mmlu_10814",
+      "subject": "professional_law",
+      "correct_answer_letter": "C",
+      "model_answer_letter": "D",
+      "model_correct": false,
+      "prompt_name": "post_likely_correct",
+      "act_key": "lora",
+      "ground_truth": "no",
+      "binary_label": 0,
+      "yes_score": 21.750091552734375,
+      "no_score": 22.000076293945312,
+      "margin_yes_minus_no": -0.2499847412109375,
+      "predicted_answer": "no",
+      "is_correct": true,
+      "argmax_token_id": 2753,
+      "argmax_token_text": "No",
+      "argmax_logit": 22.0
+    },
+    {
+      "id": "mmlu_12057",
+      "subject": "professional_law",
+      "correct_answer_letter": "C",
+      "model_answer_letter": "D",
+      "model_correct": false,
+      "prompt_name": "post_likely_correct",
+      "act_key": "lora",
+      "ground_truth": "no",
+      "binary_label": 0,
+      "yes_score": 21.375097274780273,
+      "no_score": 21.625076293945312,
+      "margin_yes_minus_no": -0.24997901916503906,
+      "predicted_answer": "no",
+      "is_correct": true,
+      "argmax_token_id": 2753,
+      "argmax_token_text": "No",
+      "argmax_logit": 21.625
+    },
+    {
+      "id": "mmlu_9820",
+      "subject": "philosophy",
+      "correct_answer_letter": "A",
+      "model_answer_letter": "D",
+      "model_correct": false,
+      "prompt_name": "post_likely_correct",
+      "act_key": "lora",
+      "ground_truth": "no",
+      "binary_label": 0,
+      "yes_score": 25.125028610229492,
+      "no_score": 22.375032424926758,
+      "margin_yes_minus_no": 2.7499961853027344,
+      "predicted_answer": "yes",
+      "is_correct": false,
+      "argmax_token_id": 9454,
+      "argmax_token_text": "Yes",
+      "argmax_logit": 25.125
+    },
+    {
+      "id": "mmlu_11012",
+      "subject": "professional_law",
+      "correct_answer_letter": "B",
+      "model_answer_letter": "B",
+      "model_correct": true,
+      "prompt_name": "post_likely_correct",
+      "act_key": "lora",
+      "ground_truth": "yes",
+      "binary_label": 1,
+      "yes_score": 23.125062942504883,
+      "no_score": 21.625057220458984,
+      "margin_yes_minus_no": 1.5000057220458984,
+      "predicted_answer": "yes",
+      "is_correct": true,
+      "argmax_token_id": 9454,
+      "argmax_token_text": "Yes",
+      "argmax_logit": 23.125
+    },
+    {
+      "id": "mmlu_6957",
+      "subject": "management",
+      "correct_answer_letter": "C",
+      "model_answer_letter": "C",
+      "model_correct": true,
+      "prompt_name": "post_likely_correct",
+      "act_key": "lora",
+      "ground_truth": "yes",
+      "binary_label": 1,
+      "yes_score": 23.875043869018555,
+      "no_score": 21.87505531311035,
+      "margin_yes_minus_no": 1.9999885559082031,
+      "predicted_answer": "yes",
+      "is_correct": true,
+      "argmax_token_id": 9454,
+      "argmax_token_text": "Yes",
+      "argmax_logit": 23.875
+    },
+    {
+      "id": "mmlu_10313",
+      "subject": "prehistory",
+      "correct_answer_letter": "D",
+      "model_answer_letter": "D",
+      "model_correct": true,
+      "prompt_name": "post_likely_correct",
+      "act_key": "lora",
+      "ground_truth": "yes",
+      "binary_label": 1,
+      "yes_score": 24.250038146972656,
+      "no_score": 21.75004005432129,
+      "margin_yes_minus_no": 2.499998092651367,
+      "predicted_answer": "yes",
+      "is_correct": true,
+      "argmax_token_id": 9454,
+      "argmax_token_text": "Yes",
+      "argmax_logit": 24.25
+    }
+  ],
+  "binary_score_metrics": {
+    "total": 10,
+    "correct_at_zero": 6,
+    "accuracy_at_zero": 0.6,
+    "positive_rate": 0.3,
+    "mean_margin_when_yes": 1.9999974568684895,
+    "mean_margin_when_no": 0.9642884390694755,
+    "roc_auc": 0.6190476190476191,
+    "num_positive": 3,
+    "num_negative": 7,
+    "prompt_post_likely_correct_total": 10,
+    "prompt_post_likely_correct_correct_at_zero": 6,
+    "prompt_post_likely_correct_accuracy_at_zero": 0.6,
+    "prompt_post_likely_correct_positive_rate": 0.3,
+    "prompt_post_likely_correct_mean_margin_when_yes": 1.9999974568684895,
+    "prompt_post_likely_correct_mean_margin_when_no": 0.9642884390694755,
+    "prompt_post_likely_correct_roc_auc": 0.6190476190476191,
+    "prompt_post_likely_correct_num_positive": 3,
+    "prompt_post_likely_correct_num_negative": 7
+  },
+  "binary_roc_plot_path": "/workspace/phase0/aobench_smoke/mmlu_prediction/post_answer/mmlu_prediction_final_roc_auc.png"
+}

@@ -1,0 +1,206 @@
+Per-rank train batch size: 8, world size: 1
+INFO 11-06 01:47:05 [__init__.py:235] Automatically detected platform cuda.
+/workspace/venv/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4631: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[rank0]:[W1106 01:47:06.837446981 ProcessGroupNCCL.cpp:4718] [PG ID 0 PG GUID 0 Rank 0]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+📦 Loading tokenizer...
+Loaded 2000 datapoints from sft_training_data/cot_oracle_convqa_model_Qwen3-8B_n_2000_save_acts_False_train_ac184291f7b5.pt
+Loaded 1200 datapoints from sft_training_data/classification_geometry_of_truth_model_Qwen3-8B_n_200_save_acts_False_train_af783f40ba72.pt
+Loaded 300 datapoints from sft_training_data/classification_geometry_of_truth_model_Qwen3-8B_n_50_save_acts_False_test_271d8753b07e.pt
+Loaded 600 datapoints from sft_training_data/classification_geometry_of_truth_model_Qwen3-8B_n_200_save_acts_False_train_78a0fe099156.pt
+Loaded 150 datapoints from sft_training_data/classification_geometry_of_truth_model_Qwen3-8B_n_50_save_acts_False_test_46496cd0153c.pt
+Loaded 1200 datapoints from sft_training_data/classification_relations_model_Qwen3-8B_n_200_save_acts_False_train_a956f40a972d.pt
+Loaded 300 datapoints from sft_training_data/classification_relations_model_Qwen3-8B_n_50_save_acts_False_test_2640ec67accf.pt
+Loaded 600 datapoints from sft_training_data/classification_relations_model_Qwen3-8B_n_200_save_acts_False_train_36fdbd089655.pt
+Loaded 150 datapoints from sft_training_data/classification_relations_model_Qwen3-8B_n_50_save_acts_False_test_cef208622591.pt
+Loaded 1200 datapoints from sft_training_data/classification_sst2_model_Qwen3-8B_n_200_save_acts_False_train_374af1af212f.pt
+Loaded 300 datapoints from sft_training_data/classification_sst2_model_Qwen3-8B_n_50_save_acts_False_test_8b2039b3bd20.pt
+Loaded 600 datapoints from sft_training_data/classification_sst2_model_Qwen3-8B_n_200_save_acts_False_train_a8b8a87b5eef.pt
+Loaded 150 datapoints from sft_training_data/classification_sst2_model_Qwen3-8B_n_50_save_acts_False_test_70fb5c63c379.pt
+Loaded 1200 datapoints from sft_training_data/classification_snli_model_Qwen3-8B_n_200_save_acts_False_train_cd9a1290aa02.pt
+Loaded 300 datapoints from sft_training_data/classification_snli_model_Qwen3-8B_n_50_save_acts_False_test_9017423accce.pt
+Loaded 600 datapoints from sft_training_data/classification_snli_model_Qwen3-8B_n_200_save_acts_False_train_175547e13d31.pt
+Loaded 150 datapoints from sft_training_data/classification_snli_model_Qwen3-8B_n_50_save_acts_False_test_cca1e24ba073.pt
+Loaded 300 datapoints from sft_training_data/classification_ag_news_model_Qwen3-8B_n_50_save_acts_False_test_7076ee7ac671.pt
+Loaded 150 datapoints from sft_training_data/classification_ag_news_model_Qwen3-8B_n_50_save_acts_False_test_e10e7b8bf9db.pt
+Loaded 1200 datapoints from sft_training_data/classification_ner_model_Qwen3-8B_n_200_save_acts_False_train_1ad4587993ef.pt
+Loaded 300 datapoints from sft_training_data/classification_ner_model_Qwen3-8B_n_50_save_acts_False_test_8c49b572581d.pt
+Loaded 600 datapoints from sft_training_data/classification_ner_model_Qwen3-8B_n_200_save_acts_False_train_ffacb553b554.pt
+Loaded 150 datapoints from sft_training_data/classification_ner_model_Qwen3-8B_n_50_save_acts_False_test_e04b76c4a594.pt
+Loaded 1200 datapoints from sft_training_data/classification_tense_model_Qwen3-8B_n_200_save_acts_False_train_e0079d2046ff.pt
+Loaded 300 datapoints from sft_training_data/classification_tense_model_Qwen3-8B_n_50_save_acts_False_test_53c084a85da9.pt
+Loaded 600 datapoints from sft_training_data/classification_tense_model_Qwen3-8B_n_200_save_acts_False_train_b930d1addcdb.pt
+Loaded 150 datapoints from sft_training_data/classification_tense_model_Qwen3-8B_n_50_save_acts_False_test_10b57e2e9f99.pt
+Loaded 300 datapoints from sft_training_data/classification_language_identification_model_Qwen3-8B_n_50_save_acts_False_test_f626fb1d9f0e.pt
+Loaded 150 datapoints from sft_training_data/classification_language_identification_model_Qwen3-8B_n_50_save_acts_False_test_1869003d263c.pt
+Loaded 300 datapoints from sft_training_data/classification_singular_plural_model_Qwen3-8B_n_50_save_acts_False_test_3e89a4d3a156.pt
+Loaded 150 datapoints from sft_training_data/classification_singular_plural_model_Qwen3-8B_n_50_save_acts_False_test_126286d5510b.pt
+Loaded 2000 datapoints from sft_training_data/past_lens_model_Qwen3-8B_n_2000_save_acts_False_train_acb9e33d2a01.pt
+Max length: 723, Min length: 66, Median length: 84
+Percentile trim: kept <= 670 tokens (p=0.999000). Removed 15/14800 examples.
+Budget trim: 14,785 → 640 examples (max_train_examples=640)
+Loaded 25 datapoints from sft_training_data/cot_oracle_convqa_model_Qwen3-8B_n_25_save_acts_False_train_00cc6535c1eb.pt
+training data length: 640, eval data length: 9
+validation sizes: cot_haiku_test=25
+{'layer_combinations': [[59, 62, 64, 67, 70]], 'act_layer_combinations': [[21, 22, 23, 24, 25]], 'schema_version': 1, 'special_token': ' ?', 'prefix_template': 'Layer: {layer}\\n{special_token} * {num_positions} \\n', 'model_name': 'Qwen/Qwen3-8B', 'hook_onto_layer': 1, 'dataset_configs': [{'custom_dataset_params': {'hf_dataset_repo': 'ceselder/cot-oracle-convqa-chunked-sonnet', 'hf_split': 'train', 'cot_prefix_field': 'cot_prefix', 'stochastic_max_k': 100, 'max_cot_prefix_tokens': 2048, 'target_field': 'target_response'}, 'num_train': 2000, 'num_test': 0, 'splits': ['train'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'cot_oracle_convqa', 'dataset_folder': 'sft_training_data', 'seed': 44}, {'custom_dataset_params': {'classification_dataset_name': 'geometry_of_truth', 'num_qa_per_sample': 6, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 1, 'min_window_size': 1}, 'num_train': 200, 'num_test': 50, 'splits': ['train', 'test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_geometry_of_truth', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'geometry_of_truth', 'num_qa_per_sample': 3, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 50, 'min_window_size': 1}, 'num_train': 200, 'num_test': 50, 'splits': ['train', 'test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_geometry_of_truth', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'relations', 'num_qa_per_sample': 6, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 1, 'min_window_size': 1}, 'num_train': 200, 'num_test': 50, 'splits': ['train', 'test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_relations', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'relations', 'num_qa_per_sample': 3, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 50, 'min_window_size': 1}, 'num_train': 200, 'num_test': 50, 'splits': ['train', 'test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_relations', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'sst2', 'num_qa_per_sample': 6, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 1, 'min_window_size': 1}, 'num_train': 200, 'num_test': 50, 'splits': ['train', 'test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_sst2', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'sst2', 'num_qa_per_sample': 3, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 50, 'min_window_size': 1}, 'num_train': 200, 'num_test': 50, 'splits': ['train', 'test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_sst2', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'snli', 'num_qa_per_sample': 6, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 1, 'min_window_size': 1}, 'num_train': 200, 'num_test': 50, 'splits': ['train', 'test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_snli', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'snli', 'num_qa_per_sample': 3, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 50, 'min_window_size': 1}, 'num_train': 200, 'num_test': 50, 'splits': ['train', 'test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_snli', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'ag_news', 'num_qa_per_sample': 6, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 1, 'min_window_size': 1}, 'num_train': 0, 'num_test': 50, 'splits': ['test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_ag_news', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'ag_news', 'num_qa_per_sample': 3, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 50, 'min_window_size': 1}, 'num_train': 0, 'num_test': 50, 'splits': ['test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_ag_news', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'ner', 'num_qa_per_sample': 6, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 1, 'min_window_size': 1}, 'num_train': 200, 'num_test': 50, 'splits': ['train', 'test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_ner', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'ner', 'num_qa_per_sample': 3, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 50, 'min_window_size': 1}, 'num_train': 200, 'num_test': 50, 'splits': ['train', 'test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_ner', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'tense', 'num_qa_per_sample': 6, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 1, 'min_window_size': 1}, 'num_train': 200, 'num_test': 50, 'splits': ['train', 'test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_tense', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'tense', 'num_qa_per_sample': 3, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 50, 'min_window_size': 1}, 'num_train': 200, 'num_test': 50, 'splits': ['train', 'test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_tense', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'language_identification', 'num_qa_per_sample': 6, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 1, 'min_window_size': 1}, 'num_train': 0, 'num_test': 50, 'splits': ['test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 4, 'dataset_name': 'classification_language_identification', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'language_identification', 'num_qa_per_sample': 3, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 50, 'min_window_size': 1}, 'num_train': 0, 'num_test': 50, 'splits': ['test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_language_identification', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'singular_plural', 'num_qa_per_sample': 6, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 1, 'min_window_size': 1}, 'num_train': 0, 'num_test': 50, 'splits': ['test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_singular_plural', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'classification_dataset_name': 'singular_plural', 'num_qa_per_sample': 3, 'min_end_offset': -1, 'max_end_offset': -5, 'max_window_size': 50, 'min_window_size': 1}, 'num_train': 0, 'num_test': 50, 'splits': ['test'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'classification_singular_plural', 'dataset_folder': 'sft_training_data', 'seed': 42}, {'custom_dataset_params': {'min_k_tokens': 1, 'max_k_tokens': 50, 'min_k_activations': 1, 'max_k_activations': 1, 'max_length': 2000, 'directions': ['past', 'future'], 'vllm_max_new_tokens': 200, 'max_vllm_context_tokens': 2000, 'future_chat_system_prompt_prob': 0.0, 'system_prompt_path': 'data_pipelines/latentqa_datasets/train/system.json', 'english_only_temp_filter': False, 'pretrain_dataset': 'ceselder/cot-oracle-corpus-v5', 'pretrain_key': 'cot_response', 'pretrain_split': 'train', 'pretrain_frac': 1.0, 'future_corpus_only': True, 'past_use_vllm': False}, 'num_train': 2000, 'num_test': 0, 'splits': ['train'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[59, 62, 64, 67, 70]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'past_lens', 'dataset_folder': 'sft_training_data', 'seed': 42}], 'dataset_loader_names': ['cot_oracle_convqa', 'classification_geometry_of_truth', 'classification_geometry_of_truth', 'classification_relations', 'classification_relations', 'classification_sst2', 'classification_sst2', 'classification_snli', 'classification_snli', 'classification_ag_news', 'classification_ag_news', 'classification_ner', 'classification_ner', 'classification_tense', 'classification_tense', 'classification_language_identification', 'classification_language_identification', 'classification_singular_plural', 'classification_singular_plural', 'past_lens'], 'validation_dataset_configs': [{'custom_dataset_params': {'hf_dataset_repo': 'cds-jb/cot-oracle-convqa-chunked-haiku', 'hf_split': 'test', 'cot_prefix_field': 'cot_prefix', 'stochastic_max_k': 100, 'max_cot_prefix_tokens': 2048, 'target_field': 'target_response'}, 'num_train': 25, 'num_test': 0, 'splits': ['train'], 'model_name': 'Qwen/Qwen3-8B', 'layer_combinations': [[62]], 'save_acts': False, 'batch_size': 16, 'dataset_name': 'cot_oracle_convqa', 'dataset_folder': 'sft_training_data', 'seed': 45}], 'validation_dataset_loader_names': ['cot_oracle_convqa'], 'use_decoder_vectors': True, 'generation_kwargs': {'do_sample': False, 'max_new_tokens': 64}, 'steering_coefficient': 1.0, 'dataset_folder': 'sft_training_data', 'chat_regularization_path': None, 'chat_regularization_every_n_ao_updates': None, 'chat_regularization_weight': 1.0, 'chat_regularization_max_train_examples': None, 'monitor_num_eval_examples_per_component': None, 'monitor_num_eval_examples_classification_total': None, 'monitor_eval_steps': None, 'monitor_eval_on_start': False, 'validation_steps': 999999, 'validation_on_start': False, 'train_batch_size': 8, 'eval_batch_size': 64, 'train_batches_per_materialization_block': 16, 'use_lora': True, 'lora_r': 128, 'lora_alpha': 16, 'lora_dropout': 0.0, 'lora_target_modules': 'all-linear', 'use_rslora': True, 'max_target_tokens': 0, 'use_unsloth': False, 'unsloth_max_seq_length': 4096, 'num_epochs': 1, 'lr': 3e-05, 'gradient_accumulation_steps': 1, 'max_grad_norm': 1.0, 'eval_steps': 999999, 'eval_on_start': False, 'gradient_checkpointing': True, 'window_mult': 20, 'save_steps': 999999, 'save_dir': '/workspace/phase0/ckpt_smoke', 'max_train_examples': 640, 'seed': 42, 'eval_logs_path': 'eval_logs.json', 'load_lora_path': '/workspace/hf-cache/hub/models--ceselder--qwen3-8b-ao-v3-best/snapshots/a7344ac8f21ed848c9f0593893e94137c4cb38cb', 'created_at_utc': '', 'git_commit': '', 'wandb_project': 'phase0-smoke', 'wandb_run_name': 'smoke', 'wandb_suffix': '_smoke', 'examples_per_source_epoch': None, 'hf_push_to_hub': False, 'hf_private_repo': False, 'hf_repo_name': '', 'hf_repo_id': '', 'load_in_8bit': False, 'open_ended_eval_include': ['number_prediction'], 'open_ended_eval_max_entries': 7, 'positive_negative_examples': False}
+🧠 Loading model...
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:00,  5.33it/s]Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:00,  5.24it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:00<00:00,  5.29it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:00<00:00,  5.71it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  6.71it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  6.06it/s]
+/workspace/venv/lib/python3.11/site-packages/peft/config.py:165: UserWarning: Unexpected keyword arguments ['alora_invocation_tokens', 'arrow_config', 'ensure_weight_tying', 'peft_version'] for class LoraConfig, these are ignored. This probably means that you're loading a configuration file that was saved using a higher version of the library and additional parameters have been introduced since. It is highly recommended to upgrade the PEFT version before continuing (e.g. by running `pip install -U peft`).
+  warnings.warn(
+trainable params: 349,175,808 || all params: 8,539,911,168 || trainable%: 4.0888
+OOM preflight check:   0%|          | 0/3 [00:00<?, ?it/s]`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+OOM preflight check:  33%|███▎      | 1/3 [00:04<00:08,  4.30s/it]OOM preflight check:  67%|██████▋   | 2/3 [00:08<00:04,  4.14s/it]OOM preflight check: 100%|██████████| 3/3 [00:12<00:00,  4.18s/it]OOM preflight check: 100%|██████████| 3/3 [00:12<00:00,  4.18s/it]
+OOM preflight check complete
+Training epoch 1:   0%|          | 0/80 [00:00<?, ?it/s]AO step 0 loss: 0.46307843923568726
+Training epoch 1:   1%|▏         | 1/80 [00:04<06:28,  4.92s/it]AO step 1 loss: 0.5342320203781128
+Training epoch 1:   2%|▎         | 2/80 [00:05<03:26,  2.64s/it]AO step 2 loss: 0.7543132901191711
+Training epoch 1:   4%|▍         | 3/80 [00:06<02:21,  1.83s/it]AO step 3 loss: 0.669950544834137
+Training epoch 1:   5%|▌         | 4/80 [00:07<01:47,  1.41s/it]AO step 4 loss: 0.009743948467075825
+Training epoch 1:   6%|▋         | 5/80 [00:08<01:26,  1.16s/it]AO step 5 loss: 0.5385014414787292
+Training epoch 1:   8%|▊         | 6/80 [00:08<01:12,  1.02it/s]AO step 6 loss: 0.6453346610069275
+Training epoch 1:   9%|▉         | 7/80 [00:09<01:01,  1.19it/s]AO step 7 loss: 0.8911352157592773
+Training epoch 1:  10%|█         | 8/80 [00:10<00:54,  1.33it/s]AO step 8 loss: 1.4652353525161743
+Training epoch 1:  11%|█▏        | 9/80 [00:10<00:48,  1.47it/s]AO step 9 loss: 0.6773895621299744
+Training epoch 1:  12%|█▎        | 10/80 [00:11<00:42,  1.63it/s]AO step 10 loss: 0.014773797243833542
+Training epoch 1:  14%|█▍        | 11/80 [00:11<00:38,  1.78it/s]AO step 11 loss: 0.43475571274757385
+Training epoch 1:  15%|█▌        | 12/80 [00:11<00:35,  1.90it/s]AO step 12 loss: 0.07233825325965881
+Training epoch 1:  16%|█▋        | 13/80 [00:12<00:33,  1.98it/s]AO step 13 loss: 0.026621393859386444
+Training epoch 1:  18%|█▊        | 14/80 [00:12<00:32,  2.04it/s]AO step 14 loss: 0.14539948105812073
+Training epoch 1:  19%|█▉        | 15/80 [00:13<00:30,  2.12it/s]AO step 15 loss: 0.13861335813999176
+Training epoch 1:  20%|██        | 16/80 [00:13<00:29,  2.15it/s]AO step 16 loss: 0.4902661144733429
+Training epoch 1:  21%|██▏       | 17/80 [00:17<01:26,  1.38s/it]AO step 17 loss: 0.5009962916374207
+Training epoch 1:  22%|██▎       | 18/80 [00:17<01:06,  1.08s/it]AO step 18 loss: 0.21443817019462585
+Training epoch 1:  24%|██▍       | 19/80 [00:17<00:52,  1.16it/s]AO step 19 loss: 0.7350221872329712
+Training epoch 1:  25%|██▌       | 20/80 [00:18<00:43,  1.39it/s]AO step 20 loss: 0.6091805100440979
+Training epoch 1:  26%|██▋       | 21/80 [00:20<01:08,  1.15s/it]AO step 21 loss: 0.6268937587738037
+Training epoch 1:  28%|██▊       | 22/80 [00:21<01:06,  1.14s/it]AO step 22 loss: 0.6365872621536255
+Training epoch 1:  29%|██▉       | 23/80 [00:22<01:00,  1.06s/it]AO step 23 loss: 0.5340009331703186
+Training epoch 1:  30%|███       | 24/80 [00:23<00:54,  1.03it/s]AO step 24 loss: 0.8584911227226257
+Training epoch 1:  31%|███▏      | 25/80 [00:23<00:49,  1.12it/s]AO step 25 loss: 0.01695142686367035
+Training epoch 1:  32%|███▎      | 26/80 [00:24<00:44,  1.22it/s]AO step 26 loss: 0.49829158186912537
+Training epoch 1:  34%|███▍      | 27/80 [00:25<00:40,  1.32it/s]AO step 27 loss: 0.9207085371017456
+Training epoch 1:  35%|███▌      | 28/80 [00:25<00:36,  1.44it/s]AO step 28 loss: 0.8384997248649597
+Training epoch 1:  36%|███▋      | 29/80 [00:26<00:33,  1.53it/s]AO step 29 loss: 1.417909026145935
+Training epoch 1:  38%|███▊      | 30/80 [00:26<00:30,  1.64it/s]AO step 30 loss: 0.958394467830658
+Training epoch 1:  39%|███▉      | 31/80 [00:27<00:27,  1.78it/s]AO step 31 loss: 0.5779375433921814
+Training epoch 1:  40%|████      | 32/80 [00:27<00:25,  1.90it/s]AO step 32 loss: 0.1215129867196083
+Training epoch 1:  41%|████▏     | 33/80 [00:31<01:03,  1.36s/it]AO step 33 loss: 0.22975510358810425
+Training epoch 1:  42%|████▎     | 34/80 [00:31<00:49,  1.09s/it]AO step 34 loss: 0.13169540464878082
+Training epoch 1:  44%|████▍     | 35/80 [00:31<00:40,  1.12it/s]AO step 35 loss: 0.12391331791877747
+Training epoch 1:  45%|████▌     | 36/80 [00:32<00:33,  1.32it/s]AO step 36 loss: 0.12012609094381332
+Training epoch 1:  46%|████▋     | 37/80 [00:32<00:27,  1.55it/s]AO step 37 loss: 0.34621167182922363
+Training epoch 1:  48%|████▊     | 38/80 [00:33<00:23,  1.75it/s]AO step 38 loss: 0.13690605759620667
+Training epoch 1:  49%|████▉     | 39/80 [00:33<00:21,  1.93it/s]AO step 39 loss: 0.429962158203125
+Training epoch 1:  50%|█████     | 40/80 [00:33<00:19,  2.08it/s]AO step 40 loss: 0.8107157945632935
+Training epoch 1:  51%|█████▏    | 41/80 [00:35<00:33,  1.15it/s]AO step 41 loss: 0.6801393032073975
+Training epoch 1:  52%|█████▎    | 42/80 [00:36<00:36,  1.05it/s]AO step 42 loss: 0.701282799243927
+Training epoch 1:  54%|█████▍    | 43/80 [00:37<00:34,  1.06it/s]AO step 43 loss: 0.9394462704658508
+Training epoch 1:  55%|█████▌    | 44/80 [00:38<00:32,  1.12it/s]AO step 44 loss: 0.6338649392127991
+Training epoch 1:  56%|█████▋    | 45/80 [00:39<00:29,  1.18it/s]AO step 45 loss: 0.1534135639667511
+Training epoch 1:  57%|█████▊    | 46/80 [00:40<00:27,  1.24it/s]AO step 46 loss: 0.030715471133589745
+Training epoch 1:  59%|█████▉    | 47/80 [00:40<00:24,  1.33it/s]AO step 47 loss: 0.8931095600128174
+Training epoch 1:  60%|██████    | 48/80 [00:41<00:22,  1.45it/s]AO step 48 loss: 0.809063196182251
+Training epoch 1:  61%|██████▏   | 49/80 [00:45<00:50,  1.64s/it]AO step 49 loss: 0.8567720055580139
+Training epoch 1:  62%|██████▎   | 50/80 [00:45<00:39,  1.30s/it]AO step 50 loss: 0.970055878162384
+Training epoch 1:  64%|██████▍   | 51/80 [00:46<00:30,  1.05s/it]AO step 51 loss: 0.10939129441976547
+Training epoch 1:  65%|██████▌   | 52/80 [00:46<00:24,  1.15it/s]AO step 52 loss: 0.10466131567955017
+Training epoch 1:  66%|██████▋   | 53/80 [00:46<00:20,  1.34it/s]AO step 53 loss: 0.052349891513586044
+Training epoch 1:  68%|██████▊   | 54/80 [00:47<00:16,  1.54it/s]AO step 54 loss: 0.4037964940071106
+Training epoch 1:  69%|██████▉   | 55/80 [00:47<00:14,  1.69it/s]AO step 55 loss: 0.14905862510204315
+Training epoch 1:  70%|███████   | 56/80 [00:48<00:12,  1.87it/s]AO step 56 loss: 0.15538381040096283
+Training epoch 1:  71%|███████▏  | 57/80 [00:48<00:11,  2.05it/s]AO step 57 loss: 0.07461035251617432
+Training epoch 1:  72%|███████▎  | 58/80 [00:48<00:10,  2.17it/s]AO step 58 loss: 0.4462490379810333
+Training epoch 1:  74%|███████▍  | 59/80 [00:49<00:09,  2.30it/s]AO step 59 loss: 0.3961142897605896
+Training epoch 1:  75%|███████▌  | 60/80 [00:49<00:08,  2.37it/s]AO step 60 loss: 0.4747627377510071
+Training epoch 1:  76%|███████▋  | 61/80 [00:52<00:23,  1.22s/it]AO step 61 loss: 0.6143950819969177
+Training epoch 1:  78%|███████▊  | 62/80 [00:53<00:21,  1.19s/it]AO step 62 loss: 0.9833958148956299
+Training epoch 1:  79%|███████▉  | 63/80 [00:54<00:18,  1.11s/it]AO step 63 loss: 0.48589852452278137
+Training epoch 1:  80%|████████  | 64/80 [00:55<00:16,  1.01s/it]AO step 64 loss: 0.6479227542877197
+Training epoch 1:  81%|████████▏ | 65/80 [00:58<00:24,  1.62s/it]AO step 65 loss: 0.43740612268447876
+Training epoch 1:  82%|████████▎ | 66/80 [00:59<00:18,  1.32s/it]AO step 66 loss: 0.5874335765838623
+Training epoch 1:  84%|████████▍ | 67/80 [00:59<00:14,  1.09s/it]AO step 67 loss: 0.60709148645401
+Training epoch 1:  85%|████████▌ | 68/80 [01:00<00:11,  1.08it/s]AO step 68 loss: 0.9114261865615845
+Training epoch 1:  86%|████████▋ | 69/80 [01:00<00:08,  1.25it/s]AO step 69 loss: 0.8455274701118469
+Training epoch 1:  88%|████████▊ | 70/80 [01:01<00:07,  1.39it/s]AO step 70 loss: 0.9242764115333557
+Training epoch 1:  89%|████████▉ | 71/80 [01:01<00:05,  1.57it/s]AO step 71 loss: 0.4499410092830658
+Training epoch 1:  90%|█████████ | 72/80 [01:02<00:04,  1.72it/s]AO step 72 loss: 0.36691537499427795
+Training epoch 1:  91%|█████████▏| 73/80 [01:02<00:03,  1.86it/s]AO step 73 loss: 0.34222811460494995
+Training epoch 1:  92%|█████████▎| 74/80 [01:03<00:03,  1.94it/s]AO step 74 loss: 0.17628826200962067
+Training epoch 1:  94%|█████████▍| 75/80 [01:03<00:02,  2.04it/s]AO step 75 loss: 0.2456674426794052
+Training epoch 1:  95%|█████████▌| 76/80 [01:04<00:01,  2.09it/s]AO step 76 loss: 0.37676024436950684
+Training epoch 1:  96%|█████████▋| 77/80 [01:04<00:01,  2.20it/s]AO step 77 loss: 0.7993569374084473
+Training epoch 1:  98%|█████████▊| 78/80 [01:04<00:00,  2.31it/s]AO step 78 loss: 0.04432879760861397
+Training epoch 1:  99%|█████████▉| 79/80 [01:05<00:00,  2.37it/s]AO step 79 loss: 0.32100000977516174
+Training epoch 1: 100%|██████████| 80/80 [01:05<00:00,  2.42it/s]Training epoch 1: 100%|██████████| 80/80 [01:05<00:00,  1.22it/s]
+Training complete.
+Saving final model...
+Running final evaluation...
+
+======================================================================
+  RUNNING EVAL: number_prediction
+======================================================================
+
+Loading LoRA: /workspace/phase0/ckpt_smoke/open_ended_eval/_tmp_adapter_step_80
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/workspace/ao/nl_probes/sft.py", line 1485, in <module>
+[rank0]:     train_model(
+[rank0]:   File "/workspace/ao/nl_probes/sft.py", line 1174, in train_model
+[rank0]:     run_open_ended_eval(
+[rank0]:   File "/workspace/ao/nl_probes/sft.py", line 322, in run_open_ended_eval
+[rank0]:     all_summaries = run_all_evals(
+[rank0]:                     ^^^^^^^^^^^^^^
+[rank0]:   File "/workspace/ao/nl_probes/open_ended_eval/run_all.py", line 523, in run_all_evals
+[rank0]:     summary = eval_fn(
+[rank0]:               ^^^^^^^^
+[rank0]:   File "/workspace/ao/nl_probes/open_ended_eval/run_all.py", line 68, in run_number_prediction
+[rank0]:     return run_number_prediction_open_ended_eval(
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/workspace/ao/nl_probes/open_ended_eval/number_prediction.py", line 307, in run_number_prediction_open_ended_eval
+[rank0]:     return run_verbalizer_generation_eval_loop(
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/workspace/ao/nl_probes/open_ended_eval/eval_runner.py", line 376, in run_verbalizer_generation_eval_loop
+[rank0]:     sanitized_verbalizer_name, loop_config = _load_adapter_and_build_config(
+[rank0]:                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/workspace/ao/nl_probes/open_ended_eval/eval_runner.py", line 224, in _load_adapter_and_build_config
+[rank0]:     config = build_verbalizer_eval_config(
+[rank0]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/workspace/ao/nl_probes/open_ended_eval/eval_runner.py", line 180, in build_verbalizer_eval_config
+[rank0]:     selected_layer_combination = default_layer_combination(training_config)
+[rank0]:                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/workspace/ao/nl_probes/open_ended_eval/eval_runner.py", line 160, in default_layer_combination
+[rank0]:     raise ValueError(
+[rank0]: ValueError: No recognized layer combination found in [[59, 62, 64, 67, 70]]. Expected [25, 50, 75] (multi-layer) or [50] (single-layer).
+[rank0]:[W1106 01:48:47.898921538 ProcessGroupNCCL.cpp:1479] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+E1106 01:48:48.876000 2796 torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: 1) local_rank: 0 (pid: 2861) of binary: /workspace/venv/bin/python
+Traceback (most recent call last):
+  File "/workspace/venv/bin/torchrun", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/torch/distributed/run.py", line 892, in main
+    run(args)
+  File "/workspace/venv/lib/python3.11/site-packages/torch/distributed/run.py", line 883, in run
+    elastic_launch(
+  File "/workspace/venv/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 139, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 270, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+nl_probes/sft.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-11-06_01:48:48
+  host      : a836b4c5559d
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 2861)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

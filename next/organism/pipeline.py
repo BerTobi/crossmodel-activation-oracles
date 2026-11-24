@@ -30,7 +30,9 @@ random.seed(20261013)
 class Gen:
     def __init__(self, model, max_new_tokens=500):
         import torch
-        from transformers import AutoTokenizer, Qwen3_5ForCausalLM
+        import transformers
+        from transformers import AutoTokenizer
+        Qwen3_5ForCausalLM = getattr(transformers, os.environ.get("ORG_MODEL_CLASS", "Qwen3_5ForCausalLM"))
         self.tok = AutoTokenizer.from_pretrained(model)
         self.tok.padding_side = "left"
         if self.tok.pad_token is None:
